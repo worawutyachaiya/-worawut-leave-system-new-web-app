@@ -82,8 +82,7 @@ function LeaveApprovalSearchFilter() {
   const onError: SubmitErrorHandler<FormDataPage> = errors => {
     console.log('Search Errors:', errors)
   }
-  const onMutateSuccess = () => {
-  }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save settings error:', e)
   }
@@ -159,8 +158,8 @@ function LeaveApprovalSearchFilter() {
                       getOptionValue={data => data?.SECTION?.toString() || ''}
                       getOptionLabel={data => `${data?.SECTION}` || ''}
                       classNamePrefix='select'
-                      label='Section'
-                      placeholder='Select Section'
+                      label={t('Section')}
+                      placeholder={t('Select Section')}
                       error={!!error}
                       helperText={error?.message}
                     />

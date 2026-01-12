@@ -1,30 +1,22 @@
 import { useState } from 'react'
 
-
 import { Button, Card, CardContent, CardHeader, Grid, Collapse, IconButton, CircularProgress } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
-
 import { Controller, useFormContext } from 'react-hook-form'
 
-
 import { useQueryClient } from '@tanstack/react-query'
-
 
 import CustomTextField from '@/components/mui/TextField'
 import SelectCustom from '@/components/react-select/SelectCustom'
 
-
 import { useCreate } from '@libs/react-query/hooks/common-system/useUserProfileSettingProgram'
 import { getUserData } from '@utils/user-profile/userLoginProfile'
 
-
 import { useDxContext } from '@/_template/DxContextProvider'
 
-
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrDocument'
-
 
 import { FormDataPage, statusOptions } from './validationSchema'
 import { MENU_ID } from './env'
@@ -61,7 +53,7 @@ const DocumentSearchFilter = () => {
     mutate(dataItem)
   }
 
-  const onMutateSuccess = () => { }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save profile error:', e)
   }
@@ -100,7 +92,7 @@ const DocumentSearchFilter = () => {
         <CardContent>
           <Grid container spacing={4}>
             {/*------------ Document Name ------------------*/}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={3}>
               <Controller
                 name='searchFilters.documentName'
                 control={control}
@@ -118,7 +110,7 @@ const DocumentSearchFilter = () => {
             </Grid>
 
             {/*------------ Status ------------------*/}
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <Controller
                 name='searchFilters.status'
                 control={control}

@@ -26,6 +26,7 @@ import type {
   FilterOption
 } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
 import ExportEmployeeLeaveModal from './components/ExportEmployeeLeaveModal'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface Props {
   mdAbove: boolean
@@ -45,6 +46,7 @@ function SubordinateSidebar({
   onFilterAllChange,
   handleLeftSidebarToggle
 }: Props) {
+  const { t } = useTranslation()
   const [isSearching, setIsSearching] = useState(false)
   const [exportModalOpen, setExportModalOpen] = useState(false)
   const { control, watch, setValue, getValues } = useFormContext<FormDataPage>()
@@ -123,12 +125,12 @@ function SubordinateSidebar({
     <Box sx={{ p: 3, width: '100%', overflowY: 'auto', '& .select__control': { boxShadow: 'none' } }}>
       {/* Search Filter Card */}
       <Card elevation={0} sx={{ mb: 3, boxShadow: 'none' }}>
-        <CardHeader title='Search filter' titleTypographyProps={{ variant: 'h5' }} />
+        <CardHeader title={t('Employee Leave Search Filters')} titleTypographyProps={{ variant: 'h5' }} />
         <CardContent>
-          {/* Employee ID Select */}
+          {/* Employee Code Select */}
           <Box sx={{ mb: 4 }}>
             <Typography variant='body2' sx={{ mb: 1 }}>
-              Employee CODE
+              {t('Employee Code')}
             </Typography>
             <Controller
               name='searchFilters.employeeCode'
@@ -141,7 +143,7 @@ function SubordinateSidebar({
                   loadOptions={loadEmployeeOptions}
                   getOptionLabel={(option: EmployeeOptionType) => option.EMPLOYEE_ID}
                   getOptionValue={(option: EmployeeOptionType) => option.EMPLOYEE_ID}
-                  placeholder='Select employee code'
+                  placeholder={t('Select Employee Code')}
                   isClearable
                   cacheOptions
                   defaultOptions
@@ -157,14 +159,14 @@ function SubordinateSidebar({
               {isSearching ? (
                 <>
                   <CircularProgress size={16} sx={{ mr: 1 }} />
-                  Searching
+                  {t('Searching')}
                 </>
               ) : (
-                'Search'
+                t('Search')
               )}
             </Button>
             <Button variant='tonal' color='secondary' onClick={handleClearClick} disabled={isSearching}>
-              Clear
+              {t('Clear')}
             </Button>
           </Box>
         </CardContent>
@@ -174,34 +176,28 @@ function SubordinateSidebar({
         <>
           <Divider sx={{ my: 2 }} />
           <Card elevation={0} sx={{ mb: 3, boxShadow: 'none' }}>
-            <CardHeader title='Employee Information' titleTypographyProps={{ variant: 'h5' }} />
+            <CardHeader title={t('Employee Information')} titleTypographyProps={{ variant: 'h5' }} />
             <List>
               <ListItem>
-                <ListItemText primary='ID' secondary={employeeInfo.EMPLOYEE_ID} />
+                <ListItemText primary={t('ID')} secondary={employeeInfo.EMPLOYEE_ID} />
               </ListItem>
               <ListItem>
                 <ListItemText
-                  primary='Name'
+                  primary={t('Name')}
                   secondary={`${employeeInfo.EMPLOYEE_NAME} ${employeeInfo.EMPLOYEE_SURNAME}`}
                 />
               </ListItem>
               <ListItem>
-                <ListItemText primary='Department' secondary={employeeInfo.EMPLOYEE_DEPT} />
+                <ListItemText primary={t('Department')} secondary={employeeInfo.EMPLOYEE_DEPT} />
               </ListItem>
               <ListItem>
-                <ListItemText primary='Section' secondary={employeeInfo.EMPLOYEE_SECTION} />
+                <ListItemText primary={t('Section')} secondary={employeeInfo.EMPLOYEE_SECTION} />
               </ListItem>
             </List>
           </Card>
           {/* Export Button */}
-          <Button
-            variant='tonal'
-            color='success'
-            fullWidth
-            sx={{ mt: 2 }}
-            onClick={() => setExportModalOpen(true)}
-          >
-            Export Employee Leave
+          <Button variant='tonal' color='success' fullWidth sx={{ mt: 2 }} onClick={() => setExportModalOpen(true)}>
+            {t('Export Employee Leave')}
           </Button>
           {/* Export Modal */}
           <ExportEmployeeLeaveModal

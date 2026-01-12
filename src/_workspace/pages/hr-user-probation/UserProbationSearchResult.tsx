@@ -1,12 +1,10 @@
 // React Imports
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-
 // MUI Imports
 import { Box, Button, Card, CardHeader, Chip } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-
 
 // Material React Table Imports
 import type {
@@ -21,36 +19,35 @@ import type {
   MRT_VisibilityState
 } from 'material-react-table'
 
-
 // React Hook Form Imports
 import { useFormContext, useWatch } from 'react-hook-form'
 
-
 // Third-party Imports
 import { useUpdateEffect } from 'react-use'
-
 
 // _template Imports
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
 
-
 // Local Imports
 import type { FormDataPage } from './validationSchema'
-
 
 // Hook & Type Imports
 import { useSearchEmployeeProbation } from '@/_workspace/react-query/hooks/useHrSearchProbation'
 import type { UserProbationInterface } from '@/_workspace/types/hr-user-probation/HrUserProbation'
 
-
 // Modal Imports
 import EditPassProModal from './modal/EditPassProModal'
+import { useSettings } from '@/@core/hooks/useSettings'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 // Static objects moved outside component for performance //dont delete comment
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const UserProbationSearchResult = () => {
+  const { settings } = useSettings()
+  const { t } = useTranslation()
+
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
 
   // Context
@@ -67,15 +64,11 @@ const UserProbationSearchResult = () => {
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>(
     () => getValues('searchResults.columnPinning') || {}
   )
-  const [density, setDensity] = useState<MRT_DensityState>(
-    () => getValues('searchResults.density') || 'comfortable'
-  )
+  const [density, setDensity] = useState<MRT_DensityState>(() => getValues('searchResults.density') || 'comfortable')
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     () => getValues('searchResults.columnFilters') || []
   )
-  const [sorting, setSorting] = useState<MRT_SortingState>(
-    () => getValues('searchResults.sorting') || []
-  )
+  const [sorting, setSorting] = useState<MRT_SortingState>(() => getValues('searchResults.sorting') || [])
   const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>(
     () => getValues('searchResults.columnFilterFns') || {}
   )
@@ -96,14 +89,22 @@ const UserProbationSearchResult = () => {
     EMPLOYEE_CODE: getValues('searchFilters.employeeCode')?.EMPLOYEE_CODE || '',
     EMPLOYEE_NAME: getValues('searchFilters.employeeName') || '',
     EMPLOYEE_DEPT: getValues('searchFilters.section')?.SECTION || '',
-    IS_PASS_PRO: getValues('searchFilters.status')?.value !== undefined ? String(getValues('searchFilters.status')?.value) : '',
+    IS_PASS_PRO:
+      getValues('searchFilters.status')?.value !== undefined ? String(getValues('searchFilters.status')?.value) : '',
     Start: String(pagination.pageIndex * pagination.pageSize),
     Limit: String(pagination.pageSize),
     Order: sorting.length > 0 ? sorting : undefined
   }
 
   // Fetch Data Hook
-  const { data: probationData, isPending, isError, isRefetching, isFetching, refetch } = useSearchEmployeeProbation(
+  const {
+    data: probationData,
+    isPending,
+    isError,
+    isRefetching,
+    isFetching,
+    refetch
+  } = useSearchEmployeeProbation(
     paramForSearch,
     false // Disabled by default, will be triggered by refetch()
   )
@@ -129,7 +130,12 @@ const UserProbationSearchResult = () => {
     const resultData = probationData?.data?.ResultOnDb || []
 
     // Check for multi-statement format: [[{TOTAL_COUNT}], [data...]]
-    if (Array.isArray(resultData) && resultData.length > 0 && Array.isArray(resultData[0]) && resultData[0].length > 0) {
+    if (
+      Array.isArray(resultData) &&
+      resultData.length > 0 &&
+      Array.isArray(resultData[0]) &&
+      resultData[0].length > 0
+    ) {
       return Number(resultData[0][0].TOTAL_COUNT || 0)
     }
 
@@ -201,7 +207,6 @@ const UserProbationSearchResult = () => {
 
   // Handler for save pass pro date
   const handleSavePassPro = (data: any) => {
-
     // TODO: Call API to update pass pro date
     // After successful update, refetch data or update UI
   }
@@ -211,35 +216,27 @@ const UserProbationSearchResult = () => {
     () => [
       {
         accessorKey: 'IS_PASS_PRO',
-        header: 'PASS PRO',
-        size: 200,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' },
+        header: t('Status'),
+        enableSorting: false,
         Cell: ({ row }) => {
-          const passPro = row.original?.IS_PASS_PRO
+          const passpro = row.original.IS_PASS_PRO
           return (
             <Chip
-              label={Number(passPro) === 1 ? 'PASSED' : 'NOT PASSED'}
-              color={Number(passPro) === 1 ? 'success' : 'error'}
+              variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
               size='small'
-              variant='filled'
+              label={passpro === 1 ? t('Passed') : t('No')}
+              color={passpro === 1 ? 'success' : 'error'}
             />
           )
         }
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
-        header: 'START WORK',
-        size: 203,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'START WORK'
       },
       {
         accessorKey: 'PASS_PRD_DATE',
         header: 'PASS PRD DATE',
-        size: 297,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' },
         Cell: ({ row }) => {
           const date = row.original?.PASS_PRD_DATE
           return date ? (
@@ -248,7 +245,7 @@ const UserProbationSearchResult = () => {
             <Button
               variant='contained'
               color='primary'
-              size='small'
+              size='medium'
               onClick={() => handleEnterPassProbationDate(row.original)}
               sx={{ whiteSpace: 'nowrap' }}
             >
@@ -259,38 +256,23 @@ const UserProbationSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE',
-        size: 189,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'EMPLOYEE CODE'
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
-        header: 'FIRST NAME',
-        size: 203,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'FIRST NAME'
       },
       {
         accessorKey: 'EMPLOYEE_SURNAME',
-        header: 'SURNAME',
-        size: 203,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'SURNAME'
       },
       {
         accessorKey: 'EMPLOYEE_DEPT',
-        header: 'DEPARTMENT',
-        size: 243,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'DEPARTMENT'
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION',
-        size: 270,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'SECTION'
       }
     ],
     []

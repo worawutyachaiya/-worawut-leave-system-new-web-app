@@ -38,7 +38,10 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { FormDataPage } from './validationSchema'
 import { LeaveAlRemainInterface } from '@/_workspace/types/leave-employee-information/LeaveEmployeeInformationInterface'
 import { EmployeeLeaveInterface } from '@/_workspace/types/employee-leave/EmployeeLeaveInterface'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const EmployeeLeaveSearchResultTable = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue, watch } = useFormContext<FormDataPage>()
@@ -180,13 +183,13 @@ const EmployeeLeaveSearchResultTable = () => {
     () => [
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE_CODE',
+        header: t('Employee Code'),
         size: 200
       },
       {
         enableColumnOrdering: true,
         accessorKey: 'EMPLOYEE_NAME',
-        header: 'EMPLOYEE_NAME',
+        header: t('Employee Name'),
         Cell: ({ row }) => {
           const name = (row.original as any).EMPLOYEE_NAME + ' ' + (row.original as any).EMPLOYEE_SURNAME || '-'
           return name
@@ -194,12 +197,12 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION',
+        header: t('Section'),
         size: 160
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
-        header: 'LEAVE TYPE',
+        header: t('Leave Type'),
         size: 180,
         Cell: ({ row }) => {
           const desc =
@@ -209,7 +212,7 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'REQUEST DATE',
+        header: t('Request Date'),
         size: 180,
         Cell: ({ row }) => {
           const reqDate = (row.original as any).CREATE_DATE
@@ -218,7 +221,7 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
-        header: 'LEAVE DATE',
+        header: t('Leave Date'),
         size: 240,
         Cell: ({ row }) => {
           const startDate = row.original?.LEAVE_REQUEST_START_DATE
@@ -226,7 +229,7 @@ const EmployeeLeaveSearchResultTable = () => {
           return (
             <>
               {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '-'}
-              {' to '}
+              {' ' + t('to') + ' '}
               {endDate ? dayjs(endDate).format('YYYY-MM-DD') : '-'}
             </>
           )
@@ -234,18 +237,18 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'TIME',
+        header: t('Time'),
         size: 140
       },
       {
         accessorKey: 'TOTAL_LEAVE_DAY',
-        header: 'TOTAL DAY',
+        header: t('Total Day'),
         size: 160,
         Cell: ({ row }) => (row.original as any).LEAVE_REQUEST_TOTAL_DAY || '-'
       },
       {
         accessorKey: 'ATTACHMENT',
-        header: 'Attachment',
+        header: t('Attachment'),
         size: 200,
         muiTableBodyCellProps: {
           align: 'center'
@@ -261,12 +264,12 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'LEAVE_REQUEST_REMARK',
-        header: 'LEAVE_REQUEST_REMARK',
+        header: t('Remark'),
         Cell: ({ row }) => (row.original as any).REMARK || '-'
       },
       {
         accessorKey: 'STATUS',
-        header: 'APPROVAL',
+        header: t('Approval'),
         enableSorting: false,
         size: 130,
         muiTableBodyCellProps: {
@@ -278,7 +281,7 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: 'UPDATE DATE',
+        header: t('Update Date'),
         size: 170,
         Cell: ({ row }) => {
           const uDate = (row.original as any).UPDATE_DATE
@@ -287,13 +290,13 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'UPDATE BY',
+        header: t('Update By'),
         size: 160,
         Cell: ({ row }) => (row.original as any).UPDATE_BY || '-'
       },
       {
         id: 'actions',
-        header: 'EMPLOYEE DETAIL',
+        header: t('Employee Detail'),
         size: 180,
         muiTableBodyCellProps: {
           align: 'center'
@@ -312,7 +315,7 @@ const EmployeeLeaveSearchResultTable = () => {
         )
       }
     ],
-    []
+    [t]
   )
   const isFirstRender = useRef(true)
   useEffect(() => {
@@ -342,11 +345,11 @@ const EmployeeLeaveSearchResultTable = () => {
   return (
     <Card>
       <CardHeader
-        title='Search result'
+        title={t('Search result')}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>
             <Typography variant='subtitle1' fontWeight='bold'>
-              Row Selected: {Object.keys(rowSelection).length}
+              {t('Row Selected')}: {Object.keys(rowSelection).length}
             </Typography>
             <Button
               variant='tonal'
@@ -354,7 +357,7 @@ const EmployeeLeaveSearchResultTable = () => {
               disabled={Object.keys(rowSelection).length === 0}
               onClick={handleApprove}
             >
-              Approve
+              {t('Approve')}
             </Button>
             <Button
               variant='tonal'
@@ -362,7 +365,7 @@ const EmployeeLeaveSearchResultTable = () => {
               disabled={Object.keys(rowSelection).length === 0}
               onClick={handleReject}
             >
-              Reject
+              {t('Reject')}
             </Button>
           </Stack>
         }

@@ -1,44 +1,39 @@
 // React Imports
 import { useState } from 'react'
 
-
 // MUI Imports
 import { Button, Card, CardContent, CardHeader, Grid, Collapse, IconButton, CircularProgress } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
-
 // React Hook Form Imports
 import { Controller, useFormContext } from 'react-hook-form'
 
-
 // Third-party Imports
 import { useQueryClient } from '@tanstack/react-query'
-
 
 // Components Imports
 import CustomTextField from '@/components/mui/TextField'
 import SelectCustom from '@/components/react-select/SelectCustom'
 
-
 // libs Imports
 import { useCreate } from '@libs/react-query/hooks/common-system/useUserProfileSettingProgram'
 import { getUserData } from '@utils/user-profile/userLoginProfile'
 
-
 // _template Imports
 import { useDxContext } from '@/_template/DxContextProvider'
-
 
 // Types
 import { FormDataPage, statusOptions } from './validationSchema'
 import { MENU_ID } from './env'
 
-
 // Query Key
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrLeaveTypeName'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const LeaveTypeSearchFilter = () => {
+  const { t } = useTranslation()
   const [collapse, setCollapse] = useState(true)
   const { control, handleSubmit, setValue, getValues } = useFormContext<FormDataPage>()
   const { setIsEnableFetching, isEnableFetching } = useDxContext()
@@ -71,10 +66,8 @@ const LeaveTypeSearchFilter = () => {
     mutate(dataItem)
   }
 
-  const onMutateSuccess = () => { }
-  const onMutateError = (e: any) => {
-
-  }
+  const onMutateSuccess = () => {}
+  const onMutateError = (e: any) => {}
 
   const { mutate } = useCreate(onMutateSuccess, onMutateError)
 
@@ -178,7 +171,7 @@ const LeaveTypeSearchFilter = () => {
                 startIcon={isEnableFetching ? <CircularProgress size={16} color='inherit' /> : null}
                 disabled={isEnableFetching}
               >
-                Search
+                {isEnableFetching ? t('Searching') : t('Search')}
               </Button>
               <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
                 Clear

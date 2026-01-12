@@ -48,11 +48,16 @@ import ActionsMenu from './components/ActionsMenu'
 import LeaveFileColumn from './components/LeaveFileColumn'
 
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
+import { useTranslation } from '@/contexts/TranslationContext'
+import { useSettings } from '@/@core/hooks/useSettings'
 
 // Static objects moved outside component for performance //dont delete comment
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const UserLeaveSearchResult = () => {
+  const { settings } = useSettings()
+
+  const { t } = useTranslation()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
 
   // Context
@@ -269,32 +274,29 @@ const UserLeaveSearchResult = () => {
   const columns = useMemo<MRT_ColumnDef<UserLeaveInterface>[]>(
     () => [
       {
-        accessorKey: 'STATUS',
-        header: 'STATUS',
+        accessorKey: 'INUSE',
+        header: t('Status'),
         size: 100,
+        enableSorting: false,
         Cell: ({ row }) => {
-          const status = row.original?.STATUS || ''
-          const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            Use: { label: 'Use', color: 'success' },
-            Cancel: { label: 'Cancel', color: 'error' }
-          }
-          const config = statusConfig[status] || { label: status || '-', color: 'warning' }
-          return <Chip label={config.label} color={config.color} size='small' variant='filled' />
-        },
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+          const inuse = row.original.INUSE
+          return (
+            <Chip
+              variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
+              size='small'
+              label={inuse === 1 ? t('Active') : t('Cancel')}
+              color={inuse === 1 ? 'success' : 'error'}
+            />
+          )
+        }
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'REQUEST DATE',
-        size: 180,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'REQUEST DATE'
       },
       {
         accessorKey: 'LEAVE_ATTACHMENT',
         header: 'LEAVE ATTACHMENT',
-        size: 175,
         enableSorting: false,
         Cell: ({ row }) => {
           return (
@@ -303,43 +305,28 @@ const UserLeaveSearchResult = () => {
               filePath={row.original.LEAVE_REQUEST_FILE_UPLOAD_PATH}
             />
           )
-        },
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        }
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE',
-        size: 120,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'EMPLOYEE CODE'
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
         header: 'EMPLOYEE NAME',
-        size: 200,
-        Cell: ({ row }) => `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        Cell: ({ row }) => `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION',
-        size: 120,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'SECTION'
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
-        header: 'LEAVE TYPE',
-        size: 150,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'LEAVE TYPE'
       },
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
         header: 'LEAVE DATE',
-        size: 150,
         Cell: ({ cell }) => {
           const date = cell.getValue<string>()
           if (!date) return '-'
@@ -348,44 +335,27 @@ const UserLeaveSearchResult = () => {
           } catch {
             return date
           }
-        },
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        }
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'TIME',
-        size: 120,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'TIME'
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: 'TOTAL DAY LEAVE',
-        size: 130,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'TOTAL DAY LEAVE'
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: 'REASON',
-        size: 200,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'REASON'
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: 'MODIFIED',
-        size: 180,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'MODIFIED'
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'MODIFIED BY',
-        size: 120,
-        muiTableHeadCellProps: { align: 'center' },
-        muiTableBodyCellProps: { align: 'center' }
+        header: 'MODIFIED BY'
       }
     ],
     []

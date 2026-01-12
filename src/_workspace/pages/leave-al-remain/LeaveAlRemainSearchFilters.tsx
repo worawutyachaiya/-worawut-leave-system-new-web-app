@@ -81,8 +81,7 @@ function LeaveHistorySearchFilters() {
     }
     mutate(dataItem)
   }
-  const onMutateSuccess = () => {
-  }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save settings error:', e)
   }
@@ -159,8 +158,8 @@ function LeaveHistorySearchFilters() {
                       getOptionValue={data => data?.SECTION?.toString() || ''}
                       getOptionLabel={data => `${data?.SECTION}` || ''}
                       classNamePrefix='select'
-                      label='Section'
-                      placeholder='Select Section'
+                      label={t('Section')}
+                      placeholder={t('Select Section')}
                       error={!!error}
                       helperText={error?.message}
                     />

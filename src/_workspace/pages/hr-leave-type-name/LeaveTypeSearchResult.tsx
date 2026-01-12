@@ -1,18 +1,14 @@
 // React Imports
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-
 // MUI Imports
 import { Box, Button, Card, CardHeader, Chip, IconButton, Tooltip } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
-
 // MUI Icons
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-
-
 
 // Material React Table Imports
 import type {
@@ -27,24 +23,23 @@ import type {
   MRT_VisibilityState
 } from 'material-react-table'
 
-
 // React Hook Form Imports
 import { useFormContext } from 'react-hook-form'
-
 
 // Third-party Imports
 import { useUpdateEffect } from 'react-use'
 import { toast } from 'react-toastify'
 
-
 // _template Imports
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
 
-
 // Hooks Imports
-import { useSearchLeaveType, useDeleteLeaveType, PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrLeaveTypeName'
-
+import {
+  useSearchLeaveType,
+  useDeleteLeaveType,
+  PREFIX_QUERY_KEY
+} from '@/_workspace/react-query/hooks/useHrLeaveTypeName'
 
 // Local Imports
 import type { FormDataPage } from './validationSchema'
@@ -54,11 +49,15 @@ import ActionsMenu from './components/ActionsMenu'
 import type { LeaveTypeData } from './modal/validationSchema'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from '@/contexts/TranslationContext'
+import { useSettings } from '@/@core/hooks/useSettings'
 
 // Static objects moved outside component for performance //dont delete comment
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const LeaveTypeSearchResult = () => {
+  const { t } = useTranslation()
+  const { settings } = useSettings()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
 
@@ -88,15 +87,11 @@ const LeaveTypeSearchResult = () => {
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>(
     () => getValues('searchResults.columnPinning') || {}
   )
-  const [density, setDensity] = useState<MRT_DensityState>(
-    () => getValues('searchResults.density') || 'comfortable'
-  )
+  const [density, setDensity] = useState<MRT_DensityState>(() => getValues('searchResults.density') || 'comfortable')
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     () => getValues('searchResults.columnFilters') || []
   )
-  const [sorting, setSorting] = useState<MRT_SortingState>(
-    () => getValues('searchResults.sorting') || []
-  )
+  const [sorting, setSorting] = useState<MRT_SortingState>(() => getValues('searchResults.sorting') || [])
   const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>(
     () => getValues('searchResults.columnFilterFns') || {}
   )
@@ -124,7 +119,7 @@ const LeaveTypeSearchResult = () => {
 
   // Delete Mutation
   const { mutateAsync: deleteLeaveType, isPending: isDeleting } = useDeleteLeaveType(
-    (response) => {
+    response => {
       if (response.data.Status) {
         queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
         setDeleteDialogOpen(false)
@@ -134,8 +129,7 @@ const LeaveTypeSearchResult = () => {
         toast.error(response.data.Message || 'Failed to delete')
       }
     },
-    (error) => {
-
+    error => {
       toast.error('Failed to delete. Please try again.')
     }
   )
@@ -206,78 +200,44 @@ const LeaveTypeSearchResult = () => {
     () => [
       {
         accessorKey: 'INUSE',
-        header: 'STATUS',
-        size: 200,
+        header: t('Status'),
+        size: 100,
+        enableSorting: false,
         Cell: ({ row }) => {
-          const inuse = row.original?.INUSE ?? ''
-          // Accept both number and string representations from backend
-          const isUse = String(inuse) === '1'
-          const status = isUse ? 'Use' : 'Cancel'
-          const color = isUse ? 'success' : 'error'
-          return <Chip label={status} color={color} size='small' />
-        },
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
+          const inuse = row.original.INUSE
+          return (
+            <Chip
+              variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
+              size='small'
+              label={inuse === 1 ? t('Active') : t('Cancel')}
+              color={inuse === 1 ? 'success' : 'error'}
+            />
+          )
         }
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: 'LEAVE TYPE CODE',
-        size: 200,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        },
-
+        header: 'LEAVE TYPE CODE'
+      },
+      {
+        accessorKey: 'LEAVE_TYPE_CODE',
+        header: 'LEAVE TYPE CODE'
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
-        header: 'LEAVE TYPE NAME',
-        size: 350,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        },
+        header: 'LEAVE TYPE NAME'
       },
       {
         accessorKey: 'LEAVE_TYPE_REQUEST_DAY_BEFORE_USE',
-        header: 'REQUEST DAY BEFORE USE',
-        size: 280,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        },
+        header: 'REQUEST DAY BEFORE USE'
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: 'MODIFIED DATE',
-        size: 220,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        },
+        header: 'MODIFIED DATE'
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'MODIFIED BY',
-        size: 180,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        },
+        header: 'MODIFIED BY'
       }
     ],
     []
@@ -312,20 +272,12 @@ const LeaveTypeSearchResult = () => {
   return (
     <>
       <Card sx={{ mt: 4 }}>
-
-
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DxMRTTable
             columns={columns}
             enableRowActions={true}
-            positionActionsColumn="first"
-            renderRowActions={({ row }) => (
-              <ActionsMenu
-                row={row}
-                onEdit={handleEdit}
-                onDelete={handleDeleteClick}
-              />
-            )}
+            positionActionsColumn='first'
+            renderRowActions={({ row }) => <ActionsMenu row={row} onEdit={handleEdit} onDelete={handleDeleteClick} />}
             displayColumnDefOptions={{
               'mrt-row-actions': {
                 muiTableHeadCellProps: { align: 'center' },
@@ -374,7 +326,7 @@ const LeaveTypeSearchResult = () => {
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={handleDeleteConfirm}
         loading={isDeleting}
-        title="Delete Leave Type?"
+        title='Delete Leave Type?'
         content={`Are you sure you want to delete "${deleteTarget?.LEAVE_TYPE_DESCRIPTION_EN}"? This action cannot be undone.`}
       />
     </>

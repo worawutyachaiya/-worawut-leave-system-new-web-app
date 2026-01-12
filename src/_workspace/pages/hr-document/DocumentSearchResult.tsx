@@ -1,13 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-
 import { Box, Button, Card, CardHeader, Chip, Tooltip } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
-
 import AddIcon from '@mui/icons-material/Add'
-
 
 import type {
   MRT_ColumnDef,
@@ -21,25 +18,19 @@ import type {
   MRT_VisibilityState
 } from 'material-react-table'
 
-
 import { useFormContext } from 'react-hook-form'
-
 
 import dayjs from 'dayjs'
 import { useUpdateEffect } from 'react-use'
 import { toast } from 'react-toastify'
 
-
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
-
 
 import { useSearchDocument, useDeleteDocument } from '@/_workspace/react-query/hooks/useHrDocument'
 import { useQueryClient } from '@tanstack/react-query'
 
-
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
-
 
 import type { FormDataPage } from './validationSchema'
 import AddDocumentModal from './modal/AddDocumentModal'
@@ -47,6 +38,8 @@ import DeleteConfirmDialog from './modal/DeleteConfirmDialog'
 import type { DocumentData } from './modal/validationSchema'
 import ActionsMenu from './components/ActionsMenu'
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrDocument'
+import { useSettings } from '@/@core/hooks/useSettings'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 // Static objects moved outside component for performance //dont delete comment
 const DISPLAY_COLUMN_OPTIONS = {
@@ -58,6 +51,9 @@ const DISPLAY_COLUMN_OPTIONS = {
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const DocumentSearchResult = () => {
+  const { settings } = useSettings()
+  const { t } = useTranslation()
+
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
 
   // Context
@@ -90,15 +86,11 @@ const DocumentSearchResult = () => {
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>(
     () => getValues('searchResults.columnPinning') || {}
   )
-  const [density, setDensity] = useState<MRT_DensityState>(
-    () => getValues('searchResults.density') || 'comfortable'
-  )
+  const [density, setDensity] = useState<MRT_DensityState>(() => getValues('searchResults.density') || 'comfortable')
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     () => getValues('searchResults.columnFilters') || []
   )
-  const [sorting, setSorting] = useState<MRT_SortingState>(
-    () => getValues('searchResults.sorting') || []
-  )
+  const [sorting, setSorting] = useState<MRT_SortingState>(() => getValues('searchResults.sorting') || [])
   const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>(
     () => getValues('searchResults.columnFilterFns') || {}
   )
@@ -215,20 +207,18 @@ const DocumentSearchResult = () => {
     () => [
       {
         accessorKey: 'INUSE',
-        header: 'STATUS',
-        size: 200,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        },
+        header: t('Status'),
+        enableSorting: false,
         Cell: ({ row }) => {
-          const status = row.original?.INUSE
-          // Handle both number and string values รับ number
-          const label = status === 1 || status === '1' ? 'Use' : 'Cancel'
-          const color = status === 1 || status === '1' ? 'success' : 'default'
-          return <Chip label={label} color={color} size='small' />
+          const inuse = row.original.INUSE
+          return (
+            <Chip
+              variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
+              size='small'
+              label={inuse === 1 ? t('Active') : t('Cancel')}
+              color={inuse === 1 ? 'success' : 'error'}
+            />
+          )
         }
       },
       {
@@ -345,15 +335,10 @@ const DocumentSearchResult = () => {
             muiTableProps={TABLE_PROPS}
           />
         </LocalizationProvider>
-
       </Card>
 
       {/* Add Modal */}
-      <AddDocumentModal
-        open={modalOpen}
-        onClose={handleCloseModal}
-        onSubmitSuccess={handleCloseModal}
-      />
+      <AddDocumentModal open={modalOpen} onClose={handleCloseModal} onSubmitSuccess={handleCloseModal} />
 
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmDialog

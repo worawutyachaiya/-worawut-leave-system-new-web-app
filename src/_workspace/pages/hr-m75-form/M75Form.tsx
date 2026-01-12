@@ -1,40 +1,29 @@
 // React Imports
 import { useEffect, useMemo, useState } from 'react'
 
-
 // Third-party Imports
 import dayjs from 'dayjs'
-
 
 // Translation
 import { useTranslation } from '@/contexts/TranslationContext'
 
-
 // MUI Imports
 import { Button, Card, CardContent, CardHeader, Grid, Divider, FormHelperText } from '@mui/material'
-
 
 // React Hook Form Imports
 import { Controller, useFormContext } from 'react-hook-form'
 
-
 // React Query Imports
 import { useQueryClient } from '@tanstack/react-query'
-
 
 // Hooks Imports
 import { useLeaveTypeMaxDay } from '@/_workspace/react-query/hooks/useLeaveTypeMaxDay'
 import { useLeaveHolidayCompany } from '@/_workspace/react-query/hooks/useLeaveHolidayCompany'
-import {
-  useCreate75Form,
-  PREFIX_QUERY_KEY
-} from '@/_workspace/react-query/hooks/useCreate75Form'
-
+import { useCreate75Form, PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useCreate75Form'
 
 // Fetch Imports
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
 import fetchLeaveTypeHR from '@/_workspace/react-select/async-promise-load-options/fetchLeaveTypeHR'
-
 
 // Components Imports
 import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
@@ -42,7 +31,6 @@ import CustomTextField from '@/components/mui/TextField'
 import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
 import LeaveRequestConfirmModal from './modal/LeaveRequestConfirmModal'
 import LeaveRequestSuccessModal, { MessageType } from './modal/LeaveRequestSuccessModal'
-
 
 // Types & Utils Imports
 import { FormDataPage } from './validationSchema'
@@ -226,13 +214,10 @@ function M75Form() {
 
   // --- Handlers ---
   const onSubmit = () => {
-
     setConfirmModal(true)
   }
 
-  const onError = (errors: any) => {
-
-  }
+  const onError = (errors: any) => {}
 
   const handleConfirmSubmit = async () => {
     const searchFilters = getValues('searchFilters')
@@ -269,8 +254,6 @@ function M75Form() {
         REASON: searchFilters.reason || '',
         REMARK: searchFilters.remark || ''
       }
-
-
 
       const response = await create75Form(dataItem as any)
 
@@ -356,23 +339,23 @@ function M75Form() {
                       getOptionValue={(data: any) => data.EMPLOYEE_CODE}
                       classNamePrefix={'select'}
                       styles={{
-                        multiValue: (base) => ({
+                        multiValue: base => ({
                           ...base,
                           backgroundColor: 'var(--mui-palette-action-selected)',
-                          borderRadius: '4px',
+                          borderRadius: '4px'
                         }),
-                        multiValueLabel: (base) => ({
+                        multiValueLabel: base => ({
                           ...base,
-                          color: 'var(--mui-palette-text-primary)',
+                          color: 'var(--mui-palette-text-primary)'
                         }),
-                        multiValueRemove: (base) => ({
+                        multiValueRemove: base => ({
                           ...base,
                           color: 'var(--mui-palette-text-primary)',
                           ':hover': {
                             backgroundColor: 'var(--mui-palette-error-main)',
-                            color: 'white',
-                          },
-                        }),
+                            color: 'white'
+                          }
+                        })
                       }}
                     />
                     <FormHelperText error={!!error}>{error?.message}</FormHelperText>
@@ -555,8 +538,8 @@ function M75Form() {
               </Button>
               <Button
                 type='button'
-                variant='outlined'
-                color='primary'
+                variant='tonal'
+                color='secondary'
                 onClick={handleClear}
                 disabled={isPending || isCalculating}
               >

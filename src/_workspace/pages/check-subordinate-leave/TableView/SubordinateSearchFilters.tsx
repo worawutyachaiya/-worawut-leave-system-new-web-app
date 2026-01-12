@@ -89,7 +89,7 @@ function SubordinateSearchFilters() {
       <Collapse in={!collapse}>
         <CardContent>
           <Grid container spacing={4}>
-            {/* Employee ID */}
+            {/* Employee Code */}
             <Grid item xs={12} sm={6} md={3}>
               <Controller
                 name='searchFilters.tableEmployeeCode'
@@ -99,7 +99,7 @@ function SubordinateSearchFilters() {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label={t('Employee CODE')}
+                    label={t('Employee Code')}
                     placeholder={t('Enter employee code')}
                     autoComplete='off'
                   />

@@ -98,7 +98,7 @@ function TimeRecordCheckerSearchFilter() {
                 render={({ field }) => (
                   <AsyncSelectCustom
                     {...field}
-                    label={t('Employee CODE')}
+                    label={t('Employee Code')}
                     isClearable
                     cacheOptions
                     defaultOptions

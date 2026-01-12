@@ -10,6 +10,7 @@ import LeaveApprovalSearchResult from './LeaveApprovalSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
 import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
 import { MENU_ID } from './env'
+import { useTranslation } from '@/contexts/TranslationContext'
 const LeaveRequest = () => {
   return (
     <DxProvider>
@@ -18,6 +19,7 @@ const LeaveRequest = () => {
   )
 }
 const InnerApp = () => {
+  const { t } = useTranslation()
   const { setIsEnableFetching } = useDxContext()
   const reactHookFormMethods = useForm<FormDataPage>({
     resolver: zodResolver(validationSchemaPage),
@@ -32,10 +34,10 @@ const InnerApp = () => {
   }, [isLoadingReactHookForm])
   const breadcrumbs = [
     <Typography key='1' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Home
+      {t('Menu.Home')}
     </Typography>,
     <Typography key='2' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Leave Approval
+      {t('Menu.Leave Approval')}
     </Typography>
   ]
   return (
@@ -43,7 +45,7 @@ const InnerApp = () => {
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
         <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>Leave Approval</Typography>
+          <Typography variant='h4'>{t('Menu.Leave Approval')}</Typography>
           <Divider orientation='vertical' flexItem />
           <Breadcrumbs separator='›' aria-label='breadcrumb' sx={{ display: 'inline-block' }}>
             {breadcrumbs}

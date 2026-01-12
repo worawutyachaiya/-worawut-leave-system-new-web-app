@@ -11,6 +11,7 @@ import EmployeeLeaveSearchFilters from './EmployeeLeaveSearchFilter'
 import SearchEmployeeLeaveTable from './EmployeeLeaveSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
 import { MENU_ID } from './env'
+import { useTranslation } from '@/contexts/TranslationContext'
 const LeaveRequest = () => {
   return (
     <DxProvider>
@@ -19,6 +20,7 @@ const LeaveRequest = () => {
   )
 }
 const InnerApp = () => {
+  const { t } = useTranslation()
   const { setIsEnableFetching } = useDxContext()
   const reactHookFormMethods = useForm<FormDataPage>({
     resolver: zodResolver(validationSchemaPage),
@@ -33,10 +35,10 @@ const InnerApp = () => {
   }, [isLoadingReactHookForm])
   const breadcrumbs = [
     <Typography key='1' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Home
+      {t('Menu.Home')}
     </Typography>,
     <Typography key='2' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Employee Leave
+      {t('Menu.Employee Leave')}
     </Typography>
   ]
   return (
@@ -44,7 +46,7 @@ const InnerApp = () => {
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
         <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>Employee Leave</Typography>
+          <Typography variant='h4'>{t('Menu.Employee Leave')}</Typography>
           <Divider orientation='vertical' flexItem />
           <Breadcrumbs
             separator='›'

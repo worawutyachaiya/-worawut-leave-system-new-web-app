@@ -22,8 +22,10 @@ import { useLeaveEmployeeSearch } from '@/_workspace/react-query/hooks/useLeaveE
 import { EmployeeLeaveInterface } from '@/_workspace/types/employee-leave/EmployeeLeaveInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { FormDataPage } from './validationSchema'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const EmployeeLeaveSearchResultTable = () => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
@@ -131,14 +133,14 @@ const EmployeeLeaveSearchResultTable = () => {
     () => [
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
-        header: 'LEAVE REQUEST START DATE',
+        header: t('Leave Request Start Date'),
         Cell: ({ row }) => {
           const startDate = row.original?.LEAVE_REQUEST_START_DATE
           const endDate = row.original?.LEAVE_REQUEST_END_DATE
           return (
             <>
               {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '-'}
-              {' to '}
+              {' ' + t('to') + ' '}
               {endDate ? dayjs(endDate).format('YYYY-MM-DD') : '-'}
             </>
           )
@@ -146,23 +148,23 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE'
+        header: t('Employee Code')
       },
       {
         accessorKey: 'FULL_NAME',
-        header: 'FULL NAME'
+        header: t('Full Name')
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'EMPLOYEE SECTION'
+        header: t('Employee Section')
       },
       {
         accessorKey: 'EMPLOYEE_DEPT',
-        header: 'EMPLOYEE DEPT'
+        header: t('Employee Dept')
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
-        header: 'LEAVE TYPE',
+        header: t('Leave Type'),
         Cell: ({ row }) => {
           const desc =
             (row.original as any).LEAVE_TYPE_DESCRIPTION_EN || (row.original as any).LEAVE_TYPE_DESCRIPTION_TH || ''
@@ -171,15 +173,15 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'TIME'
+        header: t('Time')
       }
     ],
-    []
+    [t]
   )
   return (
     <>
       <Card>
-        <CardHeader title='Search result' />
+        <CardHeader title={t('Search result')} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DxMRTTable
             columns={columns}

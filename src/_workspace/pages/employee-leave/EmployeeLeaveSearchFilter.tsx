@@ -109,7 +109,7 @@ function EmployeeLeaveSearchFilters() {
   return (
     <Card>
       <CardHeader
-        title='Employee Leave Search Filters'
+        title={t('Employee Leave Search Filters')}
         sx={{ '& .MuiCardHeader-avatar': { mr: 3 } }}
         action={
           <IconButton size='small' aria-label='collapse' onClick={() => setCollapse(!collapse)}>
@@ -142,8 +142,8 @@ function EmployeeLeaveSearchFilters() {
                         cacheOptions
                         defaultOptions
                         key={`${watch('searchFilters.department')?.DEPARTMENT}_${watch('searchFilters.section')?.SECTION}`}
-                        placeholder='Select Employee Code'
-                        label='Employee Code'
+                        placeholder={t('Select Employee Code')}
+                        label={t('Employee Code')}
                         classNamePrefix='select'
                         loadOptions={inputValue => {
                           const dept = getValues('searchFilters.department')?.DEPARTMENT
@@ -192,8 +192,8 @@ function EmployeeLeaveSearchFilters() {
                         cacheOptions
                         defaultOptions
                         key={`name_${watch('searchFilters.department')?.DEPARTMENT}_${watch('searchFilters.section')?.SECTION}`}
-                        placeholder='Select Employee Name'
-                        label='Employee Name'
+                        placeholder={t('Select Employee Name')}
+                        label={t('Employee Name')}
                         classNamePrefix='select'
                         loadOptions={inputValue => {
                           const dept = getValues('searchFilters.department')?.DEPARTMENT
@@ -243,7 +243,7 @@ function EmployeeLeaveSearchFilters() {
                         readOnly
                         autoComplete='off'
                         placeholderText={dayjs(new Date()).format('YYYY-MM-DD')}
-                        customInput={<CustomTextField label='Leave Date' fullWidth error={!!error} />}
+                        customInput={<CustomTextField label={t('Leave Date')} fullWidth error={!!error} />}
                       />
                     </>
                   )}
@@ -261,8 +261,8 @@ function EmployeeLeaveSearchFilters() {
                         isClearable
                         cacheOptions
                         defaultOptions
-                        placeholder='Select department'
-                        label='Department'
+                        placeholder={t('Select Department')}
+                        label={t('Department')}
                         classNamePrefix='select'
                         loadOptions={inputValue => fetchDepartmentByLikeGroupByFromMember(inputValue || '')}
                         onChange={value => {
@@ -291,8 +291,8 @@ function EmployeeLeaveSearchFilters() {
                         cacheOptions
                         defaultOptions
                         key={`section_${watch('searchFilters.department')?.DEPARTMENT}`}
-                        placeholder='Select Section'
-                        label='Section'
+                        placeholder={t('Select Section')}
+                        label={t('Section')}
                         classNamePrefix='select'
                         loadOptions={inputValue => {
                           const dept = getValues('searchFilters.department')?.DEPARTMENT
@@ -350,8 +350,8 @@ function EmployeeLeaveSearchFilters() {
                             </div>
                           )}
                           classNamePrefix='select'
-                          label='Leave Type'
-                          placeholder='Select Leave Type'
+                          label={t('Leave Type')}
+                          placeholder={t('Select Leave Type')}
                           error={!!error}
                         />
                       </>

@@ -56,7 +56,7 @@ function SubordinateFlexTimeTableSearchResult() {
 
   const searchFilters = getValues('searchFilters')
 
-  // HR Check: Use search filters from Search form (Employee ID, Start Date, End Date)
+  // HR Check: Use search filters from Search form (Employee Code, Start Date, End Date)
   // Format Date objects to string for API
   const formatDateForApi = (date: any) => {
     if (!date) return null
@@ -147,7 +147,7 @@ function SubordinateFlexTimeTableSearchResult() {
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_ID',
-        header: t('Employee Id'),
+        header: t('Employee Code'),
         enableSorting: false
       },
       {
