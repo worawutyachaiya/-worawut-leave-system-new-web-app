@@ -106,8 +106,10 @@ const UserLeaveSearchResult = () => {
     Order: sorting.length > 0 ? sorting : undefined
   }
 
-  // React Query
-  const { data, error, isPending, isFetching, isRefetching, refetch } = useSearchUserLeave(paramForSearch)
+  const { data, error, isPending, isFetching, isRefetching, refetch } = useSearchUserLeave(
+    paramForSearch,
+    isEnableFetching
+  )
 
   // Helper: Get table data from API response
   // Helper: Get table data from API response
@@ -153,12 +155,8 @@ const UserLeaveSearchResult = () => {
     setIsEnableFetching(true)
   }, [JSON.stringify([columnFilters, sorting, pagination])])
 
-  // Trigger search when isEnableFetching is true
-  useEffect(() => {
-    if (isEnableFetching) {
-      refetch()
-    }
-  }, [isEnableFetching, refetch])
+  // Note: Removed manual refetch useEffect - now using enabled option in useQuery
+  // When isEnableFetching is true and params change, the query will automatically re-fetch
 
   // Mutations
   const updateMutation = useUpdateUserLeave(
