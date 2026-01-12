@@ -25,7 +25,10 @@ import type { FormDataPage } from '../validationSchema'
 import type { LeaveRecord } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
 import SubordinateTableApprover from './components/SubordinateTableApprover'
 import SubordinateLeaveFileColumn from './components/SubordinateLeaveFileColumn'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 function SubordinateSearchResult() {
+  const { t } = useTranslation()
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue, watch } = useFormContext<FormDataPage>()
@@ -91,18 +94,18 @@ function SubordinateSearchResult() {
     () => [
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
-        header: 'Status',
+        header: t('Status'),
         size: 120,
         enableSorting: false,
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ row }) => {
           const status = row.original.LEAVE_REQUEST_STATUS
           const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            '0': { label: 'Pending', color: 'warning' },
-            '1': { label: 'Approved', color: 'success' },
-            '2': { label: 'Rejected', color: 'error' }
+            '0': { label: t('Pending'), color: 'warning' },
+            '1': { label: t('Approved'), color: 'success' },
+            '2': { label: t('Rejected'), color: 'error' }
           }
-          const config = statusConfig[String(status)] || { label: 'Pending', color: 'warning' }
+          const config = statusConfig[String(status)] || { label: t('Pending'), color: 'warning' }
           return (
             <Chip
               variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
@@ -115,7 +118,7 @@ function SubordinateSearchResult() {
       },
       {
         accessorKey: 'APPROVER',
-        header: 'Approval',
+        header: t('Approval'),
         size: 200,
         enableSorting: false,
         muiTableBodyCellProps: { align: 'center' },
@@ -123,7 +126,7 @@ function SubordinateSearchResult() {
       },
       {
         accessorKey: 'LEAVE_REQUEST_FILE_UPLOAD_NAME',
-        header: 'File Upload',
+        header: t('File Upload'),
         size: 230,
         enableSorting: false,
         muiTableBodyCellProps: { align: 'center' },
@@ -138,12 +141,12 @@ function SubordinateSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'Employee CODE',
+        header: t('Employee Code'),
         size: 130
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
-        header: 'Employee Name',
+        header: t('Employee Name'),
         size: 180,
         Cell: ({ row }) => {
           const name = `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`
@@ -152,26 +155,26 @@ function SubordinateSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'Section',
+        header: t('Section'),
         size: 130,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
-        header: 'Leave Type',
+        header: t('Leave Type'),
         size: 150,
         enableSorting: false,
         Cell: ({ row }) => row.original.LEAVE_TYPE_DESCRIPTION_TH || row.original.LEAVE_TYPE_DESCRIPTION_EN || '-'
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'Request Leave Date',
+        header: t('Request Leave Date'),
         size: 180,
         Cell: ({ row }) => row.original.CREATE_DATE || '-'
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
-        header: 'Leave Date',
+        header: t('Leave Date'),
         size: 220,
         enableSorting: false,
         Cell: ({ row }) => {
@@ -179,51 +182,51 @@ function SubordinateSearchResult() {
           const endDate = row.original.LEAVE_REQUEST_END_DATE
           const start = startDate ? dayjs(startDate).format('DD-MMM-YYYY') : '-'
           const end = endDate ? dayjs(endDate).format('DD-MMM-YYYY') : '-'
-          return `${start} to ${end}`
+          return `${start} ${t('to')} ${end}`
         }
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'Time',
+        header: t('Time'),
         size: 130,
         enableSorting: false,
         Cell: ({ row }) => row.original.LEAVE_REQUEST_TIME || '-'
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: 'Total Day',
+        header: t('Total Day'),
         size: 100,
         enableSorting: false,
         muiTableBodyCellProps: { align: 'center' }
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: 'Reason',
+        header: t('Reason'),
         size: 180,
         enableSorting: false,
         Cell: ({ row }) => row.original.LEAVE_REQUEST_REASON || '-'
       },
       {
         accessorKey: 'LEAVE_REQUEST_REMARK',
-        header: 'Remark',
+        header: t('Remark'),
         size: 180,
         enableSorting: false,
         Cell: ({ row }) => row.original.LEAVE_REQUEST_REMARK || '-'
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: 'Update Date',
+        header: t('Update Date'),
         size: 180,
         Cell: ({ row }) => row.original.UPDATE_DATE || '-'
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'Update By',
+        header: t('Update By'),
         size: 120,
         Cell: ({ row }) => row.original.UPDATE_BY || '-'
       }
     ],
-    [settings.mode]
+    [settings.mode, t]
   )
   const isFirstRender = useRef(true)
   useEffect(() => {
@@ -256,7 +259,7 @@ function SubordinateSearchResult() {
 
   return (
     <Card>
-      <CardHeader title='Search result' />
+      <CardHeader title={t('Search result')} />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DxMRTTable
           enableRowActions={false}

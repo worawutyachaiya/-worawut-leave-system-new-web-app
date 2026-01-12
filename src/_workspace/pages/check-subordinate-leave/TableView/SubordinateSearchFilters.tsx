@@ -99,7 +99,7 @@ function SubordinateSearchFilters() {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label={t('Employee CODE')}
+                    label={t('Employee Code')}
                     placeholder={t('Enter employee code')}
                     autoComplete='off'
                   />

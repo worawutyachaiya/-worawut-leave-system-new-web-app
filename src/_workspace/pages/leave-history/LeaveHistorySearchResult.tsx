@@ -111,7 +111,7 @@ function SearchResult() {
     () => [
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
-        header: 'Status',
+        header: t('Status'),
         size: 155,
         Cell: ({ cell, row }) => {
           if (row.original.INUSE === 0 || row.original.INUSE === '0') {
@@ -119,16 +119,16 @@ function SearchResult() {
               <Chip
                 variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
                 size='small'
-                label='Cancelled'
+                label={t('Cancelled')}
                 color='error'
               />
             )
           }
           const status = cell.getValue<string>()
           const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            0: { label: 'Pending', color: 'warning' },
-            1: { label: 'Approved', color: 'success' },
-            2: { label: 'Rejected', color: 'error' }
+            0: { label: t('Pending'), color: 'warning' },
+            1: { label: t('Approved'), color: 'success' },
+            2: { label: t('Rejected'), color: 'error' }
           }
           const config = statusConfig[status] || { label: status || '-', color: 'warning' }
           return (
@@ -143,7 +143,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'APPROVER',
-        header: 'Approval',
+        header: t('Approval'),
         size: 150,
         enableSorting: false,
         Cell: ({ row }) => {
@@ -152,7 +152,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'LEAVE_REQUEST_FILE_UPLOAD_PATH',
-        header: 'Attachment',
+        header: t('Attachment'),
         size: 175,
         enableSorting: false,
         muiTableBodyCellProps: {
@@ -171,17 +171,17 @@ function SearchResult() {
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: 'Leave Code',
+        header: t('Leave Code'),
         size: 185
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
-        header: 'Leave Type',
+        header: t('Leave Type'),
         size: 185
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'Request Date',
+        header: t('Request Date'),
         size: 205,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -190,36 +190,36 @@ function SearchResult() {
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
-        header: 'Leave Date',
+        header: t('Leave Date'),
         size: 180,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'Time',
+        header: t('Time'),
         size: 150,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: 'Total Day',
+        header: t('Total Day'),
         size: 185
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: 'Reason',
+        header: t('Reason'),
         size: 200,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_REMARK',
-        header: 'Remark',
+        header: t('Remark'),
         size: 200,
         enableSorting: false
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: 'Update Date',
+        header: t('Update Date'),
         size: 195,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -228,11 +228,11 @@ function SearchResult() {
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'Update By',
+        header: t('Update By'),
         size: 180
       }
     ],
-    [settings.mode]
+    [settings.mode, t]
   )
   const isFirstRender = useRef(true)
   useEffect(() => {

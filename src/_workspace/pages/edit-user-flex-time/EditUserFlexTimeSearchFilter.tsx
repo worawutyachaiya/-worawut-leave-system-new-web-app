@@ -114,7 +114,7 @@ function EditUserFlexTimeSearchFilter() {
                     <CustomTextField
                       {...field}
                       fullWidth
-                      label={t('Employee CODE')}
+                      label={t('Employee Code')}
                       placeholder={t('Enter employee code')}
                       value={field.value || ''}
                     />

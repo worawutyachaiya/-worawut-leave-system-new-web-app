@@ -28,7 +28,10 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { FormDataPage } from './validationSchema'
 import { MENU_ID } from './env'
 import { LeaveAlRemainInterface } from '@/_workspace/types/leave-employee-information/LeaveEmployeeInformationInterface'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 function SearchResult() {
+  const { t } = useTranslation()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue } = useFormContext<FormDataPage>()
   const { settings } = useSettings()
@@ -96,23 +99,23 @@ function SearchResult() {
     () => [
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE',
+        header: t('Employee Code'),
         size: 220
       },
       {
         id: 'EMPLOYEE_FULL_NAME',
-        header: 'EMPLOYEE NAME',
+        header: t('Employee Name'),
         accessorFn: row => `${row.EMPLOYEE_NAME || ''}${row.EMPLOYEE_SURNAME ? ' ' + row.EMPLOYEE_SURNAME : ''}`,
         size: 350
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION',
+        header: t('Section'),
         size: 200
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
-        header: 'START WORK',
+        header: t('Start Work'),
         size: 250,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -121,7 +124,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'REMAIN_AL',
-        header: 'AL AVAILABLE',
+        header: t('AL Available'),
         size: 250,
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ cell }) => {
@@ -131,7 +134,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'REMAIN_AL_EMERGENCY',
-        header: 'AL EMERGENCY REMAINING',
+        header: t('AL Emergency Remaining'),
         size: 300,
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ cell }) => {
@@ -140,7 +143,7 @@ function SearchResult() {
         }
       }
     ],
-    [settings.mode]
+    [settings.mode, t]
   )
   const isFirstRender = useRef(true)
   useEffect(() => {
@@ -170,9 +173,7 @@ function SearchResult() {
   return (
     <>
       <Card>
-        <CardHeader
-          title='Leave AL Remain Result'
-        />
+        <CardHeader title={t('Leave AL Remain Result')} />
         {/* Modal Area (ถ้ามี) */}
         {/* {openModalAdd && <LeaveHistoryModal openModal={openModalAdd} setOpenModal={setOpenModalAdd} mode='Add' />} */}
         <LocalizationProvider dateAdapter={AdapterDayjs}>
