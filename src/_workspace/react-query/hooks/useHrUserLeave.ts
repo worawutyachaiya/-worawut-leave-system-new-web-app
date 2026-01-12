@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { keepPreviousData, useQuery, useMutation } from '@tanstack/react-query'
 import UserLeaveService from '@/_workspace/services/hr-user-leave/UserLeaveService'
 import type AxiosResponseI from '@/libs/axios/types/AxiosResponseInterface'
 import type { UserLeaveInterface } from '@/_workspace/types/hr-user-leave/HrUserLeave'
@@ -10,11 +10,12 @@ import type {
 
 export const PREFIX_QUERY_KEY = 'hr-user-leave'
 
-export const useSearchUserLeave = (params: SearchUserLeaveParams) => {
+export const useSearchUserLeave = (params: SearchUserLeaveParams, enabled: boolean = false) => {
   return useQuery<AxiosResponseI<any[]>>({
-    queryKey: [PREFIX_QUERY_KEY, 'search', params],
+    queryKey: [PREFIX_QUERY_KEY, params],
     queryFn: () => UserLeaveService.searchUserLeave(params),
-    enabled: false
+    placeholderData: keepPreviousData,
+    enabled
   })
 }
 

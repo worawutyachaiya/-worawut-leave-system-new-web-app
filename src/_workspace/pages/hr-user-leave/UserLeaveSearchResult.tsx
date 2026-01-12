@@ -26,7 +26,11 @@ import type {
 import { useFormContext, useWatch } from 'react-hook-form'
 
 // React Query
-import { useSearchUserLeave, useUpdateUserLeave, useDeleteUserLeave } from '@/_workspace/react-query/hooks/useHrUserLeave'
+import {
+  useSearchUserLeave,
+  useUpdateUserLeave,
+  useDeleteUserLeave
+} from '@/_workspace/react-query/hooks/useHrUserLeave'
 import { useQueryClient } from '@tanstack/react-query'
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrUserLeave'
 import { toast } from 'react-toastify'
@@ -65,15 +69,11 @@ const UserLeaveSearchResult = () => {
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>(
     () => getValues('searchResults.columnPinning') || {}
   )
-  const [density, setDensity] = useState<MRT_DensityState>(
-    () => getValues('searchResults.density') || 'comfortable'
-  )
+  const [density, setDensity] = useState<MRT_DensityState>(() => getValues('searchResults.density') || 'comfortable')
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     () => getValues('searchResults.columnFilters') || []
   )
-  const [sorting, setSorting] = useState<MRT_SortingState>(
-    () => getValues('searchResults.sorting') || []
-  )
+  const [sorting, setSorting] = useState<MRT_SortingState>(() => getValues('searchResults.sorting') || [])
   const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>(
     () => getValues('searchResults.columnFilterFns') || {}
   )
@@ -94,8 +94,6 @@ const UserLeaveSearchResult = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [selectedLeave, setSelectedLeave] = useState<UserLeaveInterface | null>(null)
 
-
-
   const queryClient = useQueryClient()
 
   // Build search params using getValues
@@ -108,15 +106,10 @@ const UserLeaveSearchResult = () => {
     Order: sorting.length > 0 ? sorting : undefined
   }
 
-  // React Query
-  const {
-    data,
-    error,
-    isPending,
-    isFetching,
-    isRefetching,
-    refetch
-  } = useSearchUserLeave(paramForSearch)
+  const { data, error, isPending, isFetching, isRefetching, refetch } = useSearchUserLeave(
+    paramForSearch,
+    isEnableFetching
+  )
 
   // Helper: Get table data from API response
   // Helper: Get table data from API response
@@ -162,16 +155,12 @@ const UserLeaveSearchResult = () => {
     setIsEnableFetching(true)
   }, [JSON.stringify([columnFilters, sorting, pagination])])
 
-  // Trigger search when isEnableFetching is true
-  useEffect(() => {
-    if (isEnableFetching) {
-      refetch()
-    }
-  }, [isEnableFetching, refetch])
+  // Note: Removed manual refetch useEffect - now using enabled option in useQuery
+  // When isEnableFetching is true and params change, the query will automatically re-fetch
 
   // Mutations
   const updateMutation = useUpdateUserLeave(
-    (data) => {
+    data => {
       // Success
       queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
       setEditModalOpen(false)
@@ -179,7 +168,7 @@ const UserLeaveSearchResult = () => {
       refetch()
       toast.success('Update leave successfully')
     },
-    (error) => {
+    error => {
       // Error
       console.error('Update failed:', error)
       toast.error('Failed to update leave. Please try again.')
@@ -187,7 +176,7 @@ const UserLeaveSearchResult = () => {
   )
 
   const deleteMutation = useDeleteUserLeave(
-    (data) => {
+    data => {
       // Success
       queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
       setDeleteModalOpen(false)
@@ -195,7 +184,7 @@ const UserLeaveSearchResult = () => {
       refetch()
       toast.success('Delete leave successfully')
     },
-    (error) => {
+    error => {
       // Error
       console.error('Delete failed:', error)
       toast.error('Failed to delete leave. Please try again.')
@@ -286,8 +275,8 @@ const UserLeaveSearchResult = () => {
         Cell: ({ row }) => {
           const status = row.original?.STATUS || ''
           const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            'Use': { label: 'Use', color: 'success' },
-            'Cancel': { label: 'Cancel', color: 'error' }
+            Use: { label: 'Use', color: 'success' },
+            Cancel: { label: 'Cancel', color: 'error' }
           }
           const config = statusConfig[status] || { label: status || '-', color: 'warning' }
           return <Chip label={config.label} color={config.color} size='small' variant='filled' />
@@ -410,10 +399,8 @@ const UserLeaveSearchResult = () => {
         <DxMRTTable
           columns={columns}
           enableRowActions={true}
-          positionActionsColumn="first"
-          renderRowActions={({ row }) => (
-            <ActionsMenu row={row} onEdit={handleEdit} onDelete={handleDelete} />
-          )}
+          positionActionsColumn='first'
+          renderRowActions={({ row }) => <ActionsMenu row={row} onEdit={handleEdit} onDelete={handleDelete} />}
           displayColumnDefOptions={{
             'mrt-row-actions': {
               muiTableHeadCellProps: { align: 'center' },
@@ -435,7 +422,6 @@ const UserLeaveSearchResult = () => {
           onColumnOrderChange={setColumnOrder}
           state={{
             columnFilters,
-            isLoading: isPending,
             pagination,
             showAlertBanner: isError,
             showProgressBars: isRefetching,
@@ -471,7 +457,6 @@ const UserLeaveSearchResult = () => {
         selectedLeave={selectedLeave}
         onConfirm={handleConfirmDelete}
       />
-
     </Card>
   )
 }
