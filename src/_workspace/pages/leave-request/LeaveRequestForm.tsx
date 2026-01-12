@@ -787,7 +787,7 @@ function LeaveRequestForm() {
                         )}
                         classNamePrefix='select'
                         label={t('Leave Type')}
-                        placeholder='Select Leave Type'
+                        placeholder={t('Select Leave Type')}
                         error={!!error}
                         helperText={error?.message}
                       />
@@ -836,7 +836,7 @@ function LeaveRequestForm() {
                             label={`${t('Start Date')}${currentMaxDay > 0 ? ` (ลาได้สูงสุด ${currentMaxDay} วัน)` : ''}`}
                             fullWidth
                             error={!!error}
-                            helperText={error?.message || (!watchLeaveType ? 'กรุณาเลือกประเภทการลาก่อน' : '')}
+                            helperText={error?.message || (!watchLeaveType ? t('Please Select Leave Type First') : '')}
                           />
                         }
                         // onChange={(value) => {
@@ -873,7 +873,7 @@ function LeaveRequestForm() {
                             label={t('End Date')}
                             fullWidth
                             error={!!error}
-                            helperText={error?.message || (!watchStartDate ? 'กรุณาเลือกวันเริ่มต้นก่อน' : '')}
+                            helperText={error?.message || (!watchStartDate ? t('Please Select Start Date First') : '')}
                           />
                         }
                       />
@@ -1007,14 +1007,14 @@ function LeaveRequestForm() {
                                 <CloudUploadIcon sx={{ color: 'white' }} />
                               </Avatar>
                               <Typography variant='h6' sx={{ mb: 1 }}>
-                                {isDragActive ? 'Drop file here' : 'Drag & drop file here, or click to select'}
+                                {isDragActive ? t('Drop file here') : t('Drag & drop file here, or click to select')}
                               </Typography>
                               <Typography color='text.secondary'>
                                 {t('Supported: Max')}{' '}
                                 <Typography component='span' color='primary' sx={{ cursor: 'pointer' }}>
                                   {t('5 MB')}
                                 </Typography>{' '}
-                                {t('per file.')}
+                                {t('per file')}
                               </Typography>
                             </div>
                           </Card>

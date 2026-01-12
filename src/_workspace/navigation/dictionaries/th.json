@@ -121,15 +121,22 @@
   "Reason (Optional)": "เหตุผล (ไม่จำเป็น)",
   "Remark (Optional)": "หมายเหตุ (ไม่จำเป็น)",
   "Leave Attachment (Optional)": "เอกสารแนบ (ไม่จำเป็น)",
+  "Drop file here": "วางไฟล์ที่นี้",
+  "Drag & drop file here, or click to select": "ลากและวางไฟล์ที่นี้หรือคลิกเพื่อเลือกไฟล์",
+  "Supported: Max":"รองรับ: สูงสุด",
+  "per file":"ต่อไฟล์",
 
   "Times": "ครั้ง",
   "Null": "ไม่มีข้อมูล",
 
-  "Please select leave type first": "กรุณาเลือกประเภทการลาก่อน",
+  "Please Select Leave Type First":"กรุณาเลือกประเภทการลาก่อน",
+  "Select Leave Type": "เลือกประเภทการลา",
   "Please choose a valid date and time": "โปรดเลือกวันที่และเวลาให้ถูกต้อง",
   "Confirm leave request": "ยืนยันการสร้างคำขอลาหรือไม่?",
   "Request submitted successfully": "ส่งคำขอสำเร็จ",
   "Leave request created": "สร้างคำขอลาสำเร็จ",
+
+  "Please Select Start Date First": "กรุณาเลือกวันเริ่มต้นก่อน",
 
   "Leave History Result": "ผลการค้นหาประวัติการลา",
   "Attachment": "เอกสารแนบ",

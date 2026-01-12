@@ -121,15 +121,22 @@
   "Reason (Optional)": "Reason (Optional)",
   "Remark (Optional)": "Remark (Optional)",
   "Leave Attachment (Optional)": "Leave Attachment (Optional)",
+  "Drop file here": "Drop file here",
+  "Drag & drop file here, or click to select": "Drag & drop file here, or click to select",
+  "Supported: Max": "Supported: Max",
+  "per file":"per file.",
 
   "Times": "Times",
   "Null": "Null",
 
-  "Please select leave type first": "Please select leave type first",
+  "Please Select Leave Type First": "Please Select Leave Type First",
+  "Select Leave Type": "Select Leave Type",
   "Please choose a valid date and time": "Please choose a valid date and time",
   "Confirm leave request": "Confirm leave request?",
   "Request submitted successfully": "Request submitted successfully",
   "Leave request created": "Leave request created",
+
+  "Please Select Start Date First": "Please Select Start Date First",
 
   "Leave History Result": "Leave History Result",
   "Attachment": "Attachment",
