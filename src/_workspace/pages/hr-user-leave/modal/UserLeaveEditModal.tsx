@@ -42,7 +42,10 @@ import { fetchLeaveTypeAll } from '@/_workspace/react-select/async-promise-load-
 import { useLeaveTypeMaxDay } from '@/_workspace/react-query/hooks/useLeaveTypeMaxDay'
 import { useLeaveHolidayCompany } from '@/_workspace/react-query/hooks/useLeaveHolidayCompany'
 import { useSearchFlexTimeBySpecificDate } from '@/_workspace/react-query/hooks/useFlexTime'
-import { useLeaveEmployeeBalance, getRemainDayByLeaveType } from '@/_workspace/react-query/hooks/useLeaveEmployeeBalance'
+import {
+  useLeaveEmployeeBalance,
+  getRemainDayByLeaveType
+} from '@/_workspace/react-query/hooks/useLeaveEmployeeBalance'
 
 // Local Imports
 import { getImgLeaveType } from '@/_workspace/pages/leave-history/leave-history-function/ImgLeaveType'
@@ -147,9 +150,9 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
       reset({
         leaveType: selectedLeave.LEAVE_TYPE_ID
           ? {
-            value: selectedLeave.LEAVE_TYPE_ID,
-            label: selectedLeave.LEAVE_TYPE_DESCRIPTION_TH || selectedLeave.LEAVE_TYPE || ''
-          }
+              value: selectedLeave.LEAVE_TYPE_ID,
+              label: selectedLeave.LEAVE_TYPE_DESCRIPTION_TH || selectedLeave.LEAVE_TYPE || ''
+            }
           : undefined,
         startDate: selectedLeave.LEAVE_REQUEST_START_DATE
           ? dayjs(selectedLeave.LEAVE_REQUEST_START_DATE).format('YYYY-MM-DD')
@@ -169,7 +172,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
   const employeeCode = selectedLeave?.EMPLOYEE_CODE || selectedLeave?.EMPLOYEE_ID || ''
   const { data: flexDateData } = useSearchFlexTimeBySpecificDate(
     { EMPLOYEE_CODE: employeeCode, START_DATE: watchStartDate, END_DATE: watchEndDate },
-    !!employeeCode && !!watchStartDate && !!watchEndDate  // Must have END_DATE too!
+    !!employeeCode && !!watchStartDate && !!watchEndDate // Must have END_DATE too!
   )
 
   const companyHolidays: Date[] = holidayCompanyData?.data?.ResultOnDb?.map((h: any) => new Date(h.day_holiday)) || []
@@ -259,7 +262,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
   }
 
   // Effect: Reset End Date & Time when Leave Type changes (if manually changed)
-  // Note: We might not want to aggressively reset if we are just loading initial data, 
+  // Note: We might not want to aggressively reset if we are just loading initial data,
   // but for editing, if user changes leave type, we probably should.
   // We'll trust the user interaction here.
 
@@ -290,11 +293,21 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
   }
 
   // Comparison helpers
-  const hasLeaveTypeChanged = !!watchLeaveType?.value && String(watchLeaveType.value) !== String(selectedLeave?.LEAVE_TYPE_ID)
-  const hasStartDateChanged = !!watchStartDate && !!selectedLeave?.LEAVE_REQUEST_START_DATE && watchStartDate !== dayjs(selectedLeave.LEAVE_REQUEST_START_DATE).format('YYYY-MM-DD')
-  const hasEndDateChanged = !!watchEndDate && !!selectedLeave?.LEAVE_REQUEST_END_DATE && watchEndDate !== dayjs(selectedLeave.LEAVE_REQUEST_END_DATE).format('YYYY-MM-DD')
-  const hasTimeChanged = !!watchTime?.value && watchTime.value !== (selectedLeave?.LEAVE_REQUEST_TIME || selectedLeave?.TIME)
-  const hasTotalDayChanged = !!watchTotalLeaveDay && String(watchTotalLeaveDay) !== String(selectedLeave?.LEAVE_REQUEST_TOTAL_DAY || selectedLeave?.TOTAL_DAY_LEAVE)
+  const hasLeaveTypeChanged =
+    !!watchLeaveType?.value && String(watchLeaveType.value) !== String(selectedLeave?.LEAVE_TYPE_ID)
+  const hasStartDateChanged =
+    !!watchStartDate &&
+    !!selectedLeave?.LEAVE_REQUEST_START_DATE &&
+    watchStartDate !== dayjs(selectedLeave.LEAVE_REQUEST_START_DATE).format('YYYY-MM-DD')
+  const hasEndDateChanged =
+    !!watchEndDate &&
+    !!selectedLeave?.LEAVE_REQUEST_END_DATE &&
+    watchEndDate !== dayjs(selectedLeave.LEAVE_REQUEST_END_DATE).format('YYYY-MM-DD')
+  const hasTimeChanged =
+    !!watchTime?.value && watchTime.value !== (selectedLeave?.LEAVE_REQUEST_TIME || selectedLeave?.TIME)
+  const hasTotalDayChanged =
+    !!watchTotalLeaveDay &&
+    String(watchTotalLeaveDay) !== String(selectedLeave?.LEAVE_REQUEST_TOTAL_DAY || selectedLeave?.TOTAL_DAY_LEAVE)
   const hasReasonChanged = watchReason !== (selectedLeave?.LEAVE_REQUEST_REASON || selectedLeave?.REASON || '')
 
   const renderCompareValue = (oldValue: string, newValue: string | undefined, hasChanged: boolean) => {
@@ -404,7 +417,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Employee ID
+                    Employee Code
                   </Typography>
                   <Typography variant='body1'>{selectedLeave.EMPLOYEE_CODE || selectedLeave.EMPLOYEE_ID}</Typography>
                 </Box>
@@ -423,7 +436,10 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                     Leave Type
                   </Typography>
                   {renderCompareValue(
-                    selectedLeave.LEAVE_TYPE_DESCRIPTION_TH || selectedLeave.LEAVE_TYPE_DESCRIPTION_EN || selectedLeave.LEAVE_TYPE || '-',
+                    selectedLeave.LEAVE_TYPE_DESCRIPTION_TH ||
+                      selectedLeave.LEAVE_TYPE_DESCRIPTION_EN ||
+                      selectedLeave.LEAVE_TYPE ||
+                      '-',
                     watchLeaveType?.label,
                     hasLeaveTypeChanged
                   )}
@@ -436,7 +452,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                   {renderCompareValue(
                     selectedLeave.LEAVE_REQUEST_START_DATE
                       ? new Date(selectedLeave.LEAVE_REQUEST_START_DATE).toLocaleDateString('th-TH')
-                      : (selectedLeave.LEAVE_DATE || '-'),
+                      : selectedLeave.LEAVE_DATE || '-',
                     watchStartDate ? new Date(watchStartDate).toLocaleDateString('th-TH') : undefined,
                     hasStartDateChanged
                   )}
@@ -510,7 +526,9 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                         formatOptionLabel={(data: any) => (
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <div>{getImgLeaveType(Number(data.value || data.LEAVE_TYPE_ID))}</div>
-                            <span>{data.label || `${data.LEAVE_TYPE_DESCRIPTION_EN} / ${data.LEAVE_TYPE_DESCRIPTION_TH}`}</span>
+                            <span>
+                              {data.label || `${data.LEAVE_TYPE_DESCRIPTION_EN} / ${data.LEAVE_TYPE_DESCRIPTION_TH}`}
+                            </span>
                           </div>
                         )}
                         onChange={(val: any) => {
@@ -542,7 +560,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                         onChange={(date: Date | null) => {
                           const dateStr = date ? dayjs(date).format('YYYY-MM-DD') : ''
                           onChange(dateStr)
-                          // Reset endDate and time when start date changes 
+                          // Reset endDate and time when start date changes
                           setValue('endDate', '')
                         }}
                         placeholderText='Select Start Date'
@@ -681,23 +699,14 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
           <Button onClick={handleClose} variant='outlined' color='secondary'>
             Cancel
           </Button>
-          <Button
-            type='button'
-            onClick={handleSave}
-            variant='contained'
-            color='primary'
-          >
+          <Button type='button' onClick={handleSave} variant='contained' color='primary'>
             Save
           </Button>
         </DialogActions>
       </Dialog>
 
       {/* Confirm Modal */}
-      <ConfirmModal
-        open={showConfirmModal}
-        onClose={handleCancelConfirm}
-        onConfirm={handleConfirm}
-      />
+      <ConfirmModal open={showConfirmModal} onClose={handleCancelConfirm} onConfirm={handleConfirm} />
     </>
   )
 }

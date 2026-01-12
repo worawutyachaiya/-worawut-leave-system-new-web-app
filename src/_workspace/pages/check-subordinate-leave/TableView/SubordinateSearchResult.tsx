@@ -138,7 +138,7 @@ function SubordinateSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'Employee ID',
+        header: 'Employee CODE',
         size: 130
       },
       {

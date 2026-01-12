@@ -119,7 +119,7 @@ function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, han
         <CardContent>
           <Box sx={{ mb: 4 }}>
             <Typography variant='body2' sx={{ mb: 1 }}>
-              {t('Employee ID')}
+              {t('Employee Code')}
             </Typography>
             <Controller
               name='searchFilters.employeeCode'
@@ -132,7 +132,7 @@ function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, han
                   loadOptions={loadEmployeeOptions}
                   getOptionLabel={(option: EmployeeOptionType) => option.EMPLOYEE_ID}
                   getOptionValue={(option: EmployeeOptionType) => option.EMPLOYEE_ID}
-                  placeholder={t('Select employee id')}
+                  placeholder={t('Select Employee Code')}
                   isClearable
                   cacheOptions
                   defaultOptions

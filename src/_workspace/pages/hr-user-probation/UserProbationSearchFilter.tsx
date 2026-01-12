@@ -1,41 +1,33 @@
 // React Imports
 import { useState } from 'react'
 
-
 // MUI Imports
 import { Button, Card, CardContent, CardHeader, Grid, Collapse, IconButton, CircularProgress } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
-
 // React Hook Form Imports
 import { Controller, useFormContext } from 'react-hook-form'
-
 
 // React Query
 import { useQueryClient } from '@tanstack/react-query'
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrSearchProbation'
 
-
 // libs Imports
 import { useCreate } from '@libs/react-query/hooks/common-system/useUserProfileSettingProgram'
 import { getUserData } from '@utils/user-profile/userLoginProfile'
 
-
 // _template Imports
 import { useDxContext } from '@/_template/DxContextProvider'
-
 
 // Components Imports
 import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
 import CustomTextField from '@/components/mui/TextField'
 import SelectCustom from '@/components/react-select/SelectCustom'
 
-
 // Async Load Options
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
 import { fetchSection } from '@/_workspace/react-select/async-promise-load-options/fetchSection'
-
 
 // Types
 import { FormDataPage, statusOptions } from './validationSchema'
@@ -75,10 +67,8 @@ const UserProbationSearchFilter = () => {
     mutate(dataItem)
   }
 
-  const onMutateSuccess = () => { }
-  const onMutateError = (e: any) => {
-
-  }
+  const onMutateSuccess = () => {}
+  const onMutateError = (e: any) => {}
 
   const { mutate } = useCreate(onMutateSuccess, onMutateError)
 
@@ -115,7 +105,7 @@ const UserProbationSearchFilter = () => {
       <Collapse in={collapse} timeout='auto' unmountOnExit>
         <CardContent>
           <Grid container spacing={4}>
-            {/*------------ Employee ID ------------------*/}
+            {/*------------ Employee Code ------------------*/}
             <Grid item xs={12} md={3}>
               <Controller
                 name='searchFilters.employeeCode'
@@ -123,7 +113,7 @@ const UserProbationSearchFilter = () => {
                 render={({ field }) => (
                   <AsyncSelectCustom
                     {...field}
-                    label={('Employee CODE')}
+                    label={'Employee CODE'}
                     isClearable
                     cacheOptions
                     defaultOptions
@@ -133,7 +123,7 @@ const UserProbationSearchFilter = () => {
                     }}
                     getOptionLabel={(option: any) => option.EMPLOYEE_CODE || ''}
                     getOptionValue={(option: any) => option.EMPLOYEE_CODE || ''}
-                    placeholder={('Enter employee code')}
+                    placeholder={'Enter employee code'}
                     classNamePrefix='select'
                   />
                 )}
@@ -204,7 +194,6 @@ const UserProbationSearchFilter = () => {
                 )}
               />
             </Grid>
-
 
             {/*------------ Buttons ------------------*/}
             <Grid item xs={12} sx={{ display: 'flex', gap: 2 }}>

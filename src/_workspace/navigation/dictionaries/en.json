@@ -23,10 +23,10 @@
   "Search filters": "Search filters",
   "Employee Code": "Employee Code",
   "Employee Name": "Employee Name",
-  "Employee ID": "Employee ID",
+  "Employee Code": "Employee Code",
   "Enter employee code": "Enter employee code",
   "Enter employee name": "Enter employee name",
-  "Enter employee id": "Enter employee id",
+  "Enter Employee Code": "Enter Employee Code",
   "Section": "Section",
   "Select Section": "Select Section",
   "Enter section": "Enter section",
@@ -69,13 +69,13 @@
   "Update Date": "Update Date",
   "Update By": "Update By",
   "Approve Status": "Approve Status",
-  
+
   "Employee Information": "Employee Information",
   "Organization Information": "Organization Information",
   "User Info": "User Info",
   "Working Experience": "Working Experience",
   "Leave Information": "Leave Information",
-  
+
   "Position": "Position",
   "Position Code": "Position Code",
   "Department": "Department",
@@ -84,7 +84,7 @@
   "Start Work": "Start Work",
   "Experience": "Experience",
   "Name": "Name",
-  
+
   "Annual Leave Emergency Remaining": "Annual Leave Emergency Remaining",
   "Annual Leave Emergency": "Annual Leave Emergency",
   "Business Leave Remaining": "Business Leave Remaining",
@@ -105,7 +105,7 @@
   "Work from home": "Work from home",
   "Vaccine Covid Leave": "Vaccine Covid Leave",
   "No Leave": "No Leave",
-  
+
   "Select Leave Type": "Select Leave Type",
   "Select leave time": "Select leave time",
   "Select Date": "Select Date",
@@ -114,17 +114,17 @@
   "Half Day Afternoon": "Half Day Afternoon",
   "Morning": "Morning",
   "Afternoon": "Afternoon",
-  
+
   "Total Days": "Total Days",
   "Calculating": "Calculating...",
   "Optional": "Optional",
   "Reason (Optional)": "Reason (Optional)",
   "Remark (Optional)": "Remark (Optional)",
   "Leave Attachment (Optional)": "Leave Attachment (Optional)",
-  
+
   "Times": "Times",
   "Null": "Null",
-  
+
   "Please select leave type first": "Please select leave type first",
   "Please choose a valid date and time": "Please choose a valid date and time",
   "Confirm leave request": "Confirm leave request?",
@@ -387,10 +387,10 @@
       "Search": "Search",
       "Searching": "Searching...",
       "Clear": "Clear",
-      "Employee Id": "Employee ID",
+      "Employee Code": "Employee Code",
       "Employee Name": "Employee Name",
       "Section": "Section",
-      "Enter employee id": "Enter employee id",
+      "Enter Employee Code": "Enter Employee Code",
       "Enter employee name": "Enter employee name",
       "Enter employee section": "Enter employee section",
       "Start Date": "Start Date",
@@ -466,7 +466,7 @@
       "Row Selected": "Row Selected",
       "Approve": "Approve",
       "Reject": "Reject",
-      "Employee Id": "Employee Id",
+      "Employee Code": "Employee Code",
       "Employee Code": "Employee Code",
       "Employee Name": "Employee Name",
       "Section": "Section",
@@ -577,7 +577,7 @@
       "Leave Type Name": "Leave Type Name",
       "Leave Request Selected": "Leave Request Selected",
       "Flex Time Request Selected": "Flex Time Request Selected",
-      "Employee Id": "Employee ID",
+      "Employee Code": "Employee Code",
       "Employee Name": "Employee Name",
       "Leave Type": "Leave Type",
       "Start Date": "Start Date",
@@ -602,7 +602,7 @@
       "Remain Leave": "Remain Leave",
       "Please enter Remain Leave": "Please enter Remain Leave",
       "Please enter numbers or decimal": "Please enter numbers (ex. 1,2,3) or decimal (ex. 0.125 , 0.458 , 25.456) only.",
-      "Employee ID": "Employee ID",
+      "Employee Code": "Employee Code",
       "Edit Pass Pro": "Edit Pass Pro",
       "Employee Surname": "Surname",
       "Start work date": "Start Work Date",
@@ -680,8 +680,8 @@
         "Submitting": "Submitting...",
         "Calculating": "Calculating...",
         "Clear": "Clear",
-        "Employee ID*": "Employee ID",
-        "Select employee id": "Select employee id",
+        "Employee Code*": "Employee Code",
+        "Select Employee Code": "Select Employee Code",
         "M.75 Form": "M.75 Form",
         "Days": "Days",
         "Birthday": "Birthday",

@@ -63,7 +63,7 @@ function RemainLeaveSearchFilter() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit, onError)}>
             <Grid container spacing={5}>
-              {/* ------------- Employee ID ------------------------------------------------------------- */}
+              {/* ------------- Employee Code ------------------------------------------------------------- */}
               <Grid item xs={12} sm={6} md={3}>
                 <Controller
                   name='searchFilters.employeeCode'
@@ -76,10 +76,10 @@ function RemainLeaveSearchFilter() {
                         cacheOptions
                         defaultOptions
                         key={`${watch('searchFilters.section')?.SECTION}`}
-                        placeholder={t('Enter employee id')}
-                        label={t('Employee ID')}
+                        placeholder={t('Enter Employee Code')}
+                        label={t('Employee Code')}
                         classNamePrefix='select'
-                        loadOptions={async (inputValue) => {
+                        loadOptions={async inputValue => {
                           const employees = await fetchAllEmployee({
                             EMPLOYEE_CODE: inputValue || '',
                             SECT_NAME: watch('searchFilters.section')?.SECTION || ''
@@ -150,9 +150,9 @@ function RemainLeaveSearchFilter() {
                         onChange={(value: any) => {
                           const mappedValue = value
                             ? {
-                              SECTION: value.SECT_NAME || value.SECTION || '',
-                              DEPARTMENT: value.DEPARTMENT || ''
-                            }
+                                SECTION: value.SECT_NAME || value.SECTION || '',
+                                DEPARTMENT: value.DEPARTMENT || ''
+                              }
                             : null
                           onChange(mappedValue)
                           setValue('searchFilters.employeeCode', null)

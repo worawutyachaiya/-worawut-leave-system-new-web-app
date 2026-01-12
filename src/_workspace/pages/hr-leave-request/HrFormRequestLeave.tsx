@@ -1,10 +1,8 @@
 // React Imports
 import { useState, useEffect, useMemo } from 'react'
 
-
 // Translation
 import { useTranslation } from '@/contexts/TranslationContext'
-
 
 // MUI Imports
 import {
@@ -26,20 +24,16 @@ import {
 } from '@mui/material'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
-
 // React Hook Form Imports
 import type { SubmitErrorHandler, SubmitHandler } from 'react-hook-form'
 import { Controller, useFormContext, useFormState } from 'react-hook-form'
 
-
 // React Query Imports
 import { useQueryClient } from '@tanstack/react-query'
-
 
 // Third-party Imports
 import { useDropzone } from 'react-dropzone'
 import dayjs from 'dayjs'
-
 
 // Hooks Imports
 import { useLeaveTypeMaxDay } from '@/_workspace/react-query/hooks/useLeaveTypeMaxDay'
@@ -55,12 +49,10 @@ import {
 import { useUploadLeaveFile } from '@/_workspace/react-query/hooks/useLeaveFile'
 import { useSearchFlexTimeBySpecificDate } from '@/_workspace/react-query/hooks/useFlexTime'
 
-
 // Fetch Imports
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
 import { fetchLeaveType } from '@/_workspace/react-select/async-promise-load-options/fetchLeaveType'
 import { fetchLeaveTypeAll } from '@/_workspace/react-select/async-promise-load-options/fetchLeaveTypeAll'
-
 
 // Components Imports
 import CustomTextField from '@/components/mui/TextField'
@@ -69,14 +61,12 @@ import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
 import LeaveRequestConfirmModal from '../leave-request/modal/LeaveRequestConfirmModal'
 import LeaveRequestSuccessModal, { MessageType } from '../leave-request/modal/LeaveRequestSuccessModal'
 
-
 // Types & Utils Imports
 import { FormDataPage } from './validationSchema'
 import { LEAVE_TYPE_IDS } from '@/_workspace/types/leave-employee-balance/LeaveEmployeeBalanceInterface'
 import { FileProp } from '@/_workspace/types/leave-file-prop/LeaveFilePropInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
-
 
 // Time Leave Options
 import {
@@ -114,7 +104,7 @@ function RequestLeaveFormHr() {
   // Watch employee selection
   const watchEmployeeId = watch('requestLeaveForm.EMPLOYEE_CODE')
 
-  // Update selected employee ID when form value changes
+  // Update selected Employee Code when form value changes
   useEffect(() => {
     if (watchEmployeeId?.EMPLOYEE_CODE) {
       setSelectedEmployeeId(watchEmployeeId.EMPLOYEE_CODE)
@@ -242,10 +232,8 @@ function RequestLeaveFormHr() {
     return oneDayTimeLeaveArr
   }
 
-
   // Translation helper
   const { t } = useTranslation()
-
 
   // Dropzone configuration
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -402,9 +390,7 @@ function RequestLeaveFormHr() {
     }
   }
 
-  const onError: SubmitErrorHandler<FormDataPage> = errors => {
-
-  }
+  const onError: SubmitErrorHandler<FormDataPage> = errors => {}
 
   const handleClear = () => {
     reset()
@@ -417,7 +403,7 @@ function RequestLeaveFormHr() {
         <CardHeader title={t('Request Leave Form')} />
         <CardContent>
           <Grid container spacing={5}>
-            {/* -------------  Employee ID  ---------------- */}
+            {/* -------------  Employee Code  ---------------- */}
             <Grid item md={6} sm={12}>
               <Controller
                 name='requestLeaveForm.EMPLOYEE_CODE'
@@ -756,7 +742,6 @@ function RequestLeaveFormHr() {
                             </ListItem>
                           ))}
                         </List>
-
                       </Card>
                     )}
                   </>
@@ -766,12 +751,7 @@ function RequestLeaveFormHr() {
 
             {/* -------------  Buttons ---------------- */}
             <Grid item sx={{ display: 'flex', gap: 4, justifyContent: 'flex-end' }}>
-              <Button
-                variant='contained'
-                type='button'
-                onClick={handleSubmit(onSubmit, onError)}
-                disabled={isPending}
-              >
+              <Button variant='contained' type='button' onClick={handleSubmit(onSubmit, onError)} disabled={isPending}>
                 {isPending ? 'กำลังบันทึก...' : t('Submit')}
               </Button>
               <Button variant='tonal' color='secondary' type='button' onClick={handleClear} disabled={isPending}>

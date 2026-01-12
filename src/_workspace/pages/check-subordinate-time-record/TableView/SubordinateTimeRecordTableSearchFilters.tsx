@@ -98,8 +98,8 @@ function SubordinateTimeRecordTableSearchFilters() {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label={t('Employee Id')}
-                    placeholder={t('Enter employee id')}
+                    label={t('Employee Code')}
+                    placeholder={t('Enter Employee Code')}
                     autoComplete='off'
                   />
                 )}

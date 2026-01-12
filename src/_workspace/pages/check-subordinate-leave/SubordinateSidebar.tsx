@@ -125,7 +125,7 @@ function SubordinateSidebar({
       <Card elevation={0} sx={{ mb: 3, boxShadow: 'none' }}>
         <CardHeader title='Search filter' titleTypographyProps={{ variant: 'h5' }} />
         <CardContent>
-          {/* Employee ID Select */}
+          {/* Employee Code Select */}
           <Box sx={{ mb: 4 }}>
             <Typography variant='body2' sx={{ mb: 1 }}>
               Employee CODE
@@ -194,13 +194,7 @@ function SubordinateSidebar({
             </List>
           </Card>
           {/* Export Button */}
-          <Button
-            variant='tonal'
-            color='success'
-            fullWidth
-            sx={{ mt: 2 }}
-            onClick={() => setExportModalOpen(true)}
-          >
+          <Button variant='tonal' color='success' fullWidth sx={{ mt: 2 }} onClick={() => setExportModalOpen(true)}>
             Export Employee Leave
           </Button>
           {/* Export Modal */}

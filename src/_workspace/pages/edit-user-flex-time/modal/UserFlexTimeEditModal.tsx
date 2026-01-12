@@ -300,7 +300,7 @@ function UserFlexTimeEditModal({ open, onClose, data, onSubmitSuccess }: Props) 
                     <Grid container spacing={2}>
                       <Grid item xs={4}>
                         <Typography variant='body2' fontWeight='bold'>
-                          {t('Employee Id')}
+                          {t('Employee Code')}
                         </Typography>
                       </Grid>
                       <Grid item xs={8}>
