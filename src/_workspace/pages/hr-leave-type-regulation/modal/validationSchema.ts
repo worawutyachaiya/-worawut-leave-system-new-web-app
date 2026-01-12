@@ -15,7 +15,7 @@ export interface LeaveTypeRegulationData {
   DEPARTMENT_ID?: number
   DEPARTMENT: string
   LEAVE_TYPE_REQUEST_DAY_BEFORE_USE: number
-  INUSE: string
+  INUSE: number
   MODIFIED_DATE?: string
   UPDATE_BY?: string
 }

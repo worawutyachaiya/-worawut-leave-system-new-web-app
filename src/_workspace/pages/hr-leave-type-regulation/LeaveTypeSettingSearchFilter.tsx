@@ -1,24 +1,19 @@
 // MUI Imports
 import { Button, Card, CardContent, CardHeader, Divider, Grid, CircularProgress } from '@mui/material'
 
-
 // React Hook Form Imports
 import { Controller, useFormContext } from 'react-hook-form'
 
-
 // Components Imports
 import SelectCustom from '@/components/react-select/SelectCustom'
-
 
 // libs Imports
 import { useCreate } from '@libs/react-query/hooks/common-system/useUserProfileSettingProgram'
 import { getUserData } from '@utils/user-profile/userLoginProfile'
 
-
 // Types
 import { FormDataPage, statusOptions } from './validationSchema'
 import { MENU_ID } from './env'
-
 
 // Hooks
 import { useGetDepartment } from '@/_workspace/react-query/hooks/useHrLeaveTypeRegulation'
@@ -27,20 +22,22 @@ import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { useQueryClient } from '@tanstack/react-query'
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrLeaveTypeRegulation'
-
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const LeaveTypeSettingSearchFilter = () => {
+  const { t } = useTranslation()
+
   const { control, handleSubmit, setValue, getValues } = useFormContext<FormDataPage>()
   const { setIsEnableFetching, isEnableFetching } = useDxContext()
   const queryClient = useQueryClient()
 
-
   // Master Data
   const { data: departmentData } = useGetDepartment()
-  const departmentOptions = departmentData?.data?.ResultOnDb?.map((item: any) => ({
-    label: item.DEPARTMENT,
-    value: item.DEPARTMENT
-  })) || []
+  const departmentOptions =
+    departmentData?.data?.ResultOnDb?.map((item: any) => ({
+      label: item.DEPARTMENT,
+      value: item.DEPARTMENT
+    })) || []
 
   // Save user profile settings
   const handleAdd = () => {
@@ -69,10 +66,8 @@ const LeaveTypeSettingSearchFilter = () => {
     mutate(dataItem)
   }
 
-  const onMutateSuccess = () => { }
-  const onMutateError = (e: any) => {
-
-  }
+  const onMutateSuccess = () => {}
+  const onMutateError = (e: any) => {}
 
   const { mutate } = useCreate(onMutateSuccess, onMutateError)
 
@@ -180,7 +175,7 @@ const LeaveTypeSettingSearchFilter = () => {
               startIcon={isEnableFetching ? <CircularProgress size={16} color='inherit' /> : null}
               disabled={isEnableFetching}
             >
-              Search
+              {isEnableFetching ? t('Searching') : t('Search')}
             </Button>
             <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
               Clear

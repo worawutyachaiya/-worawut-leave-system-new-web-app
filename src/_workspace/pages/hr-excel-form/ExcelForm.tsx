@@ -1,6 +1,5 @@
 import { Fragment, useState, useCallback } from 'react'
 
-
 // MUI Imports
 import {
   Box,
@@ -32,7 +31,6 @@ import {
   CircularProgress
 } from '@mui/material'
 
-
 // MUI Icons
 import DownloadIcon from '@mui/icons-material/Download'
 import EditNoteIcon from '@mui/icons-material/EditNote'
@@ -40,7 +38,6 @@ import UploadFileIcon from '@mui/icons-material/UploadFile'
 import PreviewIcon from '@mui/icons-material/Preview'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-
 
 // Third-party Imports
 import * as XLSX from 'xlsx'
@@ -51,10 +48,8 @@ import { useDropzone } from 'react-dropzone'
 // Extend dayjs with customParseFormat plugin
 dayjs.extend(customParseFormat)
 
-
 // Translation
 import { useTranslation } from '@/contexts/TranslationContext'
-
 
 // Services & Validation
 import HrExcelFormService from '@/_workspace/services/hr-excel-form/HrExcelFormService'
@@ -89,7 +84,12 @@ const ExcelForm = () => {
         'text/csv'
       ]
 
-      if (fileTypes.includes(file.type) || file.name.endsWith('.xlsx') || file.name.endsWith('.xls') || file.name.endsWith('.csv')) {
+      if (
+        fileTypes.includes(file.type) ||
+        file.name.endsWith('.xlsx') ||
+        file.name.endsWith('.xls') ||
+        file.name.endsWith('.csv')
+      ) {
         setTypeError(null)
         setSelectedFile(file)
         const reader = new FileReader()
@@ -160,7 +160,9 @@ const ExcelForm = () => {
         const parseExcelDate = (value: any): string => {
           if (typeof value === 'number') {
             // Excel serial number: days since 1900-01-01 (with Excel's incorrect leap year bug)
-            return dayjs('1900-01-01').add(value - 2, 'days').format('YYYY-MM-DD')
+            return dayjs('1900-01-01')
+              .add(value - 2, 'days')
+              .format('YYYY-MM-DD')
           } else if (typeof value === 'string') {
             // Try parsing as DD/MM/YYYY format
             const parsed = dayjs(value, 'DD/MM/YYYY')
@@ -202,7 +204,7 @@ const ExcelForm = () => {
           TOTAL_DAY_LEAVE: String(totalDays > 0 ? totalDays : 1),
           REASON: row['เหตุผล'] || '',
           REMARK: row['หมายเหตุ'] || '',
-          EMPLOYEE_CODE: String(row['รหัสพนักงาน']),
+          EMPLOYEE_CODE: String(row['รหัสพนักงาน'])
         }
 
         const res = await HrExcelFormService.create(params)
@@ -285,7 +287,6 @@ const ExcelForm = () => {
                 mb: 2,
                 maxWidth: '35%',
                 ml: 0
-
               }}
             >
               <input {...getInputProps()} />
@@ -307,9 +308,7 @@ const ExcelForm = () => {
                 <Typography variant='h6' sx={{ mb: 1 }}>
                   {isDragActive ? 'Drop file here' : 'Drag & drop file here, or click to select'}
                 </Typography>
-                <Typography color='text.secondary'>
-                  {t('Supported: .xlsx, .xls, .csv')}
-                </Typography>
+                <Typography color='text.secondary'>{t('Supported: .xlsx, .xls, .csv')}</Typography>
               </div>
             </Card>
           ) : (
@@ -329,12 +328,7 @@ const ExcelForm = () => {
                 <Typography variant='subtitle1' fontWeight={600}>
                   {t('Uploaded File')}
                 </Typography>
-                <Chip
-                  label='1 file'
-                  size='small'
-                  color='primary'
-                  variant='outlined'
-                />
+                <Chip label='1 file' size='small' color='primary' variant='outlined' />
               </Box>
               <List disablePadding>
                 <ListItem
@@ -346,12 +340,7 @@ const ExcelForm = () => {
                     '&:last-child': { mb: 0 }
                   }}
                   secondaryAction={
-                    <IconButton
-                      edge='end'
-                      color='error'
-                      onClick={handleRemoveFile}
-                      size='small'
-                    >
+                    <IconButton edge='end' color='error' onClick={handleRemoveFile} size='small'>
                       <i className='tabler-x text-xl' />
                     </IconButton>
                   }
@@ -448,13 +437,15 @@ const ExcelForm = () => {
             <Alert severity='error' sx={{ mb: 2 }}>
               <Typography fontWeight='bold'>Validation Errors:</Typography>
               {validationErrors.map((err, idx) => (
-                <Typography key={idx} variant='body2'>{err}</Typography>
+                <Typography key={idx} variant='body2'>
+                  {err}
+                </Typography>
               ))}
             </Alert>
           )}
           <Button
             variant='contained'
-            color='success'
+            color='primary'
             onClick={handleSubmit}
             disabled={isSubmitting || !excelData || excelData.length <= 0}
             startIcon={isSubmitting ? <CircularProgress size={20} color='inherit' /> : undefined}

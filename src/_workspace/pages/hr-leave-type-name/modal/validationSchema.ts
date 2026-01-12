@@ -13,7 +13,7 @@ export interface LeaveTypeData {
   LEAVE_TYPE_CODE: string
   LEAVE_TYPE_DESCRIPTION_EN: string
   LEAVE_TYPE_REQUEST_DAY_BEFORE_USE: number
-  INUSE: string
+  INUSE: number
   MODIFIED_DATE?: string
   UPDATE_BY?: string
   DESCRIPTION?: string

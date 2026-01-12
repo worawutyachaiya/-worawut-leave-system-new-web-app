@@ -221,7 +221,7 @@ function EditUserFlexTimeSearchResult() {
             <Chip
               variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
               size='small'
-              label={inuse === 1 ? t('Active') : t('Deleted')}
+              label={inuse === 1 ? t('Active') : t('Cancel')}
               color={inuse === 1 ? 'success' : 'error'}
             />
           )

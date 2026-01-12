@@ -158,27 +158,23 @@ function FlexTimeHistorySearchResult() {
       {
         accessorKey: 'FLEX_TIME_REQUEST_STATUS',
         header: t('Status'),
-        size: 150,
         enableSorting: false,
         Cell: ({ row }) => getStatusChip(row.original)
       },
       {
         accessorKey: 'APPROVER',
         header: t('Approval'),
-        size: 200,
         enableSorting: false,
         Cell: ({ row }) => <TableApprover row={row.original} />
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
         header: t('Time to Work'),
-        size: 150,
         enableSorting: false
       },
       {
         accessorKey: 'FLEX_TIME_DATE_RANGE',
         header: t('Flex Time Date'),
-        size: 200,
         enableSorting: false,
         Cell: ({ row }) => {
           const startDate = row.original.FLEX_TIME_REQUEST_START_DATE || row.original.START_DATE
@@ -191,18 +187,15 @@ function FlexTimeHistorySearchResult() {
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: t('Request Flex Time Date'),
-        size: 200
+        header: t('Request Flex Time Date')
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: t('Update Date'),
-        size: 200
+        header: t('Update Date')
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Update By'),
-        size: 150
+        header: t('Update By')
       }
     ],
     [t, settings.mode]
