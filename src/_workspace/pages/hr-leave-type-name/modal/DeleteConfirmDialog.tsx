@@ -1,0 +1,106 @@
+// React Imports
+import { forwardRef, ReactElement, Ref } from 'react'
+
+// MUI Imports
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import Slide from '@mui/material/Slide'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import CircularProgress from '@mui/material/CircularProgress'
+import { TransitionProps } from '@mui/material/transitions'
+
+// Assets
+import undraw_clean_up_re_504g from '@assets/images/common/undraw_clean_up_re_504g.svg'
+
+const Transition = forwardRef(function Transition(
+  props: TransitionProps & { children: ReactElement<any, any> },
+  ref: Ref<unknown>
+) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
+interface DeleteConfirmDialogProps {
+  open: boolean
+  onClose: () => void
+  onConfirm: () => void
+  title?: string
+  content?: string
+  loading?: boolean
+}
+
+const DeleteConfirmDialog = ({
+  open,
+  onClose,
+  onConfirm,
+  title = 'Are you sure?',
+  content = "You won't be able to revert this!",
+  loading = false
+}: DeleteConfirmDialogProps) => {
+  return (
+    <Dialog
+      maxWidth='xs'
+      fullWidth
+      open={open}
+      keepMounted
+      onClose={onClose}
+      TransitionComponent={Transition}
+      sx={{
+        '& .MuiDialog-paper': {
+          overflow: 'visible',
+          borderRadius: 2
+        },
+        '& .MuiDialog-container': {
+          justifyContent: 'center',
+          alignItems: 'flex-start'
+        }
+      }}
+      PaperProps={{ sx: { top: 30, m: 0 } }}
+    >
+      <DialogContent sx={{ py: 4, px: 5 }}>
+        <Box sx={{ textAlign: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
+          {/* Delete Illustration */}
+          <Box
+            component='img'
+            src={undraw_clean_up_re_504g}
+            alt='Delete'
+            sx={{
+              width: 150,
+              height: 'auto',
+              mb: 6
+            }}
+          />
+
+          {/* Title */}
+          <Typography variant='h4' fontWeight='bold'>
+            Are You Sure ?
+          </Typography>
+          <Typography variant='h5' sx={{ color: 'text.secondary', mb: 4 }}>
+            ยืนยันการลบประเภทการลาหรือไม่ ?
+          </Typography>
+
+          {/* Action Buttons */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 3 }}>
+            <Button
+              type='button'
+              variant='contained'
+              color='error'
+              onClick={onConfirm}
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={16} color='inherit' /> : null}
+              sx={{ minWidth: 120 }}
+            >
+              {loading ? 'Deleting...' : 'Yes, Delete !'}
+            </Button>
+            <Button variant='outlined' color='secondary' onClick={onClose} disabled={loading} sx={{ minWidth: 120 }}>
+              No, Keep it
+            </Button>
+          </Box>
+        </Box>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export default DeleteConfirmDialog
