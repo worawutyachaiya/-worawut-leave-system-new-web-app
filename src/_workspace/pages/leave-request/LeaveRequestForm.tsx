@@ -572,7 +572,7 @@ function LeaveRequestForm() {
                     <CardContent sx={{ p: { xs: 4, md: 8 }, '&:last-child': { pb: { xs: 4, md: 8 } } }}>
                       <Grid container spacing={2} alignItems='center'>
                         <Grid item xs={12}>
-                          <Grid container spacing={{ xs: 3, md: 2 }}>
+                          <Grid container spacing={{ xs: 3, md: 5 }}>
                             <Grid item xs={12} sm={4}>
                               <Typography
                                 variant='h5'
@@ -720,7 +720,7 @@ function LeaveRequestForm() {
                     <CardContent sx={{ p: { xs: 4, md: 8 }, '&:last-child': { pb: { xs: 4, md: 8 } } }}>
                       <Grid container spacing={2} alignItems='center'>
                         <Grid item xs={12}>
-                          <Grid container spacing={{ xs: 3, md: 2 }}>
+                          <Grid container spacing={{ xs: 3, md: 5 }}>
                             <Grid item xs={12} sm={4}>
                               <Typography
                                 variant='h5'
@@ -777,7 +777,7 @@ function LeaveRequestForm() {
                     sx={{ height: '100%', border: '1px solid #e0e0e0', bgcolor: 'warning.lighter', borderRadius: 2 }}
                   >
                     <CardContent sx={{ p: { xs: 4, md: 8 }, '&:last-child': { pb: { xs: 4, md: 8 } } }}>
-                      <Grid container spacing={2} alignItems='center'>
+                      <Grid container spacing={5} alignItems='center'>
                         <Grid item xs={12}>
                           <Typography variant='h5' fontWeight='bold' sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
                             {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE)} / {sickLeaveMaxDay} {t('Days')}
