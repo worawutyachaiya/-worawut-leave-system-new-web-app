@@ -78,6 +78,8 @@ import {
   timeLeaveArrWFH,
   TimeLeaveOption
 } from './timeLeaveOptions'
+import { oneDayTimeLeaveArrWithFlexTimeTypeFaster, oneDayTimeLeaveArrWithFlexTimeTypeSlower } from './timeLeaveOptions'
+import { useSearchFlexTimeBySpecificDate } from '@/_workspace/react-query/hooks/useFlexTime'
 
 function LeaveRequestForm() {
   // States - UI only (modals)
@@ -197,6 +199,21 @@ function LeaveRequestForm() {
   }, [watchStartDate, watchEndDate, watchTimeLeave, setValue])
 
   // ฟังก์ชันเลือก options ตามเงื่อนไข
+  // Flex Time API - ตรวจสอบว่าวันที่เลือกมี Flex Time หรือไม่
+  const { data: flexTimeData } = useSearchFlexTimeBySpecificDate(
+    {
+      EMPLOYEE_CODE: getUserData()?.EMPLOYEE_CODE || '',
+      START_DATE: watchStartDate ? dayjs(watchStartDate).format('YYYY-MM-DD') : '',
+      END_DATE: watchEndDate ? dayjs(watchEndDate).format('YYYY-MM-DD') : ''
+    },
+    !!watchStartDate && !isMoreOneDay
+  )
+
+  // ดึงข้อมูล Flex Time จาก API response
+  const flexTimeResult = flexTimeData?.data?.ResultOnDb as any[]
+  const hasFlexTime = flexTimeResult && Array.isArray(flexTimeResult) && flexTimeResult.length > 0
+  const flexTimeType = hasFlexTime ? flexTimeResult[0]?.FLEX_TIME_TYPE : null
+
   const getTimeLeaveOptions = (): TimeLeaveOption[] => {
     const leaveTypeId = watchLeaveType?.LEAVE_TYPE_ID
 
@@ -218,6 +235,16 @@ function LeaveRequestForm() {
     // Leave Type พิเศษที่ต้องใช้ multipleDayTimeLeaveArr (17, 18, 20)
     if (leaveTypeId && [17, 18, 20].includes(leaveTypeId)) {
       return multipleDayTimeLeaveArr
+    }
+
+    // ตรวจสอบ Flex Time และแสดง options ที่เหมาะสม
+    if (hasFlexTime && flexTimeType) {
+      // Flex Time แบบเช้า (07.30-16.30)
+      if (flexTimeType === '07.30-16.30') {
+        return oneDayTimeLeaveArrWithFlexTimeTypeFaster
+      }
+      // Flex Time แบบอื่นๆ เช่น 09.30-18.30
+      return oneDayTimeLeaveArrWithFlexTimeTypeSlower
     }
 
     return oneDayTimeLeaveArr
@@ -566,7 +593,23 @@ function LeaveRequestForm() {
                                 sx={{ display: 'flex', alignItems: 'center', fontSize: { xs: '1rem', md: '1.25rem' } }}
                               >
                                 {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE_ACCUMULATE)} {t('Days')}
-                                <Tooltip title={t('Available Annual Leave (from Previous Year)')}>
+                                <Tooltip
+                                  title={t('Available Annual Leave (from Previous Year)')}
+                                  slotProps={{
+                                    tooltip: {
+                                      sx: {
+                                        bgcolor: 'background.paper',
+                                        color: 'text.primary',
+                                        boxShadow: 6,
+                                        borderRadius: 2,
+                                        maxWidth: 450,
+                                        '& .MuiTooltip-arrow': {
+                                          color: 'background.paper'
+                                        }
+                                      }
+                                    }
+                                  }}
+                                >
                                   <InfoIcon
                                     fontSize='small'
                                     sx={{ ml: 0.5, color: 'text.secondary', cursor: 'pointer' }}
@@ -631,7 +674,7 @@ function LeaveRequestForm() {
                                             <TableCell align='right'>
                                               <Chip
                                                 label={getReceivedDay()}
-                                                color='success'
+                                                color='primary'
                                                 size='small'
                                                 sx={{ fontWeight: 'bold' }}
                                               />
@@ -648,14 +691,13 @@ function LeaveRequestForm() {
                                         color: 'text.primary',
                                         boxShadow: 6,
                                         borderRadius: 2,
-                                        maxWidth: 450,
+                                        maxWidth: 550,
                                         '& .MuiTooltip-arrow': {
                                           color: 'background.paper'
                                         }
                                       }
                                     }
                                   }}
-                                  arrow
                                 >
                                   <InfoIcon
                                     fontSize='small'

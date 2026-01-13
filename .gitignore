@@ -41,6 +41,9 @@ dist-ssr
 # production
 /build
 
+# old-version
+old-version/
+
 # misc
 .DS_Store
 *.pem
