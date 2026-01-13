@@ -81,6 +81,102 @@ import {
 import { oneDayTimeLeaveArrWithFlexTimeTypeFaster, oneDayTimeLeaveArrWithFlexTimeTypeSlower } from './timeLeaveOptions'
 import { useSearchFlexTimeBySpecificDate } from '@/_workspace/react-query/hooks/useFlexTime'
 
+const getDayFromTimeLeave = (timeLeaveValue: string | undefined): number => {
+  if (!timeLeaveValue) return 0
+
+  // ดึงจำนวนวันจาก label เช่น "08.30 น. - 12.30 น. (0.5 วัน)" → 0.5
+  const match = timeLeaveValue.match(/\((\d+\.?\d*)\s*วัน\)/)
+  if (match) {
+    return parseFloat(match[1])
+  }
+
+  // fallback: ถ้าไม่มี pattern ให้ดูจาก value
+  if (timeLeaveValue.includes('0.5') || timeLeaveValue.includes('0.25')) {
+    return 0.5
+  }
+  return 1
+}
+
+const isHoliday = (date: dayjs.Dayjs, holidays: Date[]): boolean => {
+  const dateStr = date.format('YYYY-MM-DD')
+  const isCompanyHoliday = holidays.some(holiday => dayjs(holiday).format('YYYY-MM-DD') === dateStr)
+  return isCompanyHoliday
+}
+
+const countWorkingDays = (startDate: string, endDate: string, holidays: Date[]): number => {
+  const start = dayjs(startDate)
+  const end = dayjs(endDate)
+  let workingDays = 0
+
+  let current = start
+  while (current.isBefore(end) || current.isSame(end, 'day')) {
+    if (!isHoliday(current, holidays)) {
+      workingDays++
+    }
+    current = current.add(1, 'day')
+  }
+
+  return workingDays
+}
+
+const calculateTotalDayLeave = (
+  watchStartDate: string | null,
+  watchEndDate: string | null,
+  watchTimeLeave: { label?: string } | null,
+  companyHolidays: Date[]
+): string => {
+  if (!watchStartDate || !watchEndDate || !watchTimeLeave) {
+    return '0'
+  }
+
+  // นับจำนวนวันทำงาน (ไม่รวมวันหยุด)
+  const workingDays = countWorkingDays(watchStartDate, watchEndDate, companyHolidays)
+
+  // ถ้าไม่มีวันทำงานเลย
+  if (workingDays === 0) {
+    return '0'
+  }
+
+  // ดึงจำนวนวันจาก timeLeave
+  const dayFromTime = getDayFromTimeLeave(watchTimeLeave?.label)
+
+  // ถ้าลาหลายวันทำงาน
+  if (workingDays > 1) {
+    // ถ้าเลือก Full Day → คูณจำนวนวันทำงาน
+    if (dayFromTime === 1) {
+      return workingDays.toString()
+    }
+    // ถ้าเลือก Half Day → ไม่ควรเกิดกรณีนี้เพราะลาหลายวันจะแสดงแค่ Full Day
+    return workingDays.toString()
+  }
+
+  // ลาวันเดียว → ใช้ค่าจาก timeLeave
+  return dayFromTime.toString()
+}
+
+const getMaxEndDateFromStart = (
+  watchStartDate: string | null,
+  currentMaxDay: number,
+  companyHolidays: Date[]
+): Date | undefined => {
+  if (!watchStartDate || !currentMaxDay || currentMaxDay <= 0) return undefined
+
+  let workingDaysCount = 0
+  let currentDate = dayjs(watchStartDate)
+
+  while (workingDaysCount < currentMaxDay) {
+    if (!isHoliday(currentDate, companyHolidays)) {
+      workingDaysCount++
+    }
+
+    if (workingDaysCount < currentMaxDay) {
+      currentDate = currentDate.add(1, 'day')
+    }
+  }
+
+  return currentDate.toDate()
+}
+
 function LeaveRequestForm() {
   // States - UI only (modals)
   const [resultModal, setResultModal] = useState({
@@ -111,92 +207,6 @@ function LeaveRequestForm() {
     const end = dayjs(watchEndDate)
     return end.diff(start, 'day') > 0
   }, [watchStartDate, watchEndDate])
-
-  // ฟังก์ชันคำนวณจำนวนวันลาจาก timeLeave label
-  const getDayFromTimeLeave = (timeLeaveValue: string | undefined): number => {
-    if (!timeLeaveValue) return 0
-
-    // ดึงจำนวนวันจาก label เช่น "08.30 น. - 12.30 น. (0.5 วัน)" → 0.5
-    const match = timeLeaveValue.match(/\((\d+\.?\d*)\s*วัน\)/)
-    if (match) {
-      return parseFloat(match[1])
-    }
-
-    // fallback: ถ้าไม่มี pattern ให้ดูจาก value
-    if (timeLeaveValue.includes('0.5') || timeLeaveValue.includes('0.25')) {
-      return 0.5
-    }
-    return 1
-  }
-
-  // ฟังก์ชันตรวจสอบว่าวันนั้นเป็นวันหยุด
-  const isHoliday = (date: dayjs.Dayjs, holidays: Date[]): boolean => {
-    // ตรวจสอบวันเสาร์ (6) หรือ วันอาทิตย์ (0)
-    // const dayOfWeek = date.day()
-    // if (dayOfWeek === 0 || dayOfWeek === 6) {
-    //   return true
-    // }
-
-    // ตรวจสอบวันหยุดบริษัท
-    const dateStr = date.format('YYYY-MM-DD')
-    const isCompanyHoliday = holidays.some(holiday => dayjs(holiday).format('YYYY-MM-DD') === dateStr)
-
-    return isCompanyHoliday
-  }
-
-  // นับจำนวนวันทำงาน (ไม่รวมเสาร์-อาทิตย์ และวันหยุดบริษัท)
-  const countWorkingDays = (startDate: string, endDate: string, holidays: Date[]): number => {
-    const start = dayjs(startDate)
-    const end = dayjs(endDate)
-    let workingDays = 0
-
-    let current = start
-    while (current.isBefore(end) || current.isSame(end, 'day')) {
-      if (!isHoliday(current, holidays)) {
-        workingDays++
-      }
-      current = current.add(1, 'day')
-    }
-
-    return workingDays
-  }
-
-  // คำนวณ Total Day Leave (นับเฉพาะวันทำงาน)
-  const calculateTotalDayLeave = (): string => {
-    if (!watchStartDate || !watchEndDate || !watchTimeLeave) {
-      return '0'
-    }
-
-    // นับจำนวนวันทำงาน (ไม่รวมวันหยุด)
-    const workingDays = countWorkingDays(watchStartDate, watchEndDate, companyHolidays)
-
-    // ถ้าไม่มีวันทำงานเลย
-    if (workingDays === 0) {
-      return '0'
-    }
-
-    // ดึงจำนวนวันจาก timeLeave
-    const dayFromTime = getDayFromTimeLeave(watchTimeLeave?.label)
-
-    // ถ้าลาหลายวันทำงาน
-    if (workingDays > 1) {
-      // ถ้าเลือก Full Day → คูณจำนวนวันทำงาน
-      if (dayFromTime === 1) {
-        return workingDays.toString()
-      }
-      // ถ้าเลือก Half Day → ไม่ควรเกิดกรณีนี้เพราะลาหลายวันจะแสดงแค่ Full Day
-      return workingDays.toString()
-    }
-
-    // ลาวันเดียว → ใช้ค่าจาก timeLeave
-    return dayFromTime.toString()
-  }
-
-  // useEffect สำหรับอัพเดท Total Day Leave
-  useEffect(() => {
-    const total = calculateTotalDayLeave()
-    setValue('searchFilters.total', total)
-  }, [watchStartDate, watchEndDate, watchTimeLeave, setValue])
 
   // ฟังก์ชันเลือก options ตามเงื่อนไข
   // Flex Time API - ตรวจสอบว่าวันที่เลือกมี Flex Time หรือไม่
@@ -345,6 +355,12 @@ function LeaveRequestForm() {
   const companyHolidays: Date[] =
     holidayCompanyData?.data?.ResultOnDb?.map(holiday => new Date(holiday.day_holiday)) || []
 
+  // useEffect สำหรับอัพเดท Total Day Leave (ย้ายมาอยู่หลัง companyHolidays)
+  useEffect(() => {
+    const total = calculateTotalDayLeave(watchStartDate, watchEndDate, watchTimeLeave, companyHolidays)
+    setValue('searchFilters.total', total)
+  }, [watchStartDate, watchEndDate, watchTimeLeave, companyHolidays, setValue])
+
   const getMaxDayByLeaveTypeId = (leaveTypeId: number): number => {
     const found = leaveTypeMaxDayData?.data?.ResultOnDb?.find(item => item.LEAVE_TYPE_ID === leaveTypeId)
     return found ? parseFloat(found.LEAVE_TYPE_MAX_DAY) : 0
@@ -353,22 +369,7 @@ function LeaveRequestForm() {
   const currentMaxDay = watchLeaveType?.LEAVE_TYPE_ID ? getMaxDayByLeaveTypeId(watchLeaveType.LEAVE_TYPE_ID) : 0
 
   const getMaxEndDate = (): Date | undefined => {
-    if (!watchStartDate || !currentMaxDay || currentMaxDay <= 0) return undefined
-
-    let workingDaysCount = 0
-    let currentDate = dayjs(watchStartDate)
-
-    while (workingDaysCount < currentMaxDay) {
-      if (!isHoliday(currentDate, companyHolidays)) {
-        workingDaysCount++
-      }
-
-      if (workingDaysCount < currentMaxDay) {
-        currentDate = currentDate.add(1, 'day')
-      }
-    }
-
-    return currentDate.toDate()
+    return getMaxEndDateFromStart(watchStartDate, currentMaxDay, companyHolidays)
   }
 
   useEffect(() => {
@@ -862,6 +863,7 @@ function LeaveRequestForm() {
                     control={control}
                     render={({ field: { value, onChange }, fieldState: { error } }) => (
                       <AppReactDatepicker
+                        dateFormat='dd-MMM-yyyy'
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => {
                           onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
@@ -901,6 +903,7 @@ function LeaveRequestForm() {
                     control={control}
                     render={({ field: { value, onChange }, fieldState: { error } }) => (
                       <AppReactDatepicker
+                        dateFormat='dd-MMM-yyyy'
                         autoComplete='off'
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
