@@ -52,17 +52,14 @@ export interface FlexTimeRequestData {
   [key: string]: any
 }
 export interface UserFlexTimeData {
-
   FLEX_TIME_REQUEST_ID: number
   FLEX_TIME_REQUEST_EMPLOYEE_CODE: string
   EMPLOYEE_ID: string
-
 
   EMPLOYEE_NAME: string
   EMPLOYEE_SURNAME: string
   EMPLOYEE_SECTION: string
   EMPLOYEE_FULL_NAME?: string
-
 
   FLEX_TIME_TYPE_ID: number
   FLEX_TIME_DESCRIPTION: string
@@ -71,7 +68,6 @@ export interface UserFlexTimeData {
   FLEX_TIME_REQUEST_TOTAL_DAY: number
   DESCRIPTION: string
 
-
   CREATE_BY: string
   CREATE_DATE: string
   UPDATE_BY: string
@@ -79,10 +75,8 @@ export interface UserFlexTimeData {
   INUSE: number
   IS_APPROVED: number
 
-
   LEAVE_DATE_RANGE?: string
   LEAVE_TYPE?: string
-
 
   approveNo1?: string
   approveNo2?: string
@@ -220,6 +214,7 @@ export interface FlexTimeSpecificDateParams {
   EMPLOYEE_CODE?: string
   START_DATE?: string
   END_DATE?: string
+  SPECIFIC_DATE?: string
 }
 
 export interface FlexTimeUserParams {
