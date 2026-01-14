@@ -2,8 +2,8 @@ export interface SearchUserLeaveParams {
   EMPLOYEE_CODE?: string
   EMPLOYEE_NAME?: string
   EMPLOYEE_SECTION?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: Array<{ id: string; desc: boolean }>
 }
 export interface UpdateUserLeaveParams {

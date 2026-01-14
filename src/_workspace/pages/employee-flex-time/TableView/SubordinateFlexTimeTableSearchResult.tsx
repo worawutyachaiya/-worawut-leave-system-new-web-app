@@ -74,8 +74,9 @@ function SubordinateFlexTimeTableSearchResult() {
     END_DATE:
       formatDateForApi(searchFilters?.tableEndDate) || dayjs().add(1, 'year').endOf('year').format('YYYY-MM-DD'),
     STATUS: '',
-    Start: pagination.pageIndex.toString(),
-    Limit: pagination.pageSize.toString()
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useSearchFlexTimeHrChecker(

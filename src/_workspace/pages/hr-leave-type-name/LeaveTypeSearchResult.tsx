@@ -106,9 +106,9 @@ const LeaveTypeSearchResult = () => {
     LEAVE_TYPE_CODE: getValues('searchFilters.leaveTypeCode') || '',
     LEAVE_TYPE_DESCRIPTION_EN: getValues('searchFilters.leaveTypeName') || '',
     INUSE: getValues('searchFilters.status')?.value || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   // API Call - Enable on first render (initial load) OR when isEnableFetching is true

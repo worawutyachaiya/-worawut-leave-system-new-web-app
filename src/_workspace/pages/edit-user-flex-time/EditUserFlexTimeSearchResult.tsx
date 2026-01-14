@@ -127,7 +127,8 @@ function EditUserFlexTimeSearchResult() {
     EMPLOYEE_DEPT: searchFilters?.section?.SECTION || '',
     INUSE: '',
     Start: pagination.pageIndex.toString(),
-    Limit: pagination.pageSize.toString()
+    Limit: pagination.pageSize.toString(),
+    Order: sorting
   }
 
   const { data, isLoading, isFetching, isRefetching, isError } = useSearchUserFlexTime(paramForSearch, isEnableFetching)

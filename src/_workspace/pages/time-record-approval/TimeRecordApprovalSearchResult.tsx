@@ -90,9 +90,9 @@ function TimeRecordApprovalSearchResult() {
     EMPLOYEE_NAME: getValues('searchFilters.employeeName') || '',
     EMPLOYEE_ID_REQUEST: getUserData()?.EMPLOYEE_CODE || '',
     SECTION: getValues('searchFilters.section') || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { data, isLoading, isFetching, isRefetching, isError } = useTimeRecordSearchApproval(
     paramForSearch,
@@ -157,7 +157,7 @@ function TimeRecordApprovalSearchResult() {
         EMPLOYEE_CODE: row.EMPLOYEE_CODE
       })),
       approvalBy: getUserData()?.EMPLOYEE_CODE || '',
-      approvalStatus: 1 
+      approvalStatus: 1
     })
   }
   const handleConfirmReject = (remark: string) => {
@@ -169,7 +169,7 @@ function TimeRecordApprovalSearchResult() {
         EMPLOYEE_CODE: row.EMPLOYEE_CODE
       })),
       approvalBy: getUserData()?.EMPLOYEE_CODE || '',
-      approvalStatus: 2, 
+      approvalStatus: 2,
       remark: remark
     })
   }
@@ -290,7 +290,7 @@ function TimeRecordApprovalSearchResult() {
           data={getTableData()}
           rowCount={getTotalCount()}
           isError={isError}
-          enableRowSelection 
+          enableRowSelection
           enableRowActions={false}
           getRowId={row => String(row.TIME_RECORD_REQUEST_ID)}
           onColumnFiltersChange={setColumnFilters}

@@ -60,7 +60,8 @@ function SubordinateSearchResult() {
     EMPLOYEE_SECTION: searchFilters?.tableSection?.SECTION || '',
     EMPLOYEE_ID_REQUEST: getUserData()?.EMPLOYEE_CODE || '',
     Start: pagination.pageIndex * pagination.pageSize,
-    Limit: pagination.pageSize
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useCheckSubordinateLeaveSearch(

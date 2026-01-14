@@ -94,8 +94,8 @@ export interface FlexTimeSearchParams {
   FLEX_TIME_TYPE?: number[]
   STATUS?: string
   STATUS_FOR_APPROVE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: any
 }
 export interface FlexTimeHistorySearchParams {
@@ -104,8 +104,8 @@ export interface FlexTimeHistorySearchParams {
   FLEX_TIME_TYPE_ID?: string
   START_DATE?: string
   END_DATE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: any
 }
 export interface FlexTimeApprovalSearchParams {
@@ -114,8 +114,8 @@ export interface FlexTimeApprovalSearchParams {
   EMPLOYEE_SECTION?: string
   EMPLOYEE_CODE_REQUEST?: string
   DEPT_FLOW?: string[]
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: any
 }
 export interface FlexTimeCreatePayload {
@@ -222,8 +222,9 @@ export interface FlexTimeUserParams {
   INUSE?: string
   EMPLOYEE_NAME?: string
   EMPLOYEE_DEPT?: any
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
+  Order?: any
 }
 
 export interface SubordinateFlexTimeSearchParams {
@@ -235,8 +236,9 @@ export interface SubordinateFlexTimeSearchParams {
   EMPLOYEE_CODE?: string
   EMPLOYEE_NAME?: string
   EMPLOYEE_SECTION?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
+  Order?: any
 }
 
 export interface SubordinateFlexTimeCalendarParams {

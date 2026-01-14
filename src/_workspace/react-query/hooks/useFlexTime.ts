@@ -75,7 +75,7 @@ export const useSearchFlexTimeHrChecker = (params: FlexTimeSearchParams, enabled
   })
 }
 
-export const useSearchUserFlexTime = (params: FlexTimeUserParams, enabled: boolean = true) => {
+export const useSearchUserFlexTime = (params: any, enabled: boolean = true) => {
   return useQuery<AxiosResponseI<FlexTimeResponse>>({
     queryKey: [`${PREFIX_QUERY_KEY}_USER`, params],
     queryFn: () => FlexTimeService.searchUserFlexTime(params),

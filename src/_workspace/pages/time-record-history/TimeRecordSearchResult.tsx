@@ -66,9 +66,9 @@ function SearchResult() {
       ? dayjs(getValues('searchFilters.requestDate')).startOf('day').toDate().toString()
       : '',
     EMPLOYEE_CODE: getUserData()?.EMPLOYEE_CODE || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { isRefetching, isLoading, data, isError, isFetching, refetch } = useTimeRecordHistorySearch(
     paramForSearch,
@@ -219,9 +219,7 @@ function SearchResult() {
   return (
     <>
       <Card>
-        <CardHeader
-          title={t('Time Record History Result')}
-        />
+        <CardHeader title={t('Time Record History Result')} />
         {/* Modal Area (ถ้ามี) */}
         {/* {openModalAdd && <LeaveHistoryModal openModal={openModalAdd} setOpenModal={setOpenModalAdd} mode='Add' />} */}
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -253,7 +251,7 @@ function SearchResult() {
             isError={isError}
             displayColumnDefOptions={{
               'mrt-row-actions': {
-                size: 80, 
+                size: 80,
                 muiTableBodyCellProps: {
                   align: 'center'
                 }

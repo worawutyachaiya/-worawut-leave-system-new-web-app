@@ -57,15 +57,11 @@ function LeaveTypeSettingSearchResult() {
   const [columnPinning, setColumnPinning] = useState<MRT_ColumnPinningState>(
     () => getValues('searchResults.columnPinning') || {}
   )
-  const [density, setDensity] = useState<MRT_DensityState>(
-    () => getValues('searchResults.density') || 'comfortable'
-  )
+  const [density, setDensity] = useState<MRT_DensityState>(() => getValues('searchResults.density') || 'comfortable')
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
     () => getValues('searchResults.columnFilters') || []
   )
-  const [sorting, setSorting] = useState<MRT_SortingState>(
-    () => getValues('searchResults.sorting') || []
-  )
+  const [sorting, setSorting] = useState<MRT_SortingState>(() => getValues('searchResults.sorting') || [])
   const [columnFilterFns, setColumnFilterFns] = useState<MRT_ColumnFilterFnsState>(
     () => getValues('searchResults.columnFilterFns') || {}
   )
@@ -78,13 +74,13 @@ function LeaveTypeSettingSearchResult() {
     LEAVE_TYPE_CODE: getValues('searchFilters.leaveTypeCode') || '',
     LEAVE_TYPE_DESCRIPTION: getValues('searchFilters.leaveTypeDescription') || '',
     STATUS: getValues('searchFilters.status') || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { data, isLoading, isFetching, isRefetching, isError } = useSearchLeaveType(paramForSearch, isEnableFetching)
   const { mutateAsync: deleteLeaveType } = useDeleteLeaveType(
-    (response) => {
+    response => {
       if (response && response.data && response.data.Status === true) {
         queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
         toast.success(response.data.Message || 'Deleted successfully')
@@ -92,7 +88,7 @@ function LeaveTypeSettingSearchResult() {
         toast.error(response?.data?.Message || 'Failed to delete')
       }
     },
-    (error) => {
+    error => {
       console.error('Delete error:', error)
       toast.error('Failed to delete. Please try again.')
     }
@@ -157,7 +153,7 @@ function LeaveTypeSettingSearchResult() {
         header: t('Reason')
       }
     ],
-    [t]  // Re-create columns when language changes //dont delete comment
+    [t] // Re-create columns when language changes //dont delete comment
   )
   // Sync MRT state to React Hook Form (for DxWatchSearchFilters to save) //dont delete comment
   useUpdateEffect(() => {
@@ -169,7 +165,16 @@ function LeaveTypeSettingSearchResult() {
     setValue('searchResults.columnOrder', columnOrder)
     setValue('searchResults.columnFilterFns', columnFilterFns)
     setValue('searchResults.pageSize', pagination.pageSize)
-  }, [columnFilters, sorting, density, columnVisibility, columnPinning, columnOrder, columnFilterFns, pagination.pageSize])
+  }, [
+    columnFilters,
+    sorting,
+    density,
+    columnVisibility,
+    columnPinning,
+    columnOrder,
+    columnFilterFns,
+    pagination.pageSize
+  ])
 
   return (
     <Card>

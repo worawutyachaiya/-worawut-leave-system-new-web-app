@@ -15,4 +15,11 @@ export default class RemainLeaveService {
       method: 'POST'
     })
   }
+  static updateRemainLeave(params: any) {
+    return axiosRequest_LeaveSystem({
+      url: `${RemainLeaveAPI.API_ROOT_URL}/updateRemainLeave`,
+      data: params,
+      method: 'POST'
+    })
+  }
 }

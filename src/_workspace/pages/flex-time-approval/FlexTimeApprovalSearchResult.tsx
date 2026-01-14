@@ -68,9 +68,9 @@ function FlexTimeApprovalSearchResult() {
     EMPLOYEE_NAME: getValues('searchFilters.employeeName') || '',
     EMPLOYEE_SECTION: sectionValue,
     EMPLOYEE_CODE_REQUEST: getUserData()?.EMPLOYEE_CODE || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { data, isLoading, isFetching, isRefetching, isError } = useSearchFlexTimeApproval(
     paramForSearch,
