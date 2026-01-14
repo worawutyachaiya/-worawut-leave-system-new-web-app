@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { forwardRef, ReactElement, Ref, useEffect, useState } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -8,7 +8,8 @@ import {
   Grid,
   Typography,
   Box,
-  Divider
+  Divider,
+  Slide
 } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -19,12 +20,20 @@ import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
 import ConfirmModal from './ConfirmModal'
 import { RemainLeaveInterface } from '@/_workspace/types/remain-leave/RemainLeaveInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
+import type { SlideProps } from '@mui/material'
 
 const editRemainLeaveSchema = z.object({
   remainLeave: z.string().min(1, 'Remain Leave is required')
 })
 
 type EditRemainLeaveFormData = z.infer<typeof editRemainLeaveSchema>
+
+const Transition = forwardRef(function Transition(
+  props: SlideProps & { children?: ReactElement<any, any> },
+  ref: Ref<unknown>
+) {
+  return <Slide direction='down' ref={ref} {...props} />
+})
 
 interface RemainLeaveEditModalProps {
   open: boolean
@@ -101,9 +110,13 @@ const RemainLeaveEditModal = ({
       <Dialog
         open={open}
         onClose={handleClose}
-        maxWidth='sm'
+        maxWidth='xs'
         fullWidth
-        sx={{ '& .MuiDialog-paper': { overflow: 'visible' } }}
+        TransitionComponent={Transition}
+        sx={{
+          '& .MuiDialog-paper': { overflow: 'visible' },
+          '& .MuiDialog-container': { justifyContent: 'center', alignItems: 'flex-start' }
+        }}
       >
         <DialogTitle>
           <Typography variant='h5' component='span'>

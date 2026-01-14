@@ -12,6 +12,14 @@ const useRemainLeaveSearch = (params: any, isFetchData: boolean) =>
     enabled: isFetchData
   })
 
+const useRemainLeaveSearchForExport = (params: any, isFetchData: boolean) =>
+  useQuery<AxiosResponseI<RemainLeaveInterface[]>, Error>({
+    queryKey: [`${PREFIX_QUERY_KEY_REMAIN_LEAVE}_FOR_EXPORT`, params],
+    queryFn: () => RemainLeaveService.getRemainLeave(params),
+    placeholderData: keepPreviousData,
+    enabled: isFetchData
+  })
+
 export interface UpdateRemainLeaveParams {
   EMPLOYEE_CODE: string
   LEAVE_TYPE_ID: number
@@ -27,4 +35,4 @@ const useUpdateRemainLeave = (onSuccess?: (data: AxiosResponseI<any>) => void, o
   })
 }
 
-export { useRemainLeaveSearch, useUpdateRemainLeave }
+export { useRemainLeaveSearch, useRemainLeaveSearchForExport, useUpdateRemainLeave }

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Box, Card, Stack, Typography, useTheme, Button, CardHeader, Divider } from '@mui/material'
+import { Box, Card, Stack, Typography, useTheme, Button, CardHeader, Divider, CircularProgress } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
+import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import type {
   MRT_ColumnDef,
   MRT_ColumnFilterFnsState,
@@ -18,9 +19,11 @@ import { useFormContext } from 'react-hook-form'
 import dayjs from 'dayjs'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
+import { utils, writeFile } from 'xlsx'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import {
   useRemainLeaveSearch,
+  useRemainLeaveSearchForExport,
   useUpdateRemainLeave,
   PREFIX_QUERY_KEY_REMAIN_LEAVE
 } from '@/_workspace/react-query/hooks/useSearchRemainLeave'
@@ -40,6 +43,8 @@ const RemainLeaveSearchResult = () => {
 
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [selectedData, setSelectedData] = useState<RemainLeaveInterface | null>(null)
+  const [isExportingRemainLeave, setIsExportingRemainLeave] = useState(false)
+  const [isExportingALExceed, setIsExportingALExceed] = useState(false)
 
   const [columnVisibility, setColumnVisibility] = useState<MRT_VisibilityState>(
     getValues('searchResults.columnVisibility')
@@ -61,7 +66,7 @@ const RemainLeaveSearchResult = () => {
   const searchFilters = getValues('searchFilters')
 
   const paramForSearch = {
-    EMPLOYEE_CODE: searchFilters?.employeeCode || '',
+    EMPLOYEE_CODE: searchFilters?.employeeCode?.EMPLOYEE_CODE || '',
     EMPLOYEE_NAME: searchFilters?.employeeName || '',
     EMPLOYEE_SECTION: searchFilters?.section?.SECTION || '',
     EMPLOYEE_ID_REQUEST: getUserData().EMPLOYEE_CODE || '',
@@ -72,6 +77,188 @@ const RemainLeaveSearchResult = () => {
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useRemainLeaveSearch(paramForSearch, true)
+
+  const exportParamsRemainLeave = {
+    EMPLOYEE_CODE: searchFilters?.employeeCode?.EMPLOYEE_CODE || '',
+    EMPLOYEE_NAME: searchFilters?.employeeName || '',
+    EMPLOYEE_SECTION: searchFilters?.section?.SECTION || '',
+    EMPLOYEE_ID_REQUEST: getUserData().EMPLOYEE_CODE || '',
+    Start: '0',
+    Limit: '999999',
+    Order: []
+  }
+
+  const exportParamsALExceed = {
+    ...exportParamsRemainLeave,
+    LEAVE_TYPE_ID: 1
+  }
+
+  const { data: exportRemainLeaveData, isFetching: isFetchingRemainLeaveExport } = useRemainLeaveSearchForExport(
+    exportParamsRemainLeave,
+    isExportingRemainLeave
+  )
+
+  const { data: exportALExceedData, isFetching: isFetchingALExceedExport } = useRemainLeaveSearchForExport(
+    exportParamsALExceed,
+    isExportingALExceed
+  )
+
+  const getExportData = (rawData: any): RemainLeaveInterface[] => {
+    if (Array.isArray(rawData) && Array.isArray(rawData[1])) {
+      return rawData[1]
+    }
+    if (Array.isArray(rawData) && rawData.length > 0 && typeof rawData[0] === 'object' && !Array.isArray(rawData[0])) {
+      return rawData
+    }
+    return []
+  }
+
+  const leaveTypeToColumn: Record<number, string> = {
+    1: 'A/L',
+    2: 'BD/L',
+    3: 'B/L',
+    4: 'F/L',
+    5: 'MR/L',
+    6: 'ML/L',
+    7: 'MT/L',
+    8: 'P/L',
+    9: 'S/L',
+    10: 'SP/L',
+    12: 'AE/L',
+    13: 'O/L',
+    21: 'AL_ACCUMULATE',
+    22: 'AL_EXCEED'
+  }
+
+  const transformDataForExport = (dataList: RemainLeaveInterface[]) => {
+    // Group by employee
+    const employeeMap = new Map<string, any>()
+
+    dataList.forEach(item => {
+      const empCode = item.EMPLOYEE_CODE
+      if (!employeeMap.has(empCode)) {
+        employeeMap.set(empCode, {
+          EMPLOYEE_CODE: empCode,
+          EMPLOYEE_NAME: `${item.EMPLOYEE_NAME || ''} ${item.EMPLOYEE_SURNAME || ''}`.trim(),
+          SECTION: item.EMPLOYEE_SECTION,
+          'A/L': 0,
+          'BD/L': 0,
+          'B/L': 0,
+          'F/L': 0,
+          'MR/L': 0,
+          'ML/L': 0,
+          'MT/L': 0,
+          'P/L': 0,
+          'S/L': 0,
+          'SP/L': 0,
+          'AE/L': 0,
+          'O/L': 0,
+          AL_ACCUMULATE: 0,
+          AL_EXCEED: 0
+        })
+      }
+      const columnName = leaveTypeToColumn[item.LEAVE_TYPE_ID]
+      if (columnName) {
+        employeeMap.get(empCode)![columnName] = item.LEAVE_REMAIN_DAY || 0
+      }
+    })
+
+    return Array.from(employeeMap.values())
+  }
+
+  const transformDataForALExceedExport = (dataList: RemainLeaveInterface[]) => {
+    const currentYear = dayjs().year()
+    return dataList
+      .filter(item => item.LEAVE_TYPE_ID === 1 && (item.LEAVE_REMAIN_DAY || 0) < 0)
+      .map(item => ({
+        YEAR: currentYear,
+        EMPLOYEE_CODE: item.EMPLOYEE_CODE,
+        DAY: Math.abs(item.LEAVE_REMAIN_DAY || 0)
+      }))
+  }
+
+  const handleExportRemainLeave = () => {
+    const fileName = `RemainLeave_${dayjs().format('YYYYMMDDHHmmss')}`
+    toast.loading(`${fileName} - Initializing...`, { toastId: 'export-remain-leave' })
+    setIsExportingRemainLeave(true)
+  }
+
+  const handleExportALExceed = () => {
+    const fileName = `ALExceed_${dayjs().format('YYYYMMDDHHmmss')}`
+    toast.loading(`${fileName} - Initializing...`, { toastId: 'export-al-exceed' })
+    setIsExportingALExceed(true)
+  }
+
+  useEffect(() => {
+    if (isExportingRemainLeave && !isFetchingRemainLeaveExport && exportRemainLeaveData?.data?.ResultOnDb) {
+      try {
+        const rawData = getExportData(exportRemainLeaveData.data.ResultOnDb)
+        if (rawData.length === 0) {
+          toast.update('export-remain-leave', {
+            render: 'No data to export',
+            type: 'error',
+            isLoading: false,
+            autoClose: 3000
+          })
+        } else {
+          const exportData = transformDataForExport(rawData)
+          const workbook = utils.book_new()
+          const worksheet = utils.json_to_sheet(exportData)
+          utils.book_append_sheet(workbook, worksheet, 'Remain Leave')
+          const fileName = `RemainLeave_${dayjs().format('YYYY-MM-DD_HHmmss')}.xlsx`
+          writeFile(workbook, fileName)
+          toast.update('export-remain-leave', {
+            render: 'Export successfully',
+            type: 'success',
+            isLoading: false,
+            autoClose: 3000
+          })
+        }
+      } catch (error) {
+        console.error('Export error:', error)
+        toast.update('export-remain-leave', {
+          render: 'Export failed',
+          type: 'error',
+          isLoading: false,
+          autoClose: 3000
+        })
+      }
+      setIsExportingRemainLeave(false)
+    }
+  }, [isExportingRemainLeave, isFetchingRemainLeaveExport, exportRemainLeaveData])
+
+  useEffect(() => {
+    if (isExportingALExceed && !isFetchingALExceedExport && exportALExceedData?.data?.ResultOnDb) {
+      try {
+        const rawData = getExportData(exportALExceedData.data.ResultOnDb)
+        const exportData = transformDataForALExceedExport(rawData)
+        const workbook = utils.book_new()
+        const worksheetData = exportData.length > 0 ? exportData : [{ YEAR: '', EMPLOYEE_CODE: '', DAY: '' }]
+        const worksheet = utils.json_to_sheet(worksheetData, { skipHeader: false })
+        if (exportData.length === 0) {
+          utils.sheet_add_json(worksheet, [], { origin: 'A2', skipHeader: true })
+        }
+        utils.book_append_sheet(workbook, worksheet, 'AnnualLeaveExceed')
+        const fileName = `ALExceed_${dayjs().format('YYYY-MM-DD_HHmmss')}.xlsx`
+        writeFile(workbook, fileName)
+        toast.update('export-al-exceed', {
+          render: exportData.length > 0 ? 'Export AL Exceed successfully' : 'Export AL Exceed successfully (No data)',
+          type: 'success',
+          isLoading: false,
+          autoClose: 3000
+        })
+      } catch (error) {
+        console.error('Export AL Exceed error:', error)
+        toast.update('export-al-exceed', {
+          render: 'Export AL Exceed failed',
+          type: 'error',
+          isLoading: false,
+          autoClose: 3000
+        })
+      }
+      setIsExportingALExceed(false)
+    }
+  }, [isExportingALExceed, isFetchingALExceedExport, exportALExceedData])
 
   const updateMutation = useUpdateRemainLeave(
     response => {
@@ -132,6 +319,7 @@ const RemainLeaveSearchResult = () => {
       {
         id: 'detail',
         header: 'ACTIONS',
+        size: 130,
         Cell: ({ row }) => (
           <Button size='small' onClick={() => handleOpenEditModal(row.original)}>
             <BorderColorIcon fontSize='small' />
@@ -142,7 +330,7 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE ID'
+        header: 'EMPLOYEE CODE'
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
@@ -227,12 +415,36 @@ const RemainLeaveSearchResult = () => {
           title='Search result'
           action={
             <Stack direction='row' spacing={2} alignItems='center'>
-              <Button variant='tonal' color='primary'>
-                Export Remain Leave
+              <Button
+                variant='tonal'
+                color='primary'
+                onClick={handleExportRemainLeave}
+                disabled={isExportingRemainLeave || isFetchingRemainLeaveExport}
+                startIcon={
+                  isExportingRemainLeave || isFetchingRemainLeaveExport ? (
+                    <CircularProgress size={16} color='inherit' />
+                  ) : (
+                    <FileDownloadIcon />
+                  )
+                }
+              >
+                {isExportingRemainLeave || isFetchingRemainLeaveExport ? 'Exporting...' : 'Export Remain Leave'}
               </Button>
               <Divider orientation='vertical' flexItem />
-              <Button variant='tonal' color='success'>
-                Export AL Exceed
+              <Button
+                variant='tonal'
+                color='success'
+                onClick={handleExportALExceed}
+                disabled={isExportingALExceed || isFetchingALExceedExport}
+                startIcon={
+                  isExportingALExceed || isFetchingALExceedExport ? (
+                    <CircularProgress size={16} color='inherit' />
+                  ) : (
+                    <FileDownloadIcon />
+                  )
+                }
+              >
+                {isExportingALExceed || isFetchingALExceedExport ? 'Exporting...' : 'Export AL Exceed'}
               </Button>
             </Stack>
           }
