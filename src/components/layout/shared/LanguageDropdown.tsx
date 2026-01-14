@@ -22,7 +22,7 @@ type LanguageDataType = {
   langName: string
 }
 
-// Vars - คงไว้ทั้งภาษาอังกฤษและไทย แต่ไม่ต้องใส่รูปธง
+// Vars
 const languageData: LanguageDataType[] = [
   {
     langCode: 'en',
@@ -56,11 +56,10 @@ const LanguageDropdown = () => {
   const handleSelectLanguage = (langCode: Locale) => {
     setLocale(langCode)
     handleClose()
-}
+  }
 
   return (
     <>
-      {/* ส่วน Trigger: กลับมาใช้ไอคอน tabler-language เพียวๆ แบบเก่า */}
       <IconButton ref={anchorRef} onClick={handleToggle} className='text-textPrimary'>
         <i className='tabler-language' />
       </IconButton>
@@ -87,7 +86,6 @@ const LanguageDropdown = () => {
                       onClick={() => handleSelectLanguage(lang.langCode)}
                       selected={locale === lang.langCode}
                     >
-                      {/* ส่วน Menu: แสดงแค่ชื่อภาษา ไม่แสดงธง */}
                       {lang.langName}
                     </MenuItem>
                   ))}

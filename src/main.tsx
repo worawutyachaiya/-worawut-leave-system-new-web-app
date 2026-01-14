@@ -45,7 +45,7 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <TranslationProvider initialLocale="th">
+      <TranslationProvider>
         <Suspense fallback={<div>Loading...</div>}>
           {/* <ErrorBoundary
             FallbackComponent={ErrorFallback}
@@ -61,4 +61,3 @@ createRoot(document.getElementById('root')!).render(
     </QueryClientProvider>
   </BrowserRouter>
 )
-
