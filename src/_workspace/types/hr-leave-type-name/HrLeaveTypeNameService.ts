@@ -2,8 +2,8 @@ export interface SearchLeaveTypeParams {
   LEAVE_TYPE_CODE?: string
   LEAVE_TYPE_DESCRIPTION_EN?: string
   INUSE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: Array<{ id: string; desc: boolean }>
 }
 export interface UpdateLeaveTypeParams {

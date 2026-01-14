@@ -91,9 +91,9 @@ const UserProbationSearchResult = () => {
     EMPLOYEE_DEPT: getValues('searchFilters.section')?.SECTION || '',
     IS_PASS_PRO:
       getValues('searchFilters.status')?.value !== undefined ? String(getValues('searchFilters.status')?.value) : '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   // Fetch Data Hook

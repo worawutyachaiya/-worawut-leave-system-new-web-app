@@ -1,8 +1,8 @@
 export interface SearchDocumentParams {
   LEAVE_REGULARITY_NAME?: string
   INUSE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: Array<{ id: string; desc: boolean }>
 }
 export interface CreateDocumentParams {

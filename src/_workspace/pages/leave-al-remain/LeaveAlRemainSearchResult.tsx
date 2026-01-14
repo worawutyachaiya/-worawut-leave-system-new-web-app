@@ -60,8 +60,9 @@ function SearchResult() {
     INUSE: 1,
     EMPLOYEE_CODE: getValues('searchFilters.employeeCode') || '',
     EMPLOYEE_ID_REQUEST: getUserData()?.EMPLOYEE_CODE || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize)
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { isRefetching, isLoading, data, isError, isFetching, refetch } = useSearchRemainALInFlow(
     paramForSearch,

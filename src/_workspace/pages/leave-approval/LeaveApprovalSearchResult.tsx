@@ -105,9 +105,9 @@ const EmployeeLeaveSearchResultTable = () => {
     LEAVE_TYPE_ID: searchFilters?.leaveType?.LEAVE_TYPE_ID || '',
     EMPLOYEE_SECTION: searchFilters?.section?.SECTION || '',
     EMPLOYEE_ID_REQUEST: getUserData()?.EMPLOYEE_CODE || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: []
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useLeaveEmployeeSearch(

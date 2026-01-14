@@ -64,7 +64,8 @@ function SubordinateFlexTimeTableSearchResult() {
     EMPLOYEE_NAME: searchFilters?.tableEmployeeName || '',
     EMPLOYEE_SECTION: searchFilters?.tableSection?.SECTION || '',
     Start: (pagination.pageIndex * pagination.pageSize).toString(),
-    Limit: pagination.pageSize.toString()
+    Limit: pagination.pageSize.toString(),
+    Order: sorting
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useSearchSubordinateFlexTime(

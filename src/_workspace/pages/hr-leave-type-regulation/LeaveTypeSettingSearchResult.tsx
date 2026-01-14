@@ -115,9 +115,9 @@ const LeaveTypeSettingSearchResult = () => {
     DEPARTMENT: getValues('searchFilters.department')?.value || '',
     LEAVE_TYPE: getValues('searchFilters.leaveType')?.value || '',
     INUSE: getValues('searchFilters.status')?.value || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   // API Call - Search Leave Type Regulation

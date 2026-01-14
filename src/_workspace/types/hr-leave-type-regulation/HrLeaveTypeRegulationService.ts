@@ -2,8 +2,8 @@ export interface SearchLeaveTypeRegulationParams {
   LEAVE_TYPE?: string
   DEPARTMENT?: string
   INUSE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: Array<{ id: string; desc: boolean }>
 }
 export interface CreateLeaveTypeRegulationParams {

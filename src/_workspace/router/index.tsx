@@ -83,6 +83,8 @@ const SubordinateFlexTimePage = lazy(() => import('@/_workspace/pages/subordinat
 // New: Edit User Flex Time
 const EditUserFlexTimePage = lazy(() => import('@/_workspace/pages/edit-user-flex-time/page'))
 
+const Home = lazy(() => import('../../../src/pages/home/page'))
+
 import { Outlet, useParams, Navigate } from 'react-router'
 import { i18n } from '@configs/i18n'
 
@@ -102,6 +104,9 @@ export default (
     <Route path='/:lang' element={<LanguageWrapper />}>
       {/* leave-request */}
       <Route path='leave-request' element={<LeaveRequestPage />} />
+
+      {/* home */}
+      <Route path='home' element={<Home />} />
 
       {/* leave-history */}
       <Route path='leave-history' element={<LeaveHistoryPage />} />

@@ -106,9 +106,9 @@ const UserLeaveSearchResult = () => {
     EMPLOYEE_CODE: getValues('searchFilters.employeeCode')?.EMPLOYEE_CODE || '',
     EMPLOYEE_NAME: getValues('searchFilters.employeeName') || '',
     EMPLOYEE_SECTION: getValues('searchFilters.section')?.SECTION || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const { data, error, isPending, isFetching, isRefetching, refetch } = useSearchUserLeave(

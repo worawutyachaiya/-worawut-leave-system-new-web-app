@@ -59,7 +59,8 @@ function SubordinateTimeRecordTableSearchResult() {
     EMPLOYEE_SECTION: searchFilters?.tableSection?.SECTION || '',
     EMPLOYEE_ID_REQUEST: userData?.EMPLOYEE_CODE || '',
     Start: pagination.pageIndex * pagination.pageSize,
-    Limit: pagination.pageSize
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useCheckSubordinateTimeRecordSearch(

@@ -1,6 +1,6 @@
 export interface SearchEmployeeProbationParams {
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: Array<{ id: string; desc: boolean }>
   EMPLOYEE_CODE?: string
   EMPLOYEE_NAME?: string

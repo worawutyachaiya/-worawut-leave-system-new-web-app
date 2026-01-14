@@ -75,9 +75,9 @@ function SearchResult() {
     LEAVE_TYPE_CODE: getValues('searchFilters.leaveType')?.LEAVE_TYPE_CODE || '',
     INUSE: '',
     EMPLOYEE_CODE: getUserData()?.EMPLOYEE_CODE || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { isRefetching, isLoading, data, isError, isFetching, refetch } = useLeaveHistorySearch(
     paramForSearch,

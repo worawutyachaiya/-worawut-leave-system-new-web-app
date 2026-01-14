@@ -66,7 +66,7 @@ export interface LeaveApprover {
   APPROVER_ID?: number
   APPROVER_NAME?: string
   APPROVER_POSITION?: string
-  APPROVER_STATUS?: string 
+  APPROVER_STATUS?: string
   APPROVER_DATE?: string
   APPROVER_REMARK?: string
 }
@@ -99,8 +99,8 @@ export interface TimeRecordHistoryInterface {
 export interface TimeRecordSearchParams {
   REQUEST_DATE?: string
   EMPLOYEE_CODE?: string
-  Start: string
-  Limit: string
+  Start: number
+  Limit: number
   Order: object[] | undefined
 }
 export interface TimeRecordHRCheckerSearchParams {
@@ -111,8 +111,8 @@ export interface TimeRecordHRCheckerSearchParams {
   END_DATE?: string
   STATUS?: string
   STATUS_FOR_APPROVE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: any
 }
 export interface TimeRecordApprovalPayload {

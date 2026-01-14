@@ -96,8 +96,9 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       LEAVE_TYPE_CODE: '',
       INUSE: '',
       EMPLOYEE_CODE: employeeCode,
-      Start: String(pagination.pageIndex * pagination.pageSize),
-      Limit: String(pagination.pageSize)
+      Start: pagination.pageIndex * pagination.pageSize,
+      Limit: pagination.pageSize
+      // Order: sorting
     }),
     [employeeCode, pagination.pageIndex, pagination.pageSize]
   )

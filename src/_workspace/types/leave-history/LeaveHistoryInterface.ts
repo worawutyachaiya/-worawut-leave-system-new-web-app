@@ -42,7 +42,7 @@ export interface LeaveHistorySearchParams {
   LEAVE_TYPE_CODE?: string
   INUSE?: string
   EMPLOYEE_CODE?: string
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: Array<{ id: string; desc: boolean }>
 }

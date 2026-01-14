@@ -91,7 +91,8 @@ function TimeRecordCheckerSearchResult() {
     EMPLOYEE_SECTION: getValues('searchFilters.section')?.SECTION || '',
     STATUS: getValues('searchFilters.status')?.value ?? '',
     Start: pagination.pageIndex * pagination.pageSize,
-    Limit: pagination.pageSize
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const refreshData = () => {
@@ -194,8 +195,6 @@ function TimeRecordCheckerSearchResult() {
     setIsRejectConfirmModalOpen(false)
     refreshData()
   }
-
-
 
   const handleMRTRowSelectionChange = (updater: any) => {
     const tableData = getTableData()

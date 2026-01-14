@@ -71,9 +71,9 @@ const RemainLeaveSearchResult = () => {
     EMPLOYEE_SECTION: searchFilters?.section?.SECTION || '',
     EMPLOYEE_ID_REQUEST: getUserData().EMPLOYEE_CODE || '',
     START_DATE: searchFilters?.startDate ? dayjs(searchFilters.startDate).format('YYYY-MM-DD') : '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: []
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useRemainLeaveSearch(paramForSearch, true)

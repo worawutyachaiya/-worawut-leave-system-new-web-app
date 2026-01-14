@@ -64,9 +64,9 @@ function FlexTimeHistorySearchResult() {
     START_DATE: getValues('searchFilters.startDate') || '',
     END_DATE: getValues('searchFilters.endDate') || '',
     EMPLOYEE_CODE: getUserData()?.EMPLOYEE_CODE || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
   const { data, isLoading, isFetching, isRefetching, isError, refetch } = useSearchFlexTimeHistory(
     paramForSearch,

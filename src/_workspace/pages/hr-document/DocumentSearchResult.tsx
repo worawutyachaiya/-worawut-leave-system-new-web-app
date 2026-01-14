@@ -104,9 +104,9 @@ const DocumentSearchResult = () => {
   const paramForSearch = {
     LEAVE_REGULARITY_NAME: getValues('searchFilters.documentName') || '',
     INUSE: getValues('searchFilters.status')?.value || '',
-    Start: String(pagination.pageIndex * pagination.pageSize),
-    Limit: String(pagination.pageSize),
-    Order: sorting.length > 0 ? sorting : undefined
+    Start: pagination.pageIndex * pagination.pageSize,
+    Limit: pagination.pageSize,
+    Order: sorting
   }
 
   // API Call

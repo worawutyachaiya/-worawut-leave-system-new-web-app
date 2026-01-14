@@ -18,7 +18,7 @@ export interface LeaveEmployeeInformationInterface {
   UPDATE_BY: string
   UPDATE_DATE: string
   DESCRIPTION: string
-  INUSE: string 
+  INUSE: string
 }
 export interface SectionInterface {
   SECT_NAME: string | null
@@ -27,16 +27,17 @@ export interface SectionInterface {
   UPDATE_BY: string
   UPDATE_DATE: string
   DESCRIPTION: string
-  INUSE: string 
+  INUSE: string
 }
 export interface LeaveAlRemainSearchParams {
-  EMPLOYEE_SECTION?: string 
-  EMPLOYEE_NAME?: string 
-  INUSE?: number | string 
-  EMPLOYEE_CODE?: string 
-  EMPLOYEE_ID_REQUEST?: string 
-  Start?: string 
-  Limit?: string 
+  EMPLOYEE_SECTION?: string
+  EMPLOYEE_NAME?: string
+  INUSE?: number | string
+  EMPLOYEE_CODE?: string
+  EMPLOYEE_ID_REQUEST?: string
+  Start?: number
+  Limit?: number
+  Order?: Array<{ id: string; desc: boolean }>
 }
 export interface LeaveAlRemainInterface {
   EMPLOYEE_CODE?: string
@@ -52,7 +53,7 @@ export interface LeaveAlRemainInterface {
   EMPLOYEE_FULL_NAME?: string
   REMAIN_AL: string | number
   REMAIN_AL_EMERGENCY: string | number
-  INUSE?: number | string 
+  INUSE?: number | string
   CREATE_DATE?: string
   CREATE_BY?: string
   UPDATE_DATE?: string

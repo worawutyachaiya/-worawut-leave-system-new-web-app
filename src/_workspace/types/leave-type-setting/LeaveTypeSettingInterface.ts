@@ -17,8 +17,8 @@ export interface LeaveTypeSearchParams {
   LEAVE_TYPE_CODE?: string
   LEAVE_TYPE_DESCRIPTION?: string
   STATUS?: object | string | null
-  Start?: string
-  Limit?: string
+  Start?: number
+  Limit?: number
   Order?: any
 }
 export interface LeaveTypeCreatePayload {
