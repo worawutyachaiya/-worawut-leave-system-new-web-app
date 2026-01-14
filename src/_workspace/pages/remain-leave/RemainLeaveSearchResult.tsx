@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Box, Card, Stack, Typography, useTheme, Button, CardHeader, Divider } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import VisibilityIcon from '@mui/icons-material/Visibility'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
 import type {
   MRT_ColumnDef,
   MRT_ColumnFilterFnsState,
@@ -11,31 +11,36 @@ import type {
   MRT_ColumnPinningState,
   MRT_DensityState,
   MRT_PaginationState,
-  MRT_Row,
   MRT_SortingState,
   MRT_VisibilityState
 } from 'material-react-table'
 import { useFormContext } from 'react-hook-form'
 import dayjs from 'dayjs'
+import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import {
   useRemainLeaveSearch,
+  useUpdateRemainLeave,
   PREFIX_QUERY_KEY_REMAIN_LEAVE
 } from '@/_workspace/react-query/hooks/useSearchRemainLeave'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
-import { useDxContext } from '@/_template/DxContextProvider'
 import type { FormDataPage } from './validationSchema'
 import { RemainLeaveInterface } from '@/_workspace/types/remain-leave/RemainLeaveInterface'
 import { useSettings } from '@/@core/hooks/useSettings'
 import { useCheckPermission } from '@/_template/CheckPermission'
-import { LeaveHistoryInterface } from '@/_workspace/types/leave-history/LeaveHistoryInterface'
+import RemainLeaveEditModal from './modal/RemainLeaveEditModal'
+
 const RemainLeaveSearchResult = () => {
   const theme = useTheme()
-  const { isEnableFetching, setIsEnableFetching } = useDxContext()
+  const queryClient = useQueryClient()
   const { getValues, setValue } = useFormContext<FormDataPage>()
   const { settings } = useSettings()
   const checkPermission = useCheckPermission()
-  const [rowSelected, setRowSelected] = useState<MRT_Row<LeaveHistoryInterface> | null>(null)
+
+  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [selectedData, setSelectedData] = useState<RemainLeaveInterface | null>(null)
+
   const [columnVisibility, setColumnVisibility] = useState<MRT_VisibilityState>(
     getValues('searchResults.columnVisibility')
   )
@@ -67,6 +72,23 @@ const RemainLeaveSearchResult = () => {
   }
 
   const { data, isLoading, isError, isFetching, isRefetching } = useRemainLeaveSearch(paramForSearch, true)
+
+  const updateMutation = useUpdateRemainLeave(
+    response => {
+      if (response?.data?.Status) {
+        toast.success('Update Remain Leave Success')
+        queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY_REMAIN_LEAVE] })
+        setEditModalOpen(false)
+        setSelectedData(null)
+      } else {
+        toast.error(response?.data?.Message || 'Update failed')
+      }
+    },
+    error => {
+      toast.error(error?.message || 'Update failed')
+    }
+  )
+
   const tableData = useMemo(() => {
     const rawResult = data?.data?.ResultOnDb as any
     if (Array.isArray(rawResult) && Array.isArray(rawResult[1])) {
@@ -82,6 +104,7 @@ const RemainLeaveSearchResult = () => {
     }
     return []
   }, [data])
+
   const totalRecords = useMemo(() => {
     const rawResult = data?.data?.ResultOnDb as any
     if (Array.isArray(rawResult) && Array.isArray(rawResult[0]) && rawResult[0][0]?.TOTAL_COUNT) {
@@ -89,14 +112,29 @@ const RemainLeaveSearchResult = () => {
     }
     return data?.data?.TotalCountOnDb || 0
   }, [data])
+
+  const handleOpenEditModal = (rowData: RemainLeaveInterface) => {
+    setSelectedData(rowData)
+    setEditModalOpen(true)
+  }
+
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false)
+    setSelectedData(null)
+  }
+
+  const handleSaveRemainLeave = (payload: any) => {
+    updateMutation.mutate(payload)
+  }
+
   const columns = useMemo<MRT_ColumnDef<RemainLeaveInterface>[]>(
     () => [
       {
         id: 'detail',
         header: 'ACTIONS',
         Cell: ({ row }) => (
-          <Button size='small' onClick={() => console.log('View detail', row.original)}>
-            <VisibilityIcon fontSize='small' />
+          <Button size='small' onClick={() => handleOpenEditModal(row.original)}>
+            <BorderColorIcon fontSize='small' />
           </Button>
         ),
         enableColumnActions: false,
@@ -104,7 +142,7 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE'
+        header: 'EMPLOYEE ID'
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
@@ -134,6 +172,7 @@ const RemainLeaveSearchResult = () => {
     ],
     []
   )
+
   const renderEmptyRowsFallback = () => {
     return (
       <Stack
@@ -154,6 +193,7 @@ const RemainLeaveSearchResult = () => {
       </Stack>
     )
   }
+
   const isFirstRender = useRef(true)
   useEffect(() => {
     isFirstRender.current = false
@@ -179,66 +219,78 @@ const RemainLeaveSearchResult = () => {
   useEffect(() => {
     if (!isFirstRender.current) setValue('searchResults.columnFilterFns', columnFilterFns)
   }, [setValue, columnFilterFns])
+
   return (
-    <Card>
-      <CardHeader
-        title='Search result'
-        action={
-          <Stack direction='row' spacing={2} alignItems='center'>
-            <Button variant='tonal' color='primary'>
-              Export Remain Leave
-            </Button>
-            <Divider orientation='vertical' flexItem />
-            <Button variant='tonal' color='success'>
-              Export AL Exceed
-            </Button>
-          </Stack>
-        }
-      />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DxMRTTable
-          columns={columns}
-          rowCount={totalRecords}
-          data={tableData}
-          onColumnFiltersChange={setColumnFilters}
-          onColumnFilterFnsChange={setColumnFilterFns}
-          onPaginationChange={setPagination}
-          onSortingChange={setSorting}
-          onColumnVisibilityChange={setColumnVisibility}
-          onDensityChange={setDensity}
-          onColumnPinningChange={setColumnPinning}
-          onColumnOrderChange={setColumnOrder}
-          state={{
-            columnFilters,
-            isLoading,
-            pagination,
-            showAlertBanner: isError,
-            showProgressBars: isRefetching,
-            sorting,
-            density,
-            columnVisibility,
-            columnPinning,
-            columnOrder,
-            columnFilterFns
-          }}
-          isError={isError}
-          enableRowSelection={false}
-          enableRowActions={false}
-          manualPagination
-          manualSorting
-          renderEmptyRowsFallback={renderEmptyRowsFallback}
-          enableColumnActions={false}
-          enableColumnFilters={false}
-          enableDensityToggle={true}
-          enableFullScreenToggle={true}
-          enableHiding={true}
-          initialState={{
-            pagination: { pageSize: 10, pageIndex: 0 },
-            density: 'comfortable'
-          }}
+    <>
+      <Card>
+        <CardHeader
+          title='Search result'
+          action={
+            <Stack direction='row' spacing={2} alignItems='center'>
+              <Button variant='tonal' color='primary'>
+                Export Remain Leave
+              </Button>
+              <Divider orientation='vertical' flexItem />
+              <Button variant='tonal' color='success'>
+                Export AL Exceed
+              </Button>
+            </Stack>
+          }
         />
-      </LocalizationProvider>
-    </Card>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DxMRTTable
+            columns={columns}
+            rowCount={totalRecords}
+            data={tableData}
+            onColumnFiltersChange={setColumnFilters}
+            onColumnFilterFnsChange={setColumnFilterFns}
+            onPaginationChange={setPagination}
+            onSortingChange={setSorting}
+            onColumnVisibilityChange={setColumnVisibility}
+            onDensityChange={setDensity}
+            onColumnPinningChange={setColumnPinning}
+            onColumnOrderChange={setColumnOrder}
+            state={{
+              columnFilters,
+              isLoading,
+              pagination,
+              showAlertBanner: isError,
+              showProgressBars: isRefetching,
+              sorting,
+              density,
+              columnVisibility,
+              columnPinning,
+              columnOrder,
+              columnFilterFns
+            }}
+            isError={isError}
+            enableRowSelection={false}
+            enableRowActions={false}
+            manualPagination
+            manualSorting
+            renderEmptyRowsFallback={renderEmptyRowsFallback}
+            enableColumnActions={false}
+            enableColumnFilters={false}
+            enableDensityToggle={true}
+            enableFullScreenToggle={true}
+            enableHiding={true}
+            initialState={{
+              pagination: { pageSize: 10, pageIndex: 0 },
+              density: 'comfortable'
+            }}
+          />
+        </LocalizationProvider>
+      </Card>
+
+      <RemainLeaveEditModal
+        open={editModalOpen}
+        onClose={handleCloseEditModal}
+        selectedData={selectedData}
+        onSave={handleSaveRemainLeave}
+        isLoading={updateMutation.isPending}
+      />
+    </>
   )
 }
+
 export default RemainLeaveSearchResult
