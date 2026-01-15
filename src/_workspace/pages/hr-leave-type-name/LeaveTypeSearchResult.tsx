@@ -124,13 +124,13 @@ const LeaveTypeSearchResult = () => {
         queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
         setDeleteDialogOpen(false)
         setDeleteTarget(null)
-        toast.success(response.data.Message || 'Deleted successfully')
+        toast.success(response.data.Message || t('Deleted successfully'))
       } else {
-        toast.error(response.data.Message || 'Failed to delete')
+        toast.error(response.data.Message || t('Failed to delete'))
       }
     },
     error => {
-      toast.error('Failed to delete. Please try again.')
+      toast.error(t('Failed to delete. Please try again.'))
     }
   )
 
@@ -217,30 +217,30 @@ const LeaveTypeSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: 'LEAVE TYPE CODE'
+        header: t('Leave Type Code')
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: 'LEAVE TYPE CODE'
+        header: t('Leave Type Code')
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
-        header: 'LEAVE TYPE NAME'
+        header: t('Leave Type Name')
       },
       {
         accessorKey: 'LEAVE_TYPE_REQUEST_DAY_BEFORE_USE',
-        header: 'REQUEST DAY BEFORE USE'
+        header: t('Request Day Before Use')
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: 'MODIFIED DATE'
+        header: t('Modified Date')
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'MODIFIED BY'
+        header: t('Modified By')
       }
     ],
-    []
+    [t]
   )
 
   const handleEdit = (row: LeaveTypeData) => {
@@ -326,8 +326,8 @@ const LeaveTypeSearchResult = () => {
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={handleDeleteConfirm}
         loading={isDeleting}
-        title='Delete Leave Type?'
-        content={`Are you sure you want to delete "${deleteTarget?.LEAVE_TYPE_DESCRIPTION_EN}"? This action cannot be undone.`}
+        title={t('Delete Leave Type?')}
+        content={t('Are you sure you want to delete this leave type? This action cannot be undone.')}
       />
     </>
   )

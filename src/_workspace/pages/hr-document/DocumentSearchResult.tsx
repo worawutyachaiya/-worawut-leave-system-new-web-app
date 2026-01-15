@@ -170,14 +170,14 @@ const DocumentSearchResult = () => {
         setIsEnableFetching(true)
         setDeleteDialogOpen(false)
         setDeleteTarget(null)
-        toast.success(onSuccess.data.Message || 'Deleted successfully')
+        toast.success(onSuccess.data.Message || t('Deleted successfully'))
       } else {
-        toast.error(onSuccess.data.Message || 'Failed to delete')
+        toast.error(onSuccess.data.Message || t('Failed to delete'))
       }
     },
     onError => {
       console.error('Delete error:', onError)
-      toast.error('Failed to delete. Please try again.')
+      toast.error(t('Failed to delete. Please try again.'))
     }
   )
 
@@ -223,7 +223,7 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_REGULARITY_NAME',
-        header: 'DOCUMENT NAME',
+        header: t('Document Name'),
         size: 350,
         muiTableHeadCellProps: {
           align: 'center'
@@ -234,7 +234,7 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_REGULARITY_FILE_NAME',
-        header: 'DOCUMENT FILE NAME',
+        header: t('Document File Name'),
         size: 400,
         muiTableHeadCellProps: {
           align: 'center'
@@ -245,7 +245,7 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'DESCRIPTION',
-        header: 'DESCRIPTION',
+        header: t('Description'),
         size: 350,
         muiTableHeadCellProps: {
           align: 'center'
@@ -256,7 +256,7 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'MODIFIED',
-        header: 'MODIFIED',
+        header: t('Modified'),
         size: 220,
         muiTableHeadCellProps: {
           align: 'center'
@@ -267,7 +267,7 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'MODIFIED BY',
+        header: t('Modified By'),
         size: 180,
         muiTableHeadCellProps: {
           align: 'center'
@@ -277,7 +277,7 @@ const DocumentSearchResult = () => {
         }
       }
     ],
-    []
+    [t]
   )
 
   // Data for table
@@ -288,7 +288,7 @@ const DocumentSearchResult = () => {
     <>
       <Card sx={{ mt: 4 }}>
         <CardHeader
-          title='Search result'
+          title={t('Search result')}
           action={
             <Button
               variant='contained'
@@ -296,7 +296,7 @@ const DocumentSearchResult = () => {
               onClick={handleAddNew}
               sx={{ color: 'white', bgcolor: 'primary.main' }}
             >
-              Add new
+              {t('Add new')}
             </Button>
           }
         />

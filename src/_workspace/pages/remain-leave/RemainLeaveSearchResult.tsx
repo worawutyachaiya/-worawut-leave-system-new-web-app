@@ -33,6 +33,7 @@ import { RemainLeaveInterface } from '@/_workspace/types/remain-leave/RemainLeav
 import { useSettings } from '@/@core/hooks/useSettings'
 import { useCheckPermission } from '@/_template/CheckPermission'
 import RemainLeaveEditModal from './modal/RemainLeaveEditModal'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const RemainLeaveSearchResult = () => {
   const theme = useTheme()
@@ -129,6 +130,7 @@ const RemainLeaveSearchResult = () => {
     21: 'AL_ACCUMULATE',
     22: 'AL_EXCEED'
   }
+  const { t } = useTranslation()
 
   const transformDataForExport = (dataList: RemainLeaveInterface[]) => {
     // Group by employee
@@ -318,7 +320,7 @@ const RemainLeaveSearchResult = () => {
     () => [
       {
         id: 'detail',
-        header: 'ACTIONS',
+        header: t('ACTIONS'),
         size: 130,
         Cell: ({ row }) => (
           <Button size='small' onClick={() => handleOpenEditModal(row.original)}>
@@ -330,20 +332,20 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE'
+        header: t('Employee Code')
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
-        header: 'EMPLOYEE NAME',
+        header: t('Employee Name'),
         accessorFn: row => `${row.EMPLOYEE_NAME || ''}${row.EMPLOYEE_SURNAME ? ' ' + row.EMPLOYEE_SURNAME : ''}`
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION'
+        header: t('Section')
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
-        header: 'START WORK',
+        header: t('Start Work'),
         Cell: ({ cell }) => {
           const dateValue = cell.getValue() as string
           return dateValue ? dayjs(dateValue).format('DD-MMM-YYYY') : '-'
@@ -351,11 +353,11 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: 'LEAVE TYPE'
+        header: t('Leave Type')
       },
       {
         accessorKey: 'LEAVE_REMAIN_DAY',
-        header: 'LEAVE REMAINING'
+        header: t('Leave Remaining')
       }
     ],
     []
@@ -412,7 +414,7 @@ const RemainLeaveSearchResult = () => {
     <>
       <Card>
         <CardHeader
-          title='Search result'
+          title={t('Search result')}
           action={
             <Stack direction='row' spacing={2} alignItems='center'>
               <Button
@@ -428,7 +430,7 @@ const RemainLeaveSearchResult = () => {
                   )
                 }
               >
-                {isExportingRemainLeave || isFetchingRemainLeaveExport ? 'Exporting...' : 'Export Remain Leave'}
+                {isExportingRemainLeave || isFetchingRemainLeaveExport ? t('Exporting...') : t('Export Remain Leave')}
               </Button>
               <Divider orientation='vertical' flexItem />
               <Button
@@ -444,7 +446,7 @@ const RemainLeaveSearchResult = () => {
                   )
                 }
               >
-                {isExportingALExceed || isFetchingALExceedExport ? 'Exporting...' : 'Export AL Exceed'}
+                {isExportingALExceed || isFetchingALExceedExport ? t('Exporting...') : t('Export AL Exceed')}
               </Button>
             </Stack>
           }

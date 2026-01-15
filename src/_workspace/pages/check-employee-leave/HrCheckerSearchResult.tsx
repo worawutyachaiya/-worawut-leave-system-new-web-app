@@ -270,7 +270,7 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'STATUS',
-        header: 'APPROVAL',
+        header: t('Approval'),
         size: 150,
         enableSorting: false,
         muiTableBodyCellProps: {
@@ -325,15 +325,15 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: t('REASON')
+        header: t('Reason')
       },
       {
         accessorKey: 'IN_TIME',
-        header: t('In Time')
+        header: t('in time')
       },
       {
         accessorKey: 'OUT_TIME',
-        header: t('Out Time')
+        header: t('out time')
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
@@ -422,7 +422,7 @@ function HrCheckerSearchResult() {
   return (
     <Card>
       <CardHeader
-        title={t('Check Employee Leave Results')}
+        title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>
@@ -434,7 +434,7 @@ function HrCheckerSearchResult() {
                 alt='excel'
                 className='me-1'
               />
-              Export
+              {t('Export')}
             </Button>
             <Button
               variant='tonal'
@@ -443,7 +443,7 @@ function HrCheckerSearchResult() {
               disabled={isSelectAllData}
               startIcon={<i className='tabler-archive' />}
             >
-              Select Data
+              {t('Select Data')}
             </Button>
             <Button
               variant='tonal'
@@ -452,7 +452,7 @@ function HrCheckerSearchResult() {
               disabled={isSelectAllData || selectedRows.length === 0}
               startIcon={<i className='tabler-x' />}
             >
-              Clear Data
+              {t('Clear Data')}
             </Button>
             <Button
               variant='tonal'
@@ -461,7 +461,7 @@ function HrCheckerSearchResult() {
               disabled={isPageSelected || isSelectAllData}
               startIcon={<i className='tabler-database' />}
             >
-              Select All Data
+              {t('Select All Data')}
             </Button>
             <Button
               variant='tonal'
@@ -470,7 +470,7 @@ function HrCheckerSearchResult() {
               disabled={selectedRows.length === 0 || isCreatingHrChecker}
               startIcon={<i className='tabler-circle-check' />}
             >
-              Check ({selectedRows.length})
+              {t('Check')} ({selectedRows.length})
             </Button>
           </Stack>
         }

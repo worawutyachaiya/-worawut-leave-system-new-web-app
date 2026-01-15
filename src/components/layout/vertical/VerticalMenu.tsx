@@ -34,6 +34,7 @@ import { MenuI } from '@/types/security-center-system/MenuTypes'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import menuData from '@_workspace/navigation/verticalMenuData'
 import { useEffect, useState } from 'react'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 type RenderExpandIconProps = {
   open?: boolean
@@ -41,7 +42,6 @@ type RenderExpandIconProps = {
 }
 
 type Props = {
-  dictionary: Awaited<ReturnType<typeof getDictionary>>
   scrollMenu: (container: any, isPerfectScrollbar: boolean) => void
 }
 
@@ -71,11 +71,12 @@ export interface PermissionInterface {
   children?: { text: string; link: string; id?: string }[]
 }
 
-const VerticalMenu = ({ dictionary, scrollMenu }: Props) => {
+const VerticalMenu = ({ scrollMenu }: Props) => {
   // Hooks
   const theme = useTheme()
   const verticalNavOptions = useVerticalNav()
   const params = useParams()
+  const { dictionary } = useTranslation()
 
   // Vars
   const { isBreakpointReached, transitionDuration } = verticalNavOptions

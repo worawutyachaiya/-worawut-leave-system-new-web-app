@@ -329,7 +329,7 @@ function TimeRecordCheckerSearchResult() {
   return (
     <Card>
       <CardHeader
-        title={t('Time Record Checker')}
+        title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>

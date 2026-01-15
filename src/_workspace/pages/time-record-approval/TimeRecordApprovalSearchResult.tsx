@@ -202,12 +202,12 @@ function TimeRecordApprovalSearchResult() {
       },
       {
         accessorKey: 'IN_TIME',
-        header: t('Time In'),
+        header: t('in time'),
         size: 200
       },
       {
         accessorKey: 'OUT_TIME',
-        header: t('Time Out'),
+        header: t('out time'),
         size: 200
       },
       {
@@ -217,7 +217,7 @@ function TimeRecordApprovalSearchResult() {
       },
       {
         accessorKey: 'TIME_RECORD_REQUEST_STATUS',
-        header: 'APPROVAL',
+        header: t('Approval'),
         enableSorting: false,
         size: 150,
         muiTableBodyCellProps: {
@@ -258,7 +258,7 @@ function TimeRecordApprovalSearchResult() {
   return (
     <Card>
       <CardHeader
-        title={t('Time Record Approval')}
+        title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>
@@ -271,7 +271,7 @@ function TimeRecordApprovalSearchResult() {
               disabled={Object.keys(rowSelection).length === 0}
               onClick={handleApprove}
             >
-              Approve
+              {t('Approve')}
             </Button>
             <Button
               variant='tonal'
@@ -279,7 +279,7 @@ function TimeRecordApprovalSearchResult() {
               disabled={Object.keys(rowSelection).length === 0}
               onClick={handleReject}
             >
-              Reject
+              {t('Reject')}
             </Button>
           </Stack>
         }

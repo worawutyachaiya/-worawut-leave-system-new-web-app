@@ -32,8 +32,10 @@ import { fetchSection } from '@/_workspace/react-select/async-promise-load-optio
 // Types
 import { FormDataPage, statusOptions } from './validationSchema'
 import { MENU_ID } from './env'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const UserProbationSearchFilter = () => {
+  const { t } = useTranslation()
   const [collapse, setCollapse] = useState(true)
   const { control, handleSubmit, setValue, getValues } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
@@ -94,7 +96,7 @@ const UserProbationSearchFilter = () => {
   return (
     <Card sx={{ marginBottom: 4 }}>
       <CardHeader
-        title='Search filters'
+        title={t('Search filters')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <IconButton onClick={() => setCollapse(!collapse)}>
@@ -113,7 +115,7 @@ const UserProbationSearchFilter = () => {
                 render={({ field }) => (
                   <AsyncSelectCustom
                     {...field}
-                    label={'Employee CODE'}
+                    label={t('Employee Code')}
                     isClearable
                     cacheOptions
                     defaultOptions
@@ -123,7 +125,7 @@ const UserProbationSearchFilter = () => {
                     }}
                     getOptionLabel={(option: any) => option.EMPLOYEE_CODE || ''}
                     getOptionValue={(option: any) => option.EMPLOYEE_CODE || ''}
-                    placeholder={'Enter employee code'}
+                    placeholder={t('Enter employee code')}
                     classNamePrefix='select'
                   />
                 )}
@@ -139,8 +141,8 @@ const UserProbationSearchFilter = () => {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label='Employee Name'
-                    placeholder='Enter employee name'
+                    label={t('Employee Name')}
+                    placeholder={t('Enter employee name')}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -156,8 +158,8 @@ const UserProbationSearchFilter = () => {
                 render={({ field, fieldState: { error } }) => (
                   <AsyncSelectCustom
                     {...field}
-                    label='Section'
-                    placeholder='Select Section'
+                    label={t('Section')}
+                    placeholder={t('Select Section')}
                     classNamePrefix={'select'}
                     defaultOptions
                     cacheOptions
@@ -183,8 +185,8 @@ const UserProbationSearchFilter = () => {
                 render={({ field, fieldState: { error } }) => (
                   <SelectCustom
                     {...field}
-                    label='Status'
-                    placeholder='Select status'
+                    label={t('Status')}
+                    placeholder={t('Select status')}
                     options={statusOptions as any}
                     isClearable
                     error={!!error}
@@ -205,10 +207,10 @@ const UserProbationSearchFilter = () => {
                 startIcon={isEnableFetching ? <CircularProgress size={16} color='inherit' /> : null}
                 disabled={isEnableFetching}
               >
-                Search
+                {t('Search')}
               </Button>
               <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
-                Clear
+                {t('Clear')}
               </Button>
             </Grid>
           </Grid>

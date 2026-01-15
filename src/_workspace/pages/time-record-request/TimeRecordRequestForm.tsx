@@ -15,7 +15,11 @@ import TimeRecordSuccessModal, { MessageType } from './modal/TimeRecordSuccessMo
 import { FormDataPage } from './validationSchema'
 import type { TimeRecordTypeI } from '@/_workspace/types/time-record/TimeRecordInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 function TimeRecordRequestForm() {
+  const { t } = useTranslation()
+
   const [resultModal, setResultModal] = useState({
     open: false,
     message: '',
@@ -31,7 +35,7 @@ function TimeRecordRequestForm() {
   const showReasonField = watchTimeRecordType?.TIME_RECORD_TYPE_ID === 4
   const { mutateAsync: createTimeRecord } = useCreateTimeRecord()
   const onSubmit: SubmitHandler<FormDataPage> = () => {
-    setConfirmModal(true) 
+    setConfirmModal(true)
   }
   const handleConfirmSubmit = async (): Promise<void> => {
     const searchFilters = getValues('searchFilters')
@@ -147,7 +151,7 @@ function TimeRecordRequestForm() {
                           customInput={
                             <CustomTextField
                               fullWidth
-                              label='Time In'
+                              label={t('in time')}
                               placeholder='Select time'
                               error={!!errors.searchFilters?.timeIn}
                               helperText={errors.searchFilters?.timeIn?.message}
@@ -176,13 +180,13 @@ function TimeRecordRequestForm() {
                         selected={value ? new Date(value) : null}
                         openToDate={value ? new Date(value) : dayjs().set('hour', 8).set('minute', 30).toDate()}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')}
-                        placeholderText='Choose a date'
+                        placeholderText={t('Choose a date')}
                         dateFormat='dd-MMM-yyyy'
                         customInput={
                           <CustomTextField
                             fullWidth
-                            label='Date In'
-                            placeholder='Choose a date'
+                            label={t('date in')}
+                            placeholder={t('Choose a date')}
                             error={!!errors.searchFilters?.dateIn}
                             helperText={errors.searchFilters?.dateIn?.message}
                           />
@@ -217,7 +221,7 @@ function TimeRecordRequestForm() {
                           customInput={
                             <CustomTextField
                               fullWidth
-                              label='Time Out'
+                              label={t('out time')}
                               placeholder='Select time'
                               error={!!errors.searchFilters?.timeOut}
                               helperText={errors.searchFilters?.timeOut?.message}
@@ -245,13 +249,13 @@ function TimeRecordRequestForm() {
                         autoComplete='off'
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')}
-                        placeholderText='Choose a date'
+                        placeholderText={t('Choose a date')}
                         dateFormat='dd-MMM-yyyy'
                         customInput={
                           <CustomTextField
                             fullWidth
-                            label='Date Out'
-                            placeholder='Choose a date'
+                            label={t('date out')}
+                            placeholder={t('Choose a date')}
                             error={!!errors.searchFilters?.dateOut}
                             helperText={errors.searchFilters?.dateOut?.message}
                           />
@@ -268,14 +272,14 @@ function TimeRecordRequestForm() {
                     render={({ field }) => (
                       <AsyncSelectCustom<TimeRecordTypeI>
                         {...field}
-                        label='Select a reason'
+                        label={t('select a reason')}
                         isClearable
                         cacheOptions
                         defaultOptions
                         loadOptions={fetchTimeRecordTypes}
                         getOptionLabel={(option: TimeRecordTypeI) => option.TIME_RECORD_TYPE_DESCRIPTION}
                         getOptionValue={(option: TimeRecordTypeI) => option.TIME_RECORD_TYPE_ID.toString()}
-                        placeholder='Select a reason...'
+                        placeholder={t('select a reason')}
                         error={!!errors.searchFilters?.timeRecordType}
                         helperText={errors.searchFilters?.timeRecordType?.message}
                         classNamePrefix='select'
@@ -293,8 +297,8 @@ function TimeRecordRequestForm() {
                         <CustomTextField
                           {...field}
                           fullWidth
-                          label='Reason'
-                          placeholder='Enter reason'
+                          label={t('Reason')}
+                          placeholder={t('Enter Reason')}
                           error={!!errors.searchFilters?.reason}
                           helperText={errors.searchFilters?.reason?.message}
                           multiline
@@ -310,14 +314,14 @@ function TimeRecordRequestForm() {
                     {isSubmitting ? (
                       <>
                         <CircularProgress size={20} sx={{ mr: 1 }} />
-                        Submitting...
+                        {t('Submitting...')}
                       </>
                     ) : (
-                      'Submit'
+                      t('Submit')
                     )}
                   </Button>
                   <Button type='button' variant='tonal' color='secondary' onClick={handleClear} disabled={isSubmitting}>
-                    Clear
+                    {t('Clear')}
                   </Button>
                 </Grid>
               </Grid>

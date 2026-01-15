@@ -171,12 +171,12 @@ const UserLeaveSearchResult = () => {
       setEditModalOpen(false)
       setSelectedLeave(null)
       refetch()
-      toast.success('Update leave successfully')
+      toast.success(t('Update leave successfully'))
     },
     error => {
       // Error
       console.error('Update failed:', error)
-      toast.error('Failed to update leave. Please try again.')
+      toast.error(t('Failed to update leave. Please try again.'))
     }
   )
 
@@ -187,12 +187,12 @@ const UserLeaveSearchResult = () => {
       setDeleteModalOpen(false)
       setSelectedLeave(null)
       refetch()
-      toast.success('Delete leave successfully')
+      toast.success(t('Delete leave successfully'))
     },
     error => {
       // Error
       console.error('Delete failed:', error)
-      toast.error('Failed to delete leave. Please try again.')
+      toast.error(t('Failed to delete leave. Please try again.'))
     }
   )
 
@@ -292,11 +292,11 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'REQUEST DATE'
+        header: t('Request Date')
       },
       {
         accessorKey: 'LEAVE_ATTACHMENT',
-        header: 'LEAVE ATTACHMENT',
+        header: t('Leave Attachment'),
         enableSorting: false,
         Cell: ({ row }) => {
           return (
@@ -309,24 +309,24 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE'
+        header: t('Employee Code')
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
-        header: 'EMPLOYEE NAME',
+        header: t('Employee Name'),
         Cell: ({ row }) => `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION'
+        header: t('Section')
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
-        header: 'LEAVE TYPE'
+        header: t('Leave Type')
       },
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
-        header: 'LEAVE DATE',
+        header: t('Leave Date'),
         Cell: ({ cell }) => {
           const date = cell.getValue<string>()
           if (!date) return '-'
@@ -339,31 +339,31 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'TIME'
+        header: t('Time')
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: 'TOTAL DAY LEAVE'
+        header: t('Total Day Leave')
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: 'REASON'
+        header: t('Reason')
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: 'MODIFIED'
+        header: t('Modified')
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'MODIFIED BY'
+        header: t('Modified By')
       }
     ],
-    []
+    [t]
   )
 
   return (
     <Card sx={{ mt: 4 }}>
-      <CardHeader title='Search result' />
+      <CardHeader title={t('Search result')} />
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DxMRTTable

@@ -35,10 +35,10 @@ const InnerApp = () => {
   }, [isLoadingReactHookForm])
   const breadcrumbs = [
     <Typography key='1' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      {t('Menu.Home')}
+      Home
     </Typography>,
     <Typography key='2' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      {t('Menu.Employee Leave')}
+      Employee Leave
     </Typography>
   ]
   return (
@@ -46,7 +46,7 @@ const InnerApp = () => {
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
         <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>{t('Menu.Employee Leave')}</Typography>
+          <Typography variant='h4'>Employee Leave</Typography>
           <Divider orientation='vertical' flexItem />
           <Breadcrumbs
             separator='›'

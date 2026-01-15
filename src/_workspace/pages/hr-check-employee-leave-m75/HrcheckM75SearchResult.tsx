@@ -31,8 +31,7 @@ import HrCheckM75ConfirmModal from './modal/HrCheckM75ConfirmModal'
 import HrCheckM75ExportModal from './modal/HrCheckM75ExportModal'
 import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessage'
 
-
-// Helper functions 
+// Helper functions
 const formatDate = (date: string | null | undefined) => {
   if (!date) return '-'
   return dayjs(date).format('DD/MM/YYYY')
@@ -84,11 +83,9 @@ function HrcheckM75SearchResult() {
   const [isCheckConfirmModalOpen, setIsCheckConfirmModalOpen] = useState(false)
   const [isExportModalOpen, setIsExportModalOpen] = useState(false)
 
-
-
   const params = {
     EMPLOYEE_CODE: getValues('searchFilters.employeeCode')?.EMPLOYEE_CODE || '',
-    LEAVE_TYPE: getValues('searchFilters.leaveType')?.map((item) => item.LEAVE_TYPE_ID) || [],
+    LEAVE_TYPE: getValues('searchFilters.leaveType')?.map(item => item.LEAVE_TYPE_ID) || [],
     START_DATE: getValues('searchFilters.startDate') || dayjs().subtract(1, 'year').endOf('year').format('YYYY-MM-DD'),
     END_DATE: getValues('searchFilters.endDate') || dayjs().add(1, 'year').endOf('year').format('YYYY-MM-DD'),
     STATUS: getValues('searchFilters.status')?.value || '', // Extract value from object
@@ -130,7 +127,7 @@ function HrcheckM75SearchResult() {
 
   // M75 Check mutation
   const { mutateAsync: createHrCheckerM75, isPending: isCreatingHrChecker } = useCreateHrCheckerM75(
-    (data) => {
+    data => {
       if (data?.data?.Status) {
         ToastMessageSuccess({ message: data.data.Message || t('M75 Check Success') })
         queryClient.invalidateQueries({ queryKey: ['HR_CHECK_M75'] })
@@ -142,7 +139,7 @@ function HrcheckM75SearchResult() {
         ToastMessageError({ message: data?.data?.Message || t('M75 Check Failed') })
       }
     },
-    (error) => {
+    error => {
       ToastMessageError({ message: error.message || t('An error occurred') })
     }
   )
@@ -227,10 +224,7 @@ function HrcheckM75SearchResult() {
     setIsEnableFetching(true)
   }, [JSON.stringify([columnFilters, sorting, pagination])])
 
-
-
   // // Memoize row selection function
-
 
   const columns = useMemo<MRT_ColumnDef<HrCheckerM75ResponseData>[]>(
     () => [
@@ -381,12 +375,7 @@ function HrcheckM75SearchResult() {
   )
   const renderEmptyRowsFallback = () => {
     return (
-      <Stack
-        justifyContent='center'
-        alignItems='center'
-        spacing={2}
-        sx={{ py: 10, width: '100%' }}
-      >
+      <Stack justifyContent='center' alignItems='center' spacing={2} sx={{ py: 10, width: '100%' }}>
         <i className='tabler-file-off' style={{ fontSize: '64px', color: '#E0E0E0' }} />
         <Box textAlign='center'>
           <Typography variant='h6' color='text.secondary'>
@@ -427,7 +416,7 @@ function HrcheckM75SearchResult() {
   return (
     <Card sx={{ mt: 4 }}>
       <CardHeader
-        title={t('M75 Search Results')}
+        title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>
@@ -462,17 +451,14 @@ function HrcheckM75SearchResult() {
         isLoading={isCreatingHrChecker}
       />
       {/* Export Modal */}
-      <HrCheckM75ExportModal
-        open={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-      />
+      <HrCheckM75ExportModal open={isExportModalOpen} onClose={() => setIsExportModalOpen(false)} />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DxMRTTable
           columns={columns}
           data={finalData}
           isError={isError}
           rowCount={totalRecords}
-          getRowId={(row) => String(row.LEAVE_REQUEST_ID)}
+          getRowId={row => String(row.LEAVE_REQUEST_ID)}
           onColumnFiltersChange={setColumnFilters}
           onColumnFilterFnsChange={setColumnFilterFns}
           onPaginationChange={setPagination}
@@ -482,7 +468,7 @@ function HrcheckM75SearchResult() {
           onColumnPinningChange={setColumnPinning}
           onColumnOrderChange={setColumnOrder}
           onRowSelectionChange={handleMRTRowSelectionChange}
-          enableRowSelection={(row) => !row.original.CHECKED}
+          enableRowSelection={row => !row.original.CHECKED}
           state={{
             columnFilters,
             isLoading: isLoading,

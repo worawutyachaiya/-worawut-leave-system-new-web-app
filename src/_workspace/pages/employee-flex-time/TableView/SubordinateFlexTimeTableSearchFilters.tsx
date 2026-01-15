@@ -108,7 +108,7 @@ function SubordinateFlexTimeTableSearchFilters() {
                     getOptionValue={data => data?.EMPLOYEE_ID?.toString() || data?.EMPLOYEE_CODE?.toString() || ''}
                     getOptionLabel={data => data?.EMPLOYEE_ID?.toString() || data?.EMPLOYEE_CODE?.toString() || ''}
                     classNamePrefix='select'
-                    label={t('Employee CODE')}
+                    label={t('Employee Code')}
                     placeholder={t('Enter employee code')}
                   />
                 )}

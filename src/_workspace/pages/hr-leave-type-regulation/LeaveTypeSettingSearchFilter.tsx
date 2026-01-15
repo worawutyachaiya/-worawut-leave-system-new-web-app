@@ -91,7 +91,7 @@ const LeaveTypeSettingSearchFilter = () => {
 
   return (
     <Card sx={{ marginBottom: 4 }}>
-      <CardHeader title='Search filters' titleTypographyProps={{ variant: 'h5' }} />
+      <CardHeader title={t('Search filters')} titleTypographyProps={{ variant: 'h5' }} />
       <Divider />
       <CardContent>
         <Grid container spacing={4}>
@@ -103,8 +103,8 @@ const LeaveTypeSettingSearchFilter = () => {
               render={({ field, fieldState: { error } }) => (
                 <SelectCustom
                   {...field}
-                  label='Department'
-                  placeholder='Select department'
+                  label={t('Department')}
+                  placeholder={t('Select department')}
                   options={departmentOptions}
                   isClearable
                   classNamePrefix={'select'}
@@ -123,8 +123,8 @@ const LeaveTypeSettingSearchFilter = () => {
               render={({ field, fieldState: { error } }) => (
                 <AsyncSelectCustom
                   {...field}
-                  label='Leave Type'
-                  placeholder='Select leave type'
+                  label={t('Leave Type')}
+                  placeholder={t('Select leave type')}
                   loadOptions={async (inputValue: string) => {
                     const data = await fetchLeaveTypeAll()
                     return data
@@ -153,8 +153,8 @@ const LeaveTypeSettingSearchFilter = () => {
               render={({ field, fieldState: { error } }) => (
                 <SelectCustom
                   {...field}
-                  label='Status'
-                  placeholder='Select status'
+                  label={t('Status')}
+                  placeholder={t('Select status')}
                   options={statusOptions}
                   isClearable
                   classNamePrefix={'select'}
@@ -178,7 +178,7 @@ const LeaveTypeSettingSearchFilter = () => {
               {isEnableFetching ? t('Searching') : t('Search')}
             </Button>
             <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
-              Clear
+              {t('Clear')}
             </Button>
           </Grid>
         </Grid>

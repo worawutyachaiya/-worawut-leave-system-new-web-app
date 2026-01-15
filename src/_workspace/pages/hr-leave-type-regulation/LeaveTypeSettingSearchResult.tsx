@@ -133,13 +133,13 @@ const LeaveTypeSettingSearchResult = () => {
         queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
         setDeleteDialogOpen(false)
         setDeleteTarget(null)
-        toast.success(response.data.Message || 'Deleted successfully')
+        toast.success(response.data.Message || t('Deleted successfully'))
       } else {
-        toast.error(response.data.Message || 'Failed to delete')
+        toast.error(response.data.Message || t('Failed to delete'))
       }
     },
     error => {
-      toast.error('Failed to delete. Please try again.')
+      toast.error(t('Failed to delete. Please try again.'))
     }
   )
 
@@ -226,27 +226,27 @@ const LeaveTypeSettingSearchResult = () => {
       {
         accessorFn: row => `${row.LEAVE_TYPE_DESCRIPTION_TH || ''} / ${row.LEAVE_TYPE_DESCRIPTION_EN || ''}`,
         id: 'LEAVE_TYPE',
-        header: 'LEAVE TYPE'
+        header: t('Leave Type')
       },
       {
         accessorKey: 'DEPARTMENT',
-        header: 'DEPARTMENT'
+        header: t('Department')
       },
       {
         accessorKey: 'LEAVE_TYPE_REQUEST_DAY_BEFORE_USE',
-        header: 'REQUEST LEAVE DAY BEFORE USE',
+        header: t('Request Leave Day Before Use'),
         size: 350
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'MODIFIED BY'
+        header: t('Modified By')
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: 'MODIFIED'
+        header: t('Modified')
       }
     ],
-    []
+    [t]
   )
 
   const handleAddNew = () => {
@@ -286,10 +286,10 @@ const LeaveTypeSettingSearchResult = () => {
     <>
       <Card sx={{ mt: 4 }}>
         <CardHeader
-          title='Search result'
+          title={t('Search result')}
           action={
             <Button variant='contained' color='success' startIcon={<AddIcon />} onClick={handleAddNew}>
-              Add New
+              {t('Add New')}
             </Button>
           }
         />
@@ -348,8 +348,8 @@ const LeaveTypeSettingSearchResult = () => {
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={handleDeleteConfirm}
         loading={isDeleting}
-        title='Delete Leave Type Regulation?'
-        content={`Are you sure you want to delete this regulation? This action cannot be undone.`}
+        title={t('Delete Leave Type Regulation?')}
+        content={t('Are you sure you want to delete this regulation? This action cannot be undone.')}
       />
     </>
   )

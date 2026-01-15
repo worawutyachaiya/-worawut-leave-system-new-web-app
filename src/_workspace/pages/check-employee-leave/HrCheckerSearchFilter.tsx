@@ -84,8 +84,7 @@ function HrCheckerSearchFilter() {
     }
     mutate(dataItem)
   }
-  const onMutateSuccess = () => {
-  }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save settings error:', e)
   }
@@ -112,7 +111,7 @@ function HrCheckerSearchFilter() {
                 render={({ field }) => (
                   <AsyncSelectCustom
                     {...field}
-                    label={t('Employee CODE')}
+                    label={t('Employee Code')}
                     isClearable
                     cacheOptions
                     defaultOptions

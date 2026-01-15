@@ -659,7 +659,7 @@ function RequestLeaveFormHr() {
                             <CloudUploadIcon sx={{ color: 'white' }} />
                           </Avatar>
                           <Typography variant='h6' sx={{ mb: 1 }}>
-                            {isDragActive ? 'Drop file here' : 'Drag & drop file here, or click to select'}
+                            {isDragActive ? t('Drop file here') : t('Drag & drop file here, or click to select')}
                           </Typography>
                           <Typography color='text.secondary'>
                             {t('Supported: Max')}{' '}

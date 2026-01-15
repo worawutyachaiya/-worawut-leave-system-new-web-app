@@ -58,13 +58,13 @@ function LeaveApprovalSearchFilter() {
   const { setIsEnableFetching } = useDxContext()
   const [collapse, setCollapse] = useState(false)
   const { setValue, getValues, control, handleSubmit, watch } = useFormContext<FormDataPage>()
-  const { isLoading, } = useFormState({ control })
+  const { isLoading } = useFormState({ control })
   const queryClient = useQueryClient()
   const { t } = useTranslation()
   const handleClear = () => {
     setValue('searchFilters', {
-      employeeCode: "",
-      employeeName: "",
+      employeeCode: '',
+      employeeName: '',
       section: null,
       startDate: dayjs(new Date()).format('YYYY-MM-DD'),
       department: null,
@@ -82,8 +82,7 @@ function LeaveApprovalSearchFilter() {
   const onError: SubmitErrorHandler<FormDataPage> = errors => {
     console.log('Search Errors:', errors)
   }
-  const onMutateSuccess = () => {
-  }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save settings error:', e)
   }
@@ -180,13 +179,7 @@ function LeaveApprovalSearchFilter() {
                   >
                     {isPending ? t('Searching') : t('Search')}
                   </Button>
-                  <Button
-                    variant='tonal'
-                    color='secondary'
-                    type='button'
-                    onClick={handleClear}
-                    disabled={isPending}
-                  >
+                  <Button variant='tonal' color='secondary' type='button' onClick={handleClear} disabled={isPending}>
                     {t('Clear')}
                   </Button>
                 </Box>
