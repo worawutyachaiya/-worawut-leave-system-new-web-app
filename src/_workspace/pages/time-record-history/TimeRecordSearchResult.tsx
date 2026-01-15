@@ -134,7 +134,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'APPROVER',
-        header: 'Approval',
+        header: t('Approval'),
         size: 150,
         enableSorting: false,
         Cell: ({ row }) => {
@@ -143,7 +143,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'Request Date',
+        header: t('Request Date'),
         size: 205,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -152,31 +152,31 @@ function SearchResult() {
       },
       {
         accessorKey: 'IN_TIME',
-        header: 'IN',
+        header: t('in time'),
         size: 180,
         enableSorting: false
       },
       {
         accessorKey: 'OUT_TIME',
-        header: 'OUT',
+        header: t('out time'),
         size: 150,
         enableSorting: false
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
-        header: 'Reason',
+        header: t('Reason'),
         size: 200,
         enableSorting: false
       },
       {
         accessorKey: 'REMARK',
-        header: 'Remark',
+        header: t('Remark'),
         size: 200,
         enableSorting: false
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: 'Update Date',
+        header: t('Update Date'),
         size: 195,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -185,7 +185,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'Update By',
+        header: t('Updated By'),
         size: 180
       }
     ],
@@ -219,7 +219,7 @@ function SearchResult() {
   return (
     <>
       <Card>
-        <CardHeader title={t('Time Record History Result')} />
+        <CardHeader title={t('Search result')} />
         {/* Modal Area (ถ้ามี) */}
         {/* {openModalAdd && <LeaveHistoryModal openModal={openModalAdd} setOpenModal={setOpenModalAdd} mode='Add' />} */}
         <LocalizationProvider dateAdapter={AdapterDayjs}>

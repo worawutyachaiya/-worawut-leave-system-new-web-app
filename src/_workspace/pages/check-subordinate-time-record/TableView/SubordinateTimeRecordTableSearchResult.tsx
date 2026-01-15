@@ -130,7 +130,7 @@ function SubordinateTimeRecordTableSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: t('Employee CODE'),
+        header: t('Employee Code'),
         size: 130
       },
       {
@@ -159,14 +159,14 @@ function SubordinateTimeRecordTableSearchResult() {
       },
       {
         accessorKey: 'IN_TIME',
-        header: t('In Time'),
+        header: t('in time'),
         size: 130,
         enableSorting: false,
         Cell: ({ row }) => row.original.IN_TIME || '-'
       },
       {
         accessorKey: 'OUT_TIME',
-        header: t('Out Time'),
+        header: t('out time'),
         size: 130,
         enableSorting: false,
         Cell: ({ row }) => row.original.OUT_TIME || '-'

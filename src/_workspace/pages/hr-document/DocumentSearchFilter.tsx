@@ -20,8 +20,10 @@ import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrDocument'
 
 import { FormDataPage, statusOptions } from './validationSchema'
 import { MENU_ID } from './env'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const DocumentSearchFilter = () => {
+  const { t } = useTranslation()
   const [collapse, setCollapse] = useState(true)
   const { control, handleSubmit, setValue, getValues } = useFormContext<FormDataPage>()
   const { setIsEnableFetching, isEnableFetching } = useDxContext()
@@ -80,7 +82,7 @@ const DocumentSearchFilter = () => {
   return (
     <Card sx={{ marginBottom: 4 }}>
       <CardHeader
-        title='Search filters'
+        title={t('Search filters')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <IconButton onClick={() => setCollapse(!collapse)}>
@@ -100,8 +102,8 @@ const DocumentSearchFilter = () => {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label='Document Name'
-                    placeholder='Enter document name'
+                    label={t('Document Name')}
+                    placeholder={t('Enter document name')}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -117,8 +119,8 @@ const DocumentSearchFilter = () => {
                 render={({ field, fieldState: { error } }) => (
                   <SelectCustom
                     {...field}
-                    label='Status'
-                    placeholder='Select status'
+                    label={t('Status')}
+                    placeholder={t('Select status')}
                     options={statusOptions}
                     isClearable
                     error={!!error}
@@ -139,10 +141,10 @@ const DocumentSearchFilter = () => {
                 startIcon={isEnableFetching ? <CircularProgress size={16} color='inherit' /> : null}
                 disabled={isEnableFetching}
               >
-                Search
+                {t('Search')}
               </Button>
               <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
-                Clear
+                {t('Clear')}
               </Button>
             </Grid>
           </Grid>

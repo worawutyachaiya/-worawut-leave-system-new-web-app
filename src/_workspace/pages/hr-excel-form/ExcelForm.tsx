@@ -100,7 +100,7 @@ const ExcelForm = () => {
           }
         }
       } else {
-        setTypeError('Please select only Excel file types (.xlsx, .xls, .csv)')
+        setTypeError(t('Please select only Excel file types (.xlsx, .xls, .csv)'))
         setExcelFile(null)
         setSelectedFile(null)
       }
@@ -140,7 +140,7 @@ const ExcelForm = () => {
   // Handle submit
   const handleSubmit = async () => {
     if (!excelData || excelData.length <= 0) {
-      ToastMessageError({ message: 'No data to submit' })
+      ToastMessageError({ message: t('No data to submit') })
       return
     }
 
@@ -148,7 +148,7 @@ const ExcelForm = () => {
     const validation = validateExcelData(excelData)
     if (!validation.success) {
       setValidationErrors(validation.errors?.map(e => `${e.path}: ${e.message}`) || [])
-      ToastMessageError({ message: 'Validation failed' })
+      ToastMessageError({ message: t('Validation failed') })
       return
     }
     setValidationErrors([])
@@ -213,7 +213,7 @@ const ExcelForm = () => {
         }
       }
 
-      ToastMessageSuccess({ message: 'Data submitted successfully!' })
+      ToastMessageSuccess({ message: t('Data submitted successfully!') })
       // Reset
       setExcelFile(null)
       setExcelData(null)
@@ -229,7 +229,7 @@ const ExcelForm = () => {
   // Steps configuration
   const steps = [
     {
-      label: 'Download a new format file',
+      label: t('Download a new format file'),
       description: '',
       icon: <DownloadIcon />,
       color: 'primary' as const,
@@ -255,14 +255,14 @@ const ExcelForm = () => {
       )
     },
     {
-      label: 'Enter data in excel from file downloaded',
-      description: '* Please do not change the file format from default and enter all require cell',
+      label: t('Enter data in excel from file downloaded'),
+      description: t('* Please do not change the file format from default'),
       icon: <EditNoteIcon />,
       color: 'info' as const,
-      content: <Typography color='text.secondary'>Fill in the required data in the Excel template</Typography>
+      content: <Typography color='text.secondary'>{t('Fill in the required data in the Excel template')}</Typography>
     },
     {
-      label: 'Upload the excel file',
+      label: t('Upload the excel file'),
       description: '',
       icon: <UploadFileIcon />,
       color: 'warning' as const,
@@ -306,7 +306,7 @@ const ExcelForm = () => {
                   <CloudUploadIcon sx={{ color: 'white' }} />
                 </Avatar>
                 <Typography variant='h6' sx={{ mb: 1 }}>
-                  {isDragActive ? 'Drop file here' : 'Drag & drop file here, or click to select'}
+                  {isDragActive ? t('Drop file here') : t('Drag & drop file here, or click to select')}
                 </Typography>
                 <Typography color='text.secondary'>{t('Supported: .xlsx, .xls, .csv')}</Typography>
               </div>
@@ -369,7 +369,7 @@ const ExcelForm = () => {
           )}
 
           <Button type='submit' variant='contained' color='warning' disabled={!excelFile}>
-            Upload
+            {t('Upload File')}
           </Button>
           {typeError && (
             <Alert severity='error' sx={{ mt: 2 }}>
@@ -380,14 +380,14 @@ const ExcelForm = () => {
       )
     },
     {
-      label: 'Preview the uploaded data',
+      label: t('Preview the uploaded data'),
       description: '',
       icon: <PreviewIcon />,
       color: 'error' as const,
       content: (
         <Box>
           {!excelData || excelData.length <= 0 ? (
-            <Typography color='text.secondary'>No Result Found</Typography>
+            <Typography color='text.secondary'>{t('No Result Found')}</Typography>
           ) : (
             <TableContainer sx={{ maxHeight: 400, overflow: 'auto' }}>
               <Table stickyHeader size='small'>
@@ -427,7 +427,7 @@ const ExcelForm = () => {
       )
     },
     {
-      label: 'Submit the data',
+      label: t('Submit the data'),
       description: '',
       icon: <CheckCircleIcon />,
       color: 'success' as const,
@@ -435,7 +435,7 @@ const ExcelForm = () => {
         <Box>
           {validationErrors.length > 0 && (
             <Alert severity='error' sx={{ mb: 2 }}>
-              <Typography fontWeight='bold'>Validation Errors:</Typography>
+              <Typography fontWeight='bold'>{t('Validation Errors')}:</Typography>
               {validationErrors.map((err, idx) => (
                 <Typography key={idx} variant='body2'>
                   {err}
@@ -450,7 +450,7 @@ const ExcelForm = () => {
             disabled={isSubmitting || !excelData || excelData.length <= 0}
             startIcon={isSubmitting ? <CircularProgress size={20} color='inherit' /> : undefined}
           >
-            {isSubmitting ? 'Submitting...' : 'Submit'}
+            {isSubmitting ? t('Submitting...') : t('Submit')}
           </Button>
         </Box>
       )
@@ -459,7 +459,7 @@ const ExcelForm = () => {
 
   return (
     <Card sx={{ overflow: 'visible' }}>
-      <CardHeader title='How to import excel data' titleTypographyProps={{ variant: 'h5' }} />
+      <CardHeader title={t('How to import excel data')} titleTypographyProps={{ variant: 'h5' }} />
       <Divider />
       <CardContent>
         <Stepper activeStep={activeStep} orientation='vertical'>

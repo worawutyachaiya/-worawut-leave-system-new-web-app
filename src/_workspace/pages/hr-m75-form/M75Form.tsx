@@ -313,7 +313,7 @@ function M75Form() {
   return (
     <>
       <Card sx={{ overflow: 'visible', zIndex: 4 }}>
-        <CardHeader title='M.75 Form' titleTypographyProps={{ variant: 'h5' }} />
+        <CardHeader title={t('M75 Form')} titleTypographyProps={{ variant: 'h5' }} />
         <Divider />
         <CardContent>
           <Grid container spacing={4}>
@@ -393,7 +393,7 @@ function M75Form() {
                     )}
                     classNamePrefix='select'
                     label={t('Leave Type')}
-                    placeholder='Select Leave Type'
+                    placeholder={t('Select Leave Type')}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -433,7 +433,7 @@ function M75Form() {
                         label={`${t('Start Date')}${currentMaxDay > 0 ? ` (Available ${currentMaxDay} Days)` : ''}`}
                         fullWidth
                         error={!!error}
-                        helperText={error?.message || (!watchLeaveType ? 'Please select leave type first' : '')}
+                        helperText={error?.message || (!watchLeaveType ? t('Please Select Leave Type First') : '')}
                       />
                     }
                   />
@@ -505,7 +505,7 @@ function M75Form() {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label='Total Day Leave'
+                    label={t('Total Day Leave')}
                     placeholder='0'
                     InputProps={{ readOnly: true, sx: { bgcolor: 'action.hover' } }}
                   />
@@ -519,7 +519,7 @@ function M75Form() {
                 name='searchFilters.remark'
                 control={control}
                 render={({ field }) => (
-                  <CustomTextField {...field} fullWidth multiline rows={4} label='Remark (Optional)' />
+                  <CustomTextField {...field} fullWidth multiline rows={4} label={t('Remark (Optional)')} />
                 )}
               />
             </Grid>
@@ -534,7 +534,7 @@ function M75Form() {
                 disabled={isPending || isCalculating}
                 sx={{ color: 'white', bgcolor: 'primary.main' }}
               >
-                {isCalculating ? 'Calculating...' : isPending ? 'Submitting...' : 'Submit'}
+                {isCalculating ? t('Calculating...') : isPending ? t('Submitting...') : t('Submit')}
               </Button>
               <Button
                 type='button'
@@ -543,7 +543,7 @@ function M75Form() {
                 onClick={handleClear}
                 disabled={isPending || isCalculating}
               >
-                Clear
+                {t('Clear')}
               </Button>
             </Grid>
           </Grid>

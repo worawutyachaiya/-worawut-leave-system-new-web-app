@@ -232,11 +232,11 @@ const UserProbationSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
-        header: 'START WORK'
+        header: t('Start Work')
       },
       {
         accessorKey: 'PASS_PRD_DATE',
-        header: 'PASS PRD DATE',
+        header: t('Pass Pro Date'),
         Cell: ({ row }) => {
           const date = row.original?.PASS_PRD_DATE
           return date ? (
@@ -249,38 +249,38 @@ const UserProbationSearchResult = () => {
               onClick={() => handleEnterPassProbationDate(row.original)}
               sx={{ whiteSpace: 'nowrap' }}
             >
-              Enter Pass Probation Date
+              {t('Enter Pass Probation Date')}
             </Button>
           )
         }
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: 'EMPLOYEE CODE'
+        header: t('Employee Code')
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
-        header: 'FIRST NAME'
+        header: t('First Name')
       },
       {
         accessorKey: 'EMPLOYEE_SURNAME',
-        header: 'SURNAME'
+        header: t('Surname')
       },
       {
         accessorKey: 'EMPLOYEE_DEPT',
-        header: 'DEPARTMENT'
+        header: t('Department')
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: 'SECTION'
+        header: t('Section')
       }
     ],
-    []
+    [t]
   )
 
   return (
     <Card sx={{ mt: 4 }}>
-      <CardHeader title='Search result' />
+      <CardHeader title={t('Search result')} />
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DxMRTTable

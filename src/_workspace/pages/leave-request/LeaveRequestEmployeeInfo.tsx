@@ -77,7 +77,7 @@ function LeaveRequestEmployeeInfo() {
   return (
     <Card style={{ overflow: 'visible', zIndex: 4 }}>
       <CardHeader
-        title='Employee Information'
+        title={t('Employee Information')}
         titleTypographyProps={{ variant: 'h5' }}
         sx={{ '& .MuiCardHeader-avatar': { mr: 3 } }}
         action={

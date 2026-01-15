@@ -290,7 +290,7 @@ function FlexTimeApprovalSearchResult() {
   return (
     <Card>
       <CardHeader
-        title={t('Flex Time Approval')}
+        title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>

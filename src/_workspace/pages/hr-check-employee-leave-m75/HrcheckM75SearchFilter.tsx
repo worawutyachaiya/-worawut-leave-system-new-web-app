@@ -1,42 +1,36 @@
 import { useState } from 'react'
 
-
 import { Button, Card, CardContent, CardHeader, Grid, Collapse, IconButton, CircularProgress } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
-
 import { Controller, useFormContext } from 'react-hook-form'
 
-
 import { useQueryClient } from '@tanstack/react-query'
-
 
 import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
 import SelectCustom from '@/components/react-select/SelectCustom'
 import CustomTextField from '@/components/mui/TextField'
 import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
 
-
 import { useCreate } from '@libs/react-query/hooks/common-system/useUserProfileSettingProgram'
 import { getUserData } from '@utils/user-profile/userLoginProfile'
 
-
 import { useDxContext } from '@/_template/DxContextProvider'
-
 
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
 import fetchLeaveTypeHR from '@/_workspace/react-select/async-promise-load-options/fetchLeaveTypeHR'
 import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
 import dayjs from 'dayjs'
 
-
 import { FormDataPage, StatusOption, statusOption } from './ValidationSchema'
 import { MENU_ID } from './env'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const PREFIX_QUERY_KEY = 'HR_CHECK_M75'
 
 const HrCheckM75SearchFilter = () => {
+  const { t } = useTranslation()
   const [collapse, setCollapse] = useState(true)
   const { control, handleSubmit, setValue, getValues } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
@@ -71,7 +65,7 @@ const HrCheckM75SearchFilter = () => {
     mutate(dataItem)
   }
 
-  const onMutateSuccess = () => { }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save profile error:', e)
   }
@@ -119,14 +113,14 @@ const HrCheckM75SearchFilter = () => {
                 render={({ field }) => (
                   <AsyncSelectCustom
                     {...field}
-                    label='Employee CODE'
+                    label={t('Employee Code')}
                     isClearable
                     cacheOptions
                     defaultOptions
                     loadOptions={() => fetchAllEmployee({}) as any}
                     getOptionLabel={(data: any) => data.EMPLOYEE_CODE || ''}
                     getOptionValue={(data: any) => data.EMPLOYEE_CODE || ''}
-                    placeholder='Enter employee code'
+                    placeholder={t('Enter employee code')}
                     classNamePrefix='select'
                   />
                 )}
@@ -163,28 +157,28 @@ const HrCheckM75SearchFilter = () => {
                       </div>
                     )}
                     classNamePrefix='select'
-                    label='Leave Type'
-                    placeholder='Select Leave Type'
+                    label={t('Leave Type')}
+                    placeholder={t('Select Leave Type')}
                     error={!!error}
                     helperText={error?.message}
                     styles={{
-                      multiValue: (base) => ({
+                      multiValue: base => ({
                         ...base,
                         backgroundColor: 'var(--mui-palette-action-selected)',
-                        borderRadius: '4px',
+                        borderRadius: '4px'
                       }),
-                      multiValueLabel: (base) => ({
+                      multiValueLabel: base => ({
                         ...base,
-                        color: 'var(--mui-palette-text-primary)',
+                        color: 'var(--mui-palette-text-primary)'
                       }),
-                      multiValueRemove: (base) => ({
+                      multiValueRemove: base => ({
                         ...base,
                         color: 'var(--mui-palette-text-primary)',
                         ':hover': {
                           backgroundColor: 'var(--mui-palette-error-main)',
-                          color: 'white',
-                        },
-                      }),
+                          color: 'white'
+                        }
+                      })
                     }}
                   />
                 )}
@@ -201,8 +195,8 @@ const HrCheckM75SearchFilter = () => {
                     selected={value ? dayjs(value, 'YYYY-MM-DD').toDate() : null}
                     onChange={date => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     autoComplete='off'
-                    placeholderText='Select start date'
-                    customInput={<CustomTextField label='Start Date' fullWidth error={!!error} />}
+                    placeholderText={t('Select start date')}
+                    customInput={<CustomTextField label={t('Start Date')} fullWidth error={!!error} />}
                   />
                 )}
               />
@@ -218,8 +212,8 @@ const HrCheckM75SearchFilter = () => {
                     selected={value ? dayjs(value, 'YYYY-MM-DD').toDate() : null}
                     onChange={date => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     autoComplete='off'
-                    placeholderText='Select end date'
-                    customInput={<CustomTextField label='End Date' fullWidth error={!!error} />}
+                    placeholderText={t('Select end date')}
+                    customInput={<CustomTextField label={t('End Date')} fullWidth error={!!error} />}
                   />
                 )}
               />
@@ -233,11 +227,11 @@ const HrCheckM75SearchFilter = () => {
                 render={({ field }) => (
                   <SelectCustom<StatusOption, false>
                     {...field}
-                    label='Status'
+                    label={t('Status')}
                     options={statusOption}
                     getOptionLabel={(option: StatusOption) => option.label}
                     getOptionValue={(option: StatusOption) => option.value}
-                    placeholder='Select status'
+                    placeholder={t('Select status')}
                     classNamePrefix='select'
                   />
                 )}
@@ -254,10 +248,10 @@ const HrCheckM75SearchFilter = () => {
                 startIcon={isEnableFetching ? <CircularProgress size={16} color='inherit' /> : null}
                 disabled={isEnableFetching}
               >
-                Search
+                {t('Search')}
               </Button>
               <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
-                Clear
+                {t('Clear')}
               </Button>
             </Grid>
           </Grid>

@@ -75,8 +75,7 @@ function LeaveHistorySearchFilters() {
     }
     mutate(dataItem)
   }
-  const onMutateSuccess = () => {
-  }
+  const onMutateSuccess = () => {}
   const onMutateError = (e: any) => {
     console.error('Save settings error:', e)
   }

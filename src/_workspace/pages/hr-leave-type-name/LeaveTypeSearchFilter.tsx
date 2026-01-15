@@ -92,7 +92,7 @@ const LeaveTypeSearchFilter = () => {
   return (
     <Card sx={{ marginBottom: 4 }}>
       <CardHeader
-        title='Search filters'
+        title={t('Search filters')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <IconButton onClick={() => setCollapse(!collapse)}>
@@ -113,8 +113,8 @@ const LeaveTypeSearchFilter = () => {
                     {...field}
                     value={field.value ?? ''}
                     fullWidth
-                    label='Leave Type Code'
-                    placeholder='Enter leave type code'
+                    label={t('Leave Type Code')}
+                    placeholder={t('Enter leave type code')}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -132,8 +132,8 @@ const LeaveTypeSearchFilter = () => {
                     {...field}
                     value={field.value ?? ''}
                     fullWidth
-                    label='Leave Type Name'
-                    placeholder='Enter leave type name'
+                    label={t('Leave Type Name')}
+                    placeholder={t('Enter leave type name')}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -149,8 +149,8 @@ const LeaveTypeSearchFilter = () => {
                 render={({ field, fieldState: { error } }) => (
                   <SelectCustom
                     {...field}
-                    label='Status'
-                    placeholder='Select status'
+                    label={t('Status')}
+                    placeholder={t('Select status')}
                     options={statusOptions}
                     isClearable
                     error={!!error}
@@ -174,7 +174,7 @@ const LeaveTypeSearchFilter = () => {
                 {isEnableFetching ? t('Searching') : t('Search')}
               </Button>
               <Button type='button' variant='tonal' color='secondary' onClick={handleClear}>
-                Clear
+                {t('Clear')}
               </Button>
             </Grid>
           </Grid>

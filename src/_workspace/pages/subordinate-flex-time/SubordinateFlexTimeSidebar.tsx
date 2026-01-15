@@ -115,7 +115,7 @@ function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, han
   const sidebarContent = (
     <Box sx={{ p: 3, width: '100%', overflowY: 'auto', '& .select__control': { boxShadow: 'none' } }}>
       <Card elevation={0} sx={{ mb: 3, boxShadow: 'none' }}>
-        <CardHeader title={t('Search filter')} titleTypographyProps={{ variant: 'h5' }} />
+        <CardHeader title={t('Search filters')} titleTypographyProps={{ variant: 'h5' }} />
         <CardContent>
           <Box sx={{ mb: 4 }}>
             <Typography variant='body2' sx={{ mb: 1 }}>

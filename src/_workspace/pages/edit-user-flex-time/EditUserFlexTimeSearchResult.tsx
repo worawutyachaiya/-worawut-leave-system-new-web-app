@@ -235,7 +235,7 @@ function EditUserFlexTimeSearchResult() {
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
-        header: t('Employee CODE'),
+        header: t('Employee Code'),
         enableSorting: false
       },
       {
@@ -287,7 +287,7 @@ function EditUserFlexTimeSearchResult() {
   return (
     <>
       <Card>
-        <CardHeader title={t('Edit User Flex Time')} titleTypographyProps={{ variant: 'h5' }} />
+        <CardHeader title={t('Search result')} titleTypographyProps={{ variant: 'h5' }} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DxMRTTable
             columns={columns}

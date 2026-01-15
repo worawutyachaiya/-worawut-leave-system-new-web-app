@@ -158,7 +158,7 @@ function SubordinateFlexTimeTableSearchResult() {
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
-        header: t('Time to Work'),
+        header: t('Time'),
         enableSorting: false
       },
       {
@@ -220,7 +220,7 @@ function SubordinateFlexTimeTableSearchResult() {
   return (
     <Card>
       <CardHeader
-        title={t('Employee Flex Time')}
+        title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <Stack direction='row' spacing={2} alignItems='center'>

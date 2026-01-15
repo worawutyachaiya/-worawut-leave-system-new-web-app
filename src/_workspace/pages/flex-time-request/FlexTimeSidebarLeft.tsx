@@ -1,3 +1,4 @@
+import { useTranslation } from '@/contexts/TranslationContext'
 import { Box, Card, CardContent, Button, Drawer } from '@mui/material'
 import type { Theme } from '@mui/material/styles'
 interface Props {
@@ -7,12 +8,13 @@ interface Props {
   handleAddEventClick: () => void
 }
 const FlexTimeSidebarLeft = ({ mdAbove, leftSidebarOpen, handleLeftSidebarToggle, handleAddEventClick }: Props) => {
+  const { t } = useTranslation()
   const sidebarContent = (
     <Box sx={{ p: 4, width: mdAbove ? 300 : 240 }}>
       <Card sx={{ boxShadow: 'none', bgcolor: 'transparent' }}>
         <CardContent sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
           <Button variant='contained' color='primary' fullWidth onClick={handleAddEventClick}>
-            Flex Time Request
+            {t('Flex Time Request')}
           </Button>
         </CardContent>
       </Card>

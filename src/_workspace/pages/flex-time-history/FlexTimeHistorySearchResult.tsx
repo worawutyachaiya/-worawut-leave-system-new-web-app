@@ -169,7 +169,7 @@ function FlexTimeHistorySearchResult() {
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
-        header: t('Time to Work'),
+        header: t('Time'),
         enableSorting: false
       },
       {
@@ -228,7 +228,7 @@ function FlexTimeHistorySearchResult() {
   return (
     <>
       <Card>
-        <CardHeader title={t('Flex Time History')} titleTypographyProps={{ variant: 'h5' }} />
+        <CardHeader title={t('Search result')} titleTypographyProps={{ variant: 'h5' }} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DxMRTTable
             columns={columns}
