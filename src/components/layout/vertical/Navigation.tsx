@@ -151,8 +151,6 @@ const Navigation = (props: Props) => {
         //     backgroundColor: '#f3f2ff'
         //   }
         // }}
-
-        dictionary={dictionary}
         scrollMenu={scrollMenu}
       />
     </VerticalNav>
