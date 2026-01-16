@@ -14,10 +14,12 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import { useTranslation } from '@/contexts/TranslationContext'
 import { toast } from 'react-toastify'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 const FlexTimeRequestCalendar = () => {
+  const { t } = useTranslation()
   const [openForm, setOpenForm] = useState(false)
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false)
@@ -106,16 +108,16 @@ const FlexTimeRequestCalendar = () => {
               px: 6,
               pt: 6,
               '& .fc-col-header-cell': {
+                backgroundColor: 'var(--mui-palette-background-paper) !important'
+              },
+              '& .fc-timegrid-axis': {
+                backgroundColor: 'var(--mui-palette-background-paper) !important'
+              },
+              '& .fc-scrollgrid-section-header': {
+                '& td, & th': {
                   backgroundColor: 'var(--mui-palette-background-paper) !important'
-                },
-                '& .fc-timegrid-axis': {
-                  backgroundColor: 'var(--mui-palette-background-paper) !important'
-                },
-                '& .fc-scrollgrid-section-header': {
-                  '& td, & th': {
-                    backgroundColor: 'var(--mui-palette-background-paper) !important'
-                  }
                 }
+              }
             }}
           >
             <FullCalendar

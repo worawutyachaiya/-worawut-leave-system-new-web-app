@@ -114,7 +114,7 @@ function TimeRecordRequestForm() {
     <>
       <Card style={{ overflow: 'visible', zIndex: 4 }}>
         <CardHeader
-          title='Time Record Request Form'
+          title={t('Time Record Request Form')}
           titleTypographyProps={{ variant: 'h5' }}
           sx={{ '& .MuiCardHeader-avatar': { mr: 3 } }}
         />

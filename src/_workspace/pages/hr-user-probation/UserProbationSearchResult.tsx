@@ -228,7 +228,8 @@ const UserProbationSearchResult = () => {
               color={passpro === 1 ? 'success' : 'error'}
             />
           )
-        }
+        },
+        size: 140
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',

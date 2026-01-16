@@ -55,12 +55,6 @@ import { useTranslation } from '@/contexts/TranslationContext'
 import { useSettings } from '@/@core/hooks/useSettings'
 
 // Static objects moved outside component for performance //dont delete comment
-const DISPLAY_COLUMN_OPTIONS = {
-  'mrt-row-actions': {
-    muiTableHeadCellProps: { align: 'center' as const },
-    muiTableBodyCellProps: { align: 'center' as const }
-  }
-}
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const LeaveTypeSettingSearchResult = () => {
@@ -221,7 +215,8 @@ const LeaveTypeSettingSearchResult = () => {
               color={inuse === 1 ? 'success' : 'error'}
             />
           )
-        }
+        },
+        size: 140
       },
       {
         accessorFn: row => `${row.LEAVE_TYPE_DESCRIPTION_TH || ''} / ${row.LEAVE_TYPE_DESCRIPTION_EN || ''}`,
@@ -300,7 +295,15 @@ const LeaveTypeSettingSearchResult = () => {
             enableRowActions={true}
             positionActionsColumn='first'
             renderRowActions={({ row }) => <ActionsMenu row={row} onEdit={handleEdit} onDelete={handleDeleteClick} />}
-            displayColumnDefOptions={DISPLAY_COLUMN_OPTIONS}
+            displayColumnDefOptions={{
+              'mrt-row-actions': {
+                header: t('ACTIONS'),
+                size: 100,
+                muiTableBodyCellProps: {
+                  align: 'center'
+                }
+              }
+            }}
             data={tableData}
             isError={isError}
             rowCount={totalCount}

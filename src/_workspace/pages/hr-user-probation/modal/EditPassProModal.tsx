@@ -23,6 +23,8 @@ import { UserProbationInterface, SetPassProParams } from '@/_workspace/types/hr-
 // React Query Hooks
 import { useSetPassPro } from '@/_workspace/react-query/hooks/useHrSearchProbation'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 // Validation Schema
 const editPassProSchema = z.object({
   passProDate: z.any().refine(val => val !== null && val !== undefined && val !== '', {
@@ -40,6 +42,7 @@ interface EditPassProModalProps {
 }
 
 const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassProModalProps) => {
+  const { t } = useTranslation()
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [pendingPayload, setPendingPayload] = useState<SetPassProParams | null>(null)
 
@@ -131,7 +134,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
       >
         <DialogTitle>
           <Typography variant='h5' component='span'>
-            Edit Pass Pro
+            {t('Edit Pass Pro')}
           </Typography>
           <DialogCloseButton onClick={handleClose} disableRipple>
             <i className='tabler-x' />
@@ -144,7 +147,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
             <Grid item xs={12}>
               <CustomTextField
                 fullWidth
-                label='Employee Code'
+                label={t('Employee Code')}
                 value={selectedEmployee.EMPLOYEE_CODE || ''}
                 InputProps={{
                   readOnly: true
@@ -156,7 +159,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
             <Grid item xs={6}>
               <CustomTextField
                 fullWidth
-                label='Employee Name'
+                label={t('Employee Name')}
                 value={selectedEmployee.EMPLOYEE_NAME || ''}
                 InputProps={{
                   readOnly: true
@@ -167,7 +170,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
             <Grid item xs={6}>
               <CustomTextField
                 fullWidth
-                label='Surname'
+                label={t('Surname')}
                 value={selectedEmployee.EMPLOYEE_SURNAME || ''}
                 InputProps={{
                   readOnly: true
@@ -179,7 +182,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
             <Grid item xs={12}>
               <CustomTextField
                 fullWidth
-                label='Start Work Date'
+                label={t('Start Work')}
                 value={selectedEmployee.EMPLOYEE_START_WORK || ''}
                 InputProps={{
                   readOnly: true
@@ -201,7 +204,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
                     customInput={
                       <CustomTextField
                         fullWidth
-                        label='Pass Pro Date'
+                        label={t('Pass Pro Date')}
                         error={!!errors.passProDate}
                         helperText={errors.passProDate?.message as string}
                       />
@@ -216,10 +219,10 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
 
         <DialogActions sx={{ px: 3, pb: 3 }}>
           <Button onClick={handleClose} variant='outlined' color='secondary'>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button onClick={handleSubmit(onSubmit)} variant='contained' color='primary'>
-            Save
+            {t('Save')}
           </Button>
         </DialogActions>
       </Dialog>

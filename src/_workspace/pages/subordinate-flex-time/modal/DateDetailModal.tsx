@@ -13,6 +13,7 @@ import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
 import { useGetSubordinateFlexTimeCalendarEvents } from '@/_workspace/react-query/hooks/useFlexTime'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { CalendarEvent } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface Props {
   open: boolean
@@ -23,6 +24,7 @@ interface Props {
 }
 
 function DateDetailModal({ open, onClose, date }: Props) {
+  const { t } = useTranslation()
   const userData = getUserData()
   const formattedDate = date ? dayjs(date).format('YYYY-MM-DD') : ''
 
@@ -54,7 +56,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
       }}
     >
       <DialogTitle>
-        Employee Flex Time On {displayDate}
+        {t('Employee Flex Time On')} {displayDate}
         <DialogCloseButton onClick={onClose} disableRipple>
           <i className='tabler-x' />
         </DialogCloseButton>
@@ -75,7 +77,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
             ))}
           </Box>
         ) : (
-          <Typography>No Result Found.</Typography>
+          <Typography>{t('No data')}</Typography>
         )}
       </DialogContent>
       <DialogActions>

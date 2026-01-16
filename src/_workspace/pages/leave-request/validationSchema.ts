@@ -1,14 +1,14 @@
 import { z } from 'zod'
 import { requiredFieldMessage } from '@/libs/valibot/error-message/errorMessage'
 const leaveRequestSchema = z.object({
-  leaveType: z
-    .object({
+  leaveType: z.object(
+    {
       LEAVE_TYPE_ID: z
         .number({
           required_error: requiredFieldMessage({ fieldName: 'Leave Type' }),
           invalid_type_error: requiredFieldMessage({ fieldName: 'Leave Type' })
         })
-        .int({ message: requiredFieldMessage({ fieldName: 'Leave Type' }) }) 
+        .int({ message: requiredFieldMessage({ fieldName: 'Leave Type' }) })
         .positive({ message: requiredFieldMessage({ fieldName: 'Leave Type' }) }),
       LEAVE_TYPE_DESCRIPTION_EN: z
         .string({
@@ -22,10 +22,12 @@ const leaveRequestSchema = z.object({
           invalid_type_error: requiredFieldMessage({ fieldName: 'Leave Type' })
         })
         .min(1, requiredFieldMessage({ fieldName: 'Leave Type' }))
-    }, {
+    },
+    {
       required_error: requiredFieldMessage({ fieldName: 'Leave Type' }),
       invalid_type_error: requiredFieldMessage({ fieldName: 'Leave Type' })
-    }),
+    }
+  ),
   startDate: z
     .string({
       required_error: requiredFieldMessage({ fieldName: 'Start Date' }),
@@ -38,14 +40,16 @@ const leaveRequestSchema = z.object({
       invalid_type_error: requiredFieldMessage({ fieldName: 'End Date' })
     })
     .min(1, requiredFieldMessage({ fieldName: 'End Date' })),
-  timeLeave: z
-    .object({
+  timeLeave: z.object(
+    {
       value: z.string(),
       label: z.string()
-    }, {
+    },
+    {
       required_error: requiredFieldMessage({ fieldName: 'Time Leave' }),
       invalid_type_error: requiredFieldMessage({ fieldName: 'Time Leave' })
-    }),
+    }
+  ),
   total: z
     .string({
       required_error: requiredFieldMessage({ fieldName: 'Total Day Leave' }),
@@ -58,6 +62,6 @@ const leaveRequestSchema = z.object({
   tel: z.string().nullable().optional()
 })
 export const validationSchemaPage = z.object({
-  searchFilters: leaveRequestSchema,
+  searchFilters: leaveRequestSchema
 })
 export type FormDataPage = z.infer<typeof validationSchemaPage>

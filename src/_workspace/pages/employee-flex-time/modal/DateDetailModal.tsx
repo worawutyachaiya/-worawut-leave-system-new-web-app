@@ -15,6 +15,7 @@ import { useGetSubordinateFlexTimeCalendarEvents } from '@/_workspace/react-quer
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { useFormContext } from 'react-hook-form'
 import type { FormDataPage } from '../validationSchema'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface Props {
   open: boolean
@@ -23,6 +24,7 @@ interface Props {
 }
 
 function DateDetailModal({ open, onClose, date }: Props) {
+  const { t } = useTranslation()
   const userData = getUserData()
   const { watch } = useFormContext<FormDataPage>()
   const employeeCode = watch('searchFilters.employeeCode')
@@ -43,8 +45,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
     return rawEvents
       .filter(event => event.display !== 'background' && !!event.FLEX_TIME_REQUEST_EMPLOYEE_CODE)
       .filter(
-        (event, index, self) =>
-          index === self.findIndex(t => t.FLEX_TIME_REQUEST_ID === event.FLEX_TIME_REQUEST_ID)
+        (event, index, self) => index === self.findIndex(t => t.FLEX_TIME_REQUEST_ID === event.FLEX_TIME_REQUEST_ID)
       )
   }, [data])
 
@@ -62,7 +63,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
       }}
     >
       <DialogTitle>
-        Employee Flex Time On {displayDate}
+        {t('Employee Flex Time On')} {displayDate}
         <DialogCloseButton onClick={onClose} disableRipple>
           <i className='tabler-x' />
         </DialogCloseButton>
@@ -84,7 +85,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
             ))}
           </Box>
         ) : (
-          <Typography>No data</Typography>
+          <Typography>{t('No data')}</Typography>
         )}
       </DialogContent>
       <DialogActions>

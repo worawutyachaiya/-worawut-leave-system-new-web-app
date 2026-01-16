@@ -14,6 +14,9 @@ interface FileColumnProps {
   showUploadButton?: boolean
   size?: 'small' | 'medium' | 'large'
 }
+
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const LeaveFileColumn = ({
   fileName,
   filePath,
@@ -21,15 +24,16 @@ const LeaveFileColumn = ({
   showUploadButton = true,
   size = 'small'
 }: FileColumnProps) => {
+  const { t } = useTranslation()
   const [isDownloading, setIsDownloading] = useState(false)
   const { mutateAsync: downloadFile } = useDownloadLeaveFile(
-    (response) => {
+    response => {
       if (response.data && fileName) {
         downloadBlobAsFile(response.data, fileName)
       }
       setIsDownloading(false)
     },
-    (error) => {
+    error => {
       console.error('Download error:', error)
       setIsDownloading(false)
     }
@@ -48,7 +52,7 @@ const LeaveFileColumn = ({
   }
   if (filePath && fileName) {
     return (
-      <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', flexWrap: 'wrap',justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
         {/* ปุ่มดาวน์โหลด */}
         <Tooltip title={`Download: ${fileName}`}>
           <Button
@@ -59,20 +63,14 @@ const LeaveFileColumn = ({
             disabled={isDownloading}
             startIcon={isDownloading ? <CircularProgress size={16} color='inherit' /> : <DownloadIcon />}
           >
-            {size === 'small' ? 'File' : 'Download'}
+            {size === 'small' ? t('File') : t('Download')}
           </Button>
         </Tooltip>
         {/* ปุ่มอัพโหลดใหม่ */}
         {showUploadButton && onClickUpload && (
           <Tooltip title='Upload new file'>
-            <Button
-              variant='tonal'
-              color='warning'
-              size={size}
-              onClick={onClickUpload}
-              startIcon={<UploadIcon />}
-            >
-              {size === 'small' ? 'New' : 'Upload New'}
+            <Button variant='tonal' color='warning' size={size} onClick={onClickUpload} startIcon={<UploadIcon />}>
+              {size === 'small' ? t('New') : t('Upload New')}
             </Button>
           </Tooltip>
         )}
@@ -83,26 +81,14 @@ const LeaveFileColumn = ({
     <Box>
       {showUploadButton && onClickUpload ? (
         <Tooltip title='Upload file'>
-          <Button
-            variant='tonal'
-            color='warning'
-            size={size}
-            onClick={onClickUpload}
-            startIcon={<UploadIcon />}
-          >
-            Upload
+          <Button variant='tonal' color='warning' size={size} onClick={onClickUpload} startIcon={<UploadIcon />}>
+            {t('Upload')}
           </Button>
         </Tooltip>
       ) : (
         <Tooltip title='No file uploaded'>
-          <Button
-            variant='tonal'
-            color='secondary'
-            size={size}
-            disabled
-            startIcon={<InsertDriveFileIcon />}
-          >
-            No File
+          <Button variant='tonal' color='secondary' size={size} disabled startIcon={<InsertDriveFileIcon />}>
+            {t('No File')}
           </Button>
         </Tooltip>
       )}

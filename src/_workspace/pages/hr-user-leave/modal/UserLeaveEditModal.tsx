@@ -64,6 +64,8 @@ import { UserLeaveInterface } from '@/_workspace/types/hr-user-leave/HrUserLeave
 import { editUserLeaveSchema, EditUserLeaveFormData } from './validationSchema'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 interface UserLeaveEditModalProps {
   open: boolean
   onClose: () => void
@@ -72,6 +74,7 @@ interface UserLeaveEditModalProps {
 }
 
 const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveEditModalProps) => {
+  const { t } = useTranslation()
   const {
     control,
     handleSubmit,
@@ -397,7 +400,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
       >
         <DialogTitle>
           <Typography variant='h5' component='span'>
-            Edit User Leave
+            {t('Edit User Leave')}
           </Typography>
           {/* Close button */}
           <DialogCloseButton onClick={handleClose} disableRipple>
@@ -410,21 +413,21 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
             {/* Left Side - Selected Leave Info */}
             <Grid item xs={12} md={5}>
               <Typography variant='h6' gutterBottom>
-                Leave Request Selected
+                {t('Leave Request Selected')}
               </Typography>
               <Divider sx={{ mb: 2 }} />
 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Employee Code
+                    {t('Employee Code')}
                   </Typography>
                   <Typography variant='body1'>{selectedLeave.EMPLOYEE_CODE || selectedLeave.EMPLOYEE_ID}</Typography>
                 </Box>
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Employee Name
+                    {t('Employee Name')}
                   </Typography>
                   <Typography variant='body1'>
                     {selectedLeave.EMPLOYEE_NAME} {selectedLeave.EMPLOYEE_SURNAME || ''}
@@ -433,7 +436,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Leave Type
+                    {t('Leave Type')}
                   </Typography>
                   {renderCompareValue(
                     selectedLeave.LEAVE_TYPE_DESCRIPTION_TH ||
@@ -447,7 +450,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Start Date
+                    {t('Start Date')}
                   </Typography>
                   {renderCompareValue(
                     selectedLeave.LEAVE_REQUEST_START_DATE
@@ -460,7 +463,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    End Date
+                    {t('End Date')}
                   </Typography>
                   {renderCompareValue(
                     selectedLeave.LEAVE_REQUEST_END_DATE
@@ -473,7 +476,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Leave Time
+                    {t('Leave Time')}
                   </Typography>
                   {renderCompareValue(
                     selectedLeave.LEAVE_REQUEST_TIME || selectedLeave.TIME || '-',
@@ -484,7 +487,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Total Leave Day
+                    {t('Total Leave Day')}
                   </Typography>
                   {renderCompareValue(
                     String(selectedLeave.LEAVE_REQUEST_TOTAL_DAY || selectedLeave.TOTAL_DAY_LEAVE),
@@ -495,7 +498,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
                 <Box>
                   <Typography variant='caption' color='text.secondary'>
-                    Reason
+                    {t('Reason')}
                   </Typography>
                   {renderCompareValue(
                     selectedLeave.LEAVE_REQUEST_REASON || selectedLeave.REASON || '-',
@@ -518,8 +521,8 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                     render={({ field }) => (
                       <AsyncSelectCustom
                         {...field}
-                        label='Leave Type *'
-                        placeholder='Select leave type'
+                        label={t('Leave Type') + ' *'}
+                        placeholder={t('Select leave type')}
                         loadOptions={fetchLeaveTypeAll}
                         defaultOptions
                         classNamePrefix={'select'}
@@ -563,7 +566,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                           // Reset endDate and time when start date changes
                           setValue('endDate', '')
                         }}
-                        placeholderText='Select Start Date'
+                        placeholderText={t('Select Start Date')}
                         disabled={!watchLeaveType}
                         minDate={new Date()}
                         excludeDates={companyHolidays}
@@ -571,7 +574,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                         autoComplete='off'
                         customInput={
                           <CustomTextField
-                            label={`Start Date ${currentMaxDay > 0 ? `(Available ${currentMaxDay} Days)` : ''} *`}
+                            label={`${t('Start Date')} ${currentMaxDay > 0 ? `(${t('Available')} ${currentMaxDay} ${t('Days')})` : ''} *`}
                             fullWidth
                             InputLabelProps={{ shrink: true }}
                             error={!!errors.startDate}
@@ -593,7 +596,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                       <AppReactDatepicker
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')}
-                        placeholderText='Select End Date'
+                        placeholderText={t('Select End Date')}
                         disabled={!watchStartDate}
                         minDate={watchStartDate ? new Date(watchStartDate) : new Date()}
                         maxDate={getMaxEndDate()}
@@ -602,7 +605,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                         autoComplete='off'
                         customInput={
                           <CustomTextField
-                            label='End Date *'
+                            label={t('End Date') + ' *'}
                             fullWidth
                             InputLabelProps={{ shrink: true }}
                             error={!!errors.endDate}
@@ -623,8 +626,8 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                     render={({ field }) => (
                       <AsyncSelectCustom
                         {...field}
-                        label='Time *'
-                        placeholder='Select time'
+                        label={t('Time') + ' *'}
+                        placeholder={t('Select time')}
                         isSearchable={false}
                         classNamePrefix={'select'}
                         defaultOptions={getTimeLeaveOptions()}
@@ -646,7 +649,7 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                         {...field}
                         fullWidth
                         disabled
-                        label='Total Leave Day'
+                        label={t('Total Leave Day')}
                         error={!!errors.totalLeaveDay}
                         helperText={errors.totalLeaveDay?.message}
                       />
@@ -661,10 +664,10 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                     control={control}
                     render={({ field }) => (
                       <FormControl component='fieldset'>
-                        <FormLabel component='legend'>Want to cancel leave attachment :</FormLabel>
+                        <FormLabel component='legend'>{t('Want to cancel leave attachment')} :</FormLabel>
                         <RadioGroup {...field} row>
-                          <FormControlLabel value='yes' control={<Radio />} label='Yes' />
-                          <FormControlLabel value='no' control={<Radio />} label='No' />
+                          <FormControlLabel value='yes' control={<Radio />} label={t('Yes')} />
+                          <FormControlLabel value='no' control={<Radio />} label={t('No')} />
                         </RadioGroup>
                       </FormControl>
                     )}
@@ -682,8 +685,8 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
                         fullWidth
                         multiline
                         rows={3}
-                        label='Reason'
-                        placeholder='Enter a reason'
+                        label={t('Reason')}
+                        placeholder={t('Enter a reason')}
                         error={!!errors.reason}
                         helperText={errors.reason?.message}
                       />
@@ -697,10 +700,10 @@ const UserLeaveEditModal = ({ open, onClose, selectedLeave, onSave }: UserLeaveE
 
         <DialogActions>
           <Button onClick={handleClose} variant='outlined' color='secondary'>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button type='button' onClick={handleSave} variant='contained' color='primary'>
-            Save
+            {t('Save')}
           </Button>
         </DialogActions>
       </Dialog>

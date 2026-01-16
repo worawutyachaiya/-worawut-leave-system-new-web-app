@@ -15,6 +15,7 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import CustomTextField from '@/components/mui/TextField'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface Props<TData extends MRT_RowData> extends MRT_TableOptions<TData> {
   columns: MRT_ColumnDef<TData>[]
@@ -24,6 +25,7 @@ interface Props<TData extends MRT_RowData> extends MRT_TableOptions<TData> {
 
 export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, ...rest }: Props<TData>) => {
   const { control } = useFormContext()
+  const { t } = useTranslation()
 
   const table = useMaterialReactTable({
     columns,
@@ -75,7 +77,7 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
     renderTopToolbarCustomActions: ({ table }) => (
       <div className='flex gap-1'>
         <div className='flex items-center gap-1'>
-          <Typography className='hidden sm:block'>Show</Typography>
+          <Typography className='hidden sm:block'>{t('Show')}</Typography>
           <Controller
             name='searchResults.pageSize'
             control={control}
@@ -97,7 +99,7 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
               </CustomTextField>
             )}
           />
-          <Typography className='hidden sm:block'>Entries</Typography>
+          <Typography className='hidden sm:block'>{t('Entries')}</Typography>
         </div>
         <Tooltip arrow title='Clear All Sorting' onClick={() => table.resetSorting(true)}>
           <IconButton>
@@ -119,10 +121,10 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
       <div className='flex items-center justify-end gap-2 p-3'>
         <div className='flex items-center gap-2'>
           <Typography variant='body1'>
-            Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
+            {t('Showing')} {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} {t('to')}{' '}
             {table.getState().pagination.pageIndex * table.getState().pagination.pageSize +
               table.getRowModel().rows.length}{' '}
-            of {table.getRowCount()} entries
+            {t('of')} {table.getRowCount()} {t('entries')}
           </Typography>
           <Pagination
             count={table.getPageOptions().length}

@@ -201,7 +201,7 @@ const LeaveTypeSearchResult = () => {
       {
         accessorKey: 'INUSE',
         header: t('Status'),
-        size: 100,
+        size: 140,
         enableSorting: false,
         Cell: ({ row }) => {
           const inuse = row.original.INUSE
@@ -280,8 +280,11 @@ const LeaveTypeSearchResult = () => {
             renderRowActions={({ row }) => <ActionsMenu row={row} onEdit={handleEdit} onDelete={handleDeleteClick} />}
             displayColumnDefOptions={{
               'mrt-row-actions': {
-                muiTableHeadCellProps: { align: 'center' },
-                muiTableBodyCellProps: { align: 'center' }
+                header: t('ACTIONS'),
+                size: 100,
+                muiTableBodyCellProps: {
+                  align: 'center'
+                }
               }
             }}
             data={tableData}

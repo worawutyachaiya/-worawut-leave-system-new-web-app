@@ -7,6 +7,7 @@ import { useGetLeaveDocuments } from '@/_workspace/react-query/hooks/useLeaveDoc
 import type { LeaveDocumentData } from '@/_workspace/types/leave-document/LeaveDocumentInterface'
 import { breadcrumbNavigation, MENU_NAME } from './env'
 import { useTranslation } from '@/contexts/TranslationContext'
+import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 const LeaveDocument = () => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState(0)
@@ -60,9 +61,6 @@ const LeaveDocument = () => {
         <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <Typography variant='h4'>{MENU_NAME}</Typography>
           <Divider orientation='vertical' flexItem />
-          <Breadcrumbs separator='›' aria-label='breadcrumb'>
-            {breadcrumbs}
-          </Breadcrumbs>
         </Grid>
         <Grid item xs={12}>
           <Card>
@@ -81,12 +79,8 @@ const LeaveDocument = () => {
   return (
     <Grid container spacing={6}>
       {/* Header Section */}
-      <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <Typography variant='h4'>{MENU_NAME}</Typography>
-        <Divider orientation='vertical' flexItem />
-        <Breadcrumbs separator='›' aria-label='breadcrumb' sx={{ display: 'inline-block' }}>
-          {breadcrumbs}
-        </Breadcrumbs>
+      <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+        <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
       </Grid>
       {/* Content Section */}
       <Grid item xs={12}>
