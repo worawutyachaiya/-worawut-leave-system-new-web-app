@@ -9,6 +9,7 @@ import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
 import { DxProvider, useDxContext } from '@/_template/DxContextProvider'
 import { FormDataPage, validationSchemaPage, fetchDefaultValues } from './ValidationSchema'
 import { MENU_NAME, MENU_ID, breadcrumbNavigation } from './env'
+import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 const HrLeaveM75 = () => {
   return (
     <DxProvider>
@@ -46,12 +47,8 @@ const InnerApp = () => {
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>{MENU_NAME}</Typography>
-          <Divider orientation='vertical' flexItem />
-          <Breadcrumbs separator='›' aria-label='breadcrumb' sx={{ display: 'inline-block' }}>
-            {breadcrumbs}
-          </Breadcrumbs>
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
         {/* Search Filter Section */}
         <Grid item xs={12}>

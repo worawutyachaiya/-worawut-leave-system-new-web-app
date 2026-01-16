@@ -21,6 +21,7 @@ import ConfirmModal from './ConfirmModal'
 import { RemainLeaveInterface } from '@/_workspace/types/remain-leave/RemainLeaveInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { SlideProps } from '@mui/material'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const editRemainLeaveSchema = z.object({
   remainLeave: z.string().min(1, 'Remain Leave is required')
@@ -103,6 +104,7 @@ const RemainLeaveEditModal = ({
     }
   }
 
+  const { t } = useTranslation()
   if (!selectedData) return null
 
   return (
@@ -120,7 +122,7 @@ const RemainLeaveEditModal = ({
       >
         <DialogTitle>
           <Typography variant='h5' component='span'>
-            Edit Remain Leave
+            {t('Edit Remain Leave')}
           </Typography>
           <DialogCloseButton onClick={handleClose} disableRipple>
             <i className='tabler-x' />
@@ -133,7 +135,7 @@ const RemainLeaveEditModal = ({
               <CustomTextField
                 fullWidth
                 disabled
-                label='Employee ID'
+                label={t('Employee Code')}
                 value={selectedData.EMPLOYEE_CODE || ''}
                 InputLabelProps={{ shrink: true }}
               />
@@ -143,7 +145,7 @@ const RemainLeaveEditModal = ({
               <CustomTextField
                 fullWidth
                 disabled
-                label='Employee Name'
+                label={t('Employee Name')}
                 value={`${selectedData.EMPLOYEE_NAME || ''} ${selectedData.EMPLOYEE_SURNAME || ''}`.trim()}
                 InputLabelProps={{ shrink: true }}
               />
@@ -153,7 +155,7 @@ const RemainLeaveEditModal = ({
               <CustomTextField
                 fullWidth
                 disabled
-                label='Section'
+                label={t('Section')}
                 value={selectedData.EMPLOYEE_SECTION || ''}
                 InputLabelProps={{ shrink: true }}
               />
@@ -163,7 +165,7 @@ const RemainLeaveEditModal = ({
               <CustomTextField
                 fullWidth
                 disabled
-                label='Start Work'
+                label={t('Start Work')}
                 value={
                   selectedData.EMPLOYEE_START_WORK ? dayjs(selectedData.EMPLOYEE_START_WORK).format('DD-MMM-YYYY') : ''
                 }
@@ -175,7 +177,7 @@ const RemainLeaveEditModal = ({
               <CustomTextField
                 fullWidth
                 disabled
-                label='Leave Type'
+                label={t('Leave Type')}
                 value={selectedData.LEAVE_TYPE_CODE || ''}
                 InputLabelProps={{ shrink: true }}
               />
@@ -192,8 +194,8 @@ const RemainLeaveEditModal = ({
                     {...field}
                     fullWidth
                     type='number'
-                    label='Remain Leave *'
-                    placeholder='Enter remain leave days'
+                    label={t('Remain Leave')}
+                    placeholder={t('Enter remain leave days')}
                     error={!!errors.remainLeave}
                     helperText={errors.remainLeave?.message}
                     InputLabelProps={{ shrink: true }}
@@ -207,10 +209,10 @@ const RemainLeaveEditModal = ({
 
         <DialogActions>
           <Button onClick={handleSave} variant='contained' color='primary' disabled={isLoading}>
-            Save
+            {t('Save')}
           </Button>
           <Button onClick={handleClose} variant='outlined' color='secondary' disabled={isLoading}>
-            Cancel
+            {t('Cancel')}
           </Button>
         </DialogActions>
       </Dialog>

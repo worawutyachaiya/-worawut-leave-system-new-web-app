@@ -252,21 +252,25 @@ function TimeRecordCheckerSearchResult() {
     () => [
       {
         accessorKey: 'EMPLOYEE_ID',
-        header: t('Employee Code')
+        header: t('Employee Code'),
+        size: 220
       },
 
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
         header: t('Status'),
-        Cell: ({ row }) => getStatusChip(row.original.LEAVE_REQUEST_STATUS)
+        Cell: ({ row }) => getStatusChip(row.original.LEAVE_REQUEST_STATUS),
+        size: 160
       },
       {
         accessorKey: 'IN_TIME',
-        header: t('Time In')
+        header: t('Time In'),
+        size: 200
       },
       {
         accessorKey: 'OUT_TIME',
-        header: t('Time Out')
+        header: t('Time Out'),
+        size: 200
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
@@ -279,21 +283,25 @@ function TimeRecordCheckerSearchResult() {
 
       {
         accessorKey: 'CREATE_DATE',
-        header: t('Request Date')
+        header: t('Request Date'),
+        size: 220
       },
       {
         accessorKey: 'APPROVAL',
         header: t('Approval'),
         enableSorting: false,
-        Cell: ({ row }) => <TableApprover row={row.original} />
+        Cell: ({ row }) => <TableApprover row={row.original} />,
+        size: 160
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: t('Update Date')
+        header: t('Update Date'),
+        size: 220
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Update By')
+        header: t('Update By'),
+        size: 180
       }
     ],
     [t]

@@ -6,12 +6,15 @@ import CircularProgress from '@mui/material/CircularProgress'
 import DownloadIcon from '@mui/icons-material/Download'
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 import { useDownloadLeaveFile, downloadBlobAsFile } from '@/_workspace/react-query/hooks/useLeaveFile'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 interface LeaveFileColumnProps {
   fileName?: string | null
   filePath?: string | null
   size?: 'small' | 'medium' | 'large'
 }
 const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColumnProps) => {
+  const { t } = useTranslation()
   const [isDownloading, setIsDownloading] = useState(false)
   const { mutateAsync: downloadFile } = useDownloadLeaveFile(
     response => {
@@ -49,7 +52,7 @@ const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColum
             disabled={isDownloading}
             startIcon={isDownloading ? <CircularProgress size={16} color='inherit' /> : <DownloadIcon />}
           >
-            Download File
+            {t('Download File')}
           </Button>
         </Tooltip>
       </Box>
@@ -60,7 +63,7 @@ const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColum
       <Tooltip title='No File Uploaded'>
         <Box component='span'>
           <Button variant='tonal' color='warning' size={size} disabled startIcon={<InsertDriveFileIcon />}>
-            No File Upload
+            {t('No File')}
           </Button>
         </Box>
       </Tooltip>

@@ -276,7 +276,7 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'INUSE',
         header: t('Status'),
-        size: 100,
+        size: 140,
         enableSorting: false,
         Cell: ({ row }) => {
           const inuse = row.original.INUSE
@@ -339,7 +339,8 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: t('Time')
+        header: t('Time'),
+        size: 140
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
@@ -374,7 +375,9 @@ const UserLeaveSearchResult = () => {
           displayColumnDefOptions={{
             'mrt-row-actions': {
               muiTableHeadCellProps: { align: 'center' },
-              muiTableBodyCellProps: { align: 'center' }
+              muiTableBodyCellProps: { align: 'center' },
+              header: t('ACTIONS'),
+              size: 100
             }
           }}
           data={mappedData}

@@ -15,12 +15,14 @@ import { validationSchemaPage, FormDataPage, FlexTimeTypeOption } from '../valid
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import FlexTimeRequestConfirmModal from './FlexTimeRequestConfirmModal'
+import { useTranslation } from '@/contexts/TranslationContext'
 interface Props {
   open: boolean
   onClose: () => void
   selectedDate: string
 }
 const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
+  const { t } = useTranslation()
   const methods = useForm<FormDataPage>({
     resolver: zodResolver(validationSchemaPage),
     defaultValues: {
@@ -92,11 +94,7 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
     <>
       <Dialog
         open={open}
-        onClose={(event, reason) => {
-          if (reason !== 'backdropClick' && !isCreating) {
-            handleClose()
-          }
-        }}
+        onClose={onClose}
         maxWidth='sm'
         fullWidth
         sx={{
@@ -105,7 +103,7 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
       >
         <DialogTitle>
           <Typography variant='h5' component='span'>
-            Flex Time Request
+            {t('Flex Time Request')}
           </Typography>
           <DialogCloseButton onClick={handleClose} disableRipple disabled={isCreating}>
             <i className='tabler-x' />
@@ -122,12 +120,12 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                   render={({ field }) => (
                     <AsyncSelectCustom
                       {...field}
-                      label='Time to Work'
+                      label={t('Time')}
                       defaultOptions={flexTimeTypes}
                       loadOptions={() => Promise.resolve(flexTimeTypes)}
                       getOptionLabel={option => option.FLEX_TIME_DESCRIPTION}
                       getOptionValue={option => option.FLEX_TIME_TYPE_ID?.toString()}
-                      placeholder='Select flex time type'
+                      placeholder={t('Select flex time type')}
                       isClearable
                       error={!!methods.formState.errors.formData?.flexTimeType}
                       helperText={methods.formState.errors.formData?.flexTimeType?.message}
@@ -148,13 +146,18 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                         onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
                         setValue('formData.endDate', date ? dayjs(date).format('YYYY-MM-DD') : '')
                       }}
-                      placeholderText='Select Date'
+                      placeholderText={t('Select Date')}
                       minDate={new Date()}
                       excludeDates={companyHolidays}
                       highlightDates={companyHolidays}
                       autoComplete='off'
                       customInput={
-                        <CustomTextField label='Start Date' fullWidth error={!!error} helperText={error?.message} />
+                        <CustomTextField
+                          label={t('Start Date')}
+                          fullWidth
+                          error={!!error}
+                          helperText={error?.message}
+                        />
                       }
                     />
                   )}
@@ -171,13 +174,13 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                       onChange={(date: Date | null) => {
                         onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
                       }}
-                      placeholderText='Select Date'
+                      placeholderText={t('Select Date')}
                       minDate={watchStartDate ? new Date(watchStartDate) : new Date()}
                       excludeDates={companyHolidays}
                       highlightDates={companyHolidays}
                       autoComplete='off'
                       customInput={
-                        <CustomTextField label='End Date' fullWidth error={!!error} helperText={error?.message} />
+                        <CustomTextField label={t('End Date')} fullWidth error={!!error} helperText={error?.message} />
                       }
                     />
                   )}
@@ -194,8 +197,8 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                       fullWidth
                       multiline
                       rows={3}
-                      label='Description (Optional)'
-                      placeholder='Enter description'
+                      label={t('Description (Optional)')}
+                      placeholder={t('Enter description')}
                     />
                   )}
                 />
@@ -205,10 +208,10 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant='outlined' color='secondary' disabled={isCreating}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button variant='contained' color='primary' disabled={isCreating} onClick={handleSubmit(onSubmit)}>
-            Submit
+            {t('Submit')}
           </Button>
         </DialogActions>
       </Dialog>

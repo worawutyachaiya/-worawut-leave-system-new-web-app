@@ -172,12 +172,12 @@ function SearchResult() {
       {
         accessorKey: 'LEAVE_TYPE_CODE',
         header: t('Leave Code'),
-        size: 185
+        size: 210
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
         header: t('Leave Type'),
-        size: 185
+        size: 190
       },
       {
         accessorKey: 'CREATE_DATE',
@@ -305,7 +305,8 @@ function SearchResult() {
             isError={isError}
             displayColumnDefOptions={{
               'mrt-row-actions': {
-                size: 80,
+                header: t('ACTIONS'),
+                size: 100,
                 muiTableBodyCellProps: {
                   align: 'center'
                 }

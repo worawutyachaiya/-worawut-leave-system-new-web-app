@@ -15,6 +15,7 @@ import { useReactToPrint } from 'react-to-print'
 import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
 import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessage'
 import { useGetEmployeeLeaveUsage } from '@/_workspace/react-query/hooks/useCheckSubordinateLeave'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
@@ -47,6 +48,8 @@ interface ExportEmployeeLeaveModalProps {
 const ExportEmployeeLeaveModal = ({ open, onClose, employeeInfo }: ExportEmployeeLeaveModalProps) => {
   const printRef = useRef<HTMLDivElement>(null)
   const currentYear = new Date().getFullYear()
+
+  const { t } = useTranslation()
 
   const { data, isLoading, isFetching } = useGetEmployeeLeaveUsage(
     { EMPLOYEE_CODE: employeeInfo?.EMPLOYEE_ID || '' },
@@ -92,7 +95,7 @@ const ExportEmployeeLeaveModal = ({ open, onClose, employeeInfo }: ExportEmploye
       }}
     >
       <DialogTitle>
-        <Typography variant='h5'>Export Employee Leave</Typography>
+        <Typography variant='h5'>{t('Export Employee Leave')}</Typography>
         <DialogCloseButton onClick={handleClose} disableRipple disabled={isLoading || isFetching}>
           <i className='tabler-x' />
         </DialogCloseButton>
@@ -128,7 +131,7 @@ const ExportEmployeeLeaveModal = ({ open, onClose, employeeInfo }: ExportEmploye
                 </ul>
               </>
             ) : (
-              <span style={{ color: '#000' }}>No Results Found.</span>
+              <span style={{ color: '#000' }}>{t('No Results Found.')}</span>
             )}
           </div>
         )}
@@ -140,10 +143,10 @@ const ExportEmployeeLeaveModal = ({ open, onClose, employeeInfo }: ExportEmploye
           color='primary'
           variant='contained'
         >
-          Export
+          {t('Export')}
         </Button>
         <Button onClick={handleClose} disabled={isLoading || isFetching} color='secondary' variant='tonal'>
-          Cancel
+          {t('Cancel')}
         </Button>
       </DialogActions>
     </Dialog>

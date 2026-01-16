@@ -159,18 +159,21 @@ function FlexTimeHistorySearchResult() {
         accessorKey: 'FLEX_TIME_REQUEST_STATUS',
         header: t('Status'),
         enableSorting: false,
-        Cell: ({ row }) => getStatusChip(row.original)
+        Cell: ({ row }) => getStatusChip(row.original),
+        size: 140
       },
       {
         accessorKey: 'APPROVER',
         header: t('Approval'),
         enableSorting: false,
-        Cell: ({ row }) => <TableApprover row={row.original} />
+        Cell: ({ row }) => <TableApprover row={row.original} />,
+        size: 150
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
         header: t('Time'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       },
       {
         accessorKey: 'FLEX_TIME_DATE_RANGE',
@@ -258,7 +261,8 @@ function FlexTimeHistorySearchResult() {
             isError={isError}
             displayColumnDefOptions={{
               'mrt-row-actions': {
-                size: 80,
+                header: t('ACTIONS'),
+                size: 100,
                 muiTableBodyCellProps: {
                   align: 'center'
                 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 // Confirm Modal
 import ConfirmModal from './ConfirmModal'
 import { toast } from 'react-toastify'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 // MUI Imports
 import {
@@ -51,6 +52,7 @@ interface Props {
 }
 
 function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
+  const { t } = useTranslation()
   const [fileName, setFileName] = useState<string>('No file chosen')
   const queryClient = useQueryClient()
 
@@ -178,7 +180,7 @@ function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
       >
         <DialogTitle>
           <Typography variant='h5' component='span'>
-            Add Leave Regularity
+            {t('Add Leave Regularity')}
           </Typography>
           <DialogCloseButton onClick={handleClose} disableRipple disabled={isPending}>
             <i className='tabler-x' />
@@ -207,8 +209,8 @@ function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
                       getOptionLabel={(data: any) =>
                         `${data?.LEAVE_TYPE_DESCRIPTION_TH} / ${data?.LEAVE_TYPE_DESCRIPTION_EN}`
                       }
-                      label='Leave Type'
-                      placeholder='Select leave type'
+                      label={t('Leave Type')}
+                      placeholder={t('Select leave type')}
                       error={!!error}
                       helperText={error?.message}
                     />
@@ -226,8 +228,8 @@ function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
                   <CustomTextField
                     {...field}
                     fullWidth
-                    label='Description'
-                    placeholder='Enter description'
+                    label={t('Description')}
+                    placeholder={t('Enter description')}
                     error={!!errors.DESCRIPTION}
                     helperText={errors.DESCRIPTION?.message}
                   />
@@ -238,11 +240,11 @@ function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
             {/*----------- File Upload -----------*/}
             <Grid item xs={12}>
               <Typography variant='body2' sx={{ mb: 1 }}>
-                Edit Leave Regularity (.pdf)
+                {t('Edit Leave Regularity')} (.pdf)
               </Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Button component='label' variant='outlined' startIcon={<CloudUploadIcon />}>
-                  Choose File
+                  {t('Choose File')}
                   <input type='file' hidden accept='.pdf' onChange={handleFileChange} />
                 </Button>
                 <Typography variant='body2' color='text.secondary'>
@@ -254,7 +256,7 @@ function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant='outlined' color='secondary' disabled={isPending}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button
             type='button'
@@ -264,7 +266,7 @@ function AddDocumentModal({ open, onClose, onSubmitSuccess }: Props) {
             disabled={isPending}
             startIcon={isPending ? <CircularProgress size={16} color='inherit' /> : null}
           >
-            {isPending ? 'Creating...' : 'Create'}
+            {isPending ? t('Creating...') : t('Create')}
           </Button>
         </DialogActions>
       </Dialog>

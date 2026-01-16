@@ -1,4 +1,5 @@
 import { Breadcrumbs, Divider, Link, Typography } from '@mui/material'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface Props {
   menuName: string
@@ -6,6 +7,7 @@ interface Props {
 }
 
 const DxBreadCrumbs = ({ menuName, breadcrumbNavigation }: Props) => {
+  const { t } = useTranslation()
   return (
     <>
       <Typography
@@ -14,7 +16,7 @@ const DxBreadCrumbs = ({ menuName, breadcrumbNavigation }: Props) => {
           display: 'inline-block'
         }}
       >
-        {menuName}
+        {t(menuName)}
       </Typography>
       <Divider orientation='vertical' className='mx-4' />
       <Breadcrumbs
@@ -38,7 +40,7 @@ const DxBreadCrumbs = ({ menuName, breadcrumbNavigation }: Props) => {
               }
               href={item.href}
             >
-              {item.menuName}
+              {t(item.menuName)}
             </Link>
           ) : (
             <Typography
@@ -49,7 +51,7 @@ const DxBreadCrumbs = ({ menuName, breadcrumbNavigation }: Props) => {
                   : 'var(--mui-pallet-text-secondary) !important'
               }}
             >
-              {item.menuName}
+              {t(item.menuName)}
             </Typography>
           )
         })}

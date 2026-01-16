@@ -10,8 +10,9 @@ import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
 import EmployeeLeaveSearchFilters from './EmployeeLeaveSearchFilter'
 import SearchEmployeeLeaveTable from './EmployeeLeaveSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
-import { MENU_ID } from './env'
+import { breadcrumbNavigation, MENU_ID, MENU_NAME } from './env'
 import { useTranslation } from '@/contexts/TranslationContext'
+import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 const LeaveRequest = () => {
   return (
     <DxProvider>
@@ -45,19 +46,8 @@ const InnerApp = () => {
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>Employee Leave</Typography>
-          <Divider orientation='vertical' flexItem />
-          <Breadcrumbs
-            separator='›'
-            aria-label='breadcrumb'
-            sx={{
-              display: 'inline-block'
-            }}
-          >
-            {breadcrumbs}
-          </Breadcrumbs>
-          {/* {!isLoading && <ProductCategoryWatch />} */}
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
         {/* Search Section */}
         <Grid item xs={12}>

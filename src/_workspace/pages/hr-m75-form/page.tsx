@@ -25,14 +25,8 @@ const M75Page = () => {
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <DxBreadCrumbs
-            menuName={MENU_NAME}
-            breadcrumbNavigation={[
-              { menuName: 'Home' },
-              { menuName: MENU_NAME }
-            ]}
-          />
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={[{ menuName: 'Home' }, { menuName: MENU_NAME }]} />
         </Grid>
 
         {/* Request Leave Form Section */}

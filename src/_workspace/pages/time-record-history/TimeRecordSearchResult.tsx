@@ -110,16 +110,16 @@ function SearchResult() {
               <Chip
                 variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
                 size='small'
-                label='Cancelled'
+                label={t('Cancelled')}
                 color='error'
               />
             )
           }
           const status = cell.getValue<string>()
           const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            0: { label: 'Pending', color: 'warning' },
-            1: { label: 'Approved', color: 'success' },
-            2: { label: 'Rejected', color: 'error' }
+            0: { label: t('Pending'), color: 'warning' },
+            1: { label: t('Approved'), color: 'success' },
+            2: { label: t('Rejected'), color: 'error' }
           }
           const config = statusConfig[status] || { label: status || '-', color: 'warning' }
           return (
@@ -251,7 +251,8 @@ function SearchResult() {
             isError={isError}
             displayColumnDefOptions={{
               'mrt-row-actions': {
-                size: 80,
+                header: t('ACTIONS'),
+                size: 100,
                 muiTableBodyCellProps: {
                   align: 'center'
                 }

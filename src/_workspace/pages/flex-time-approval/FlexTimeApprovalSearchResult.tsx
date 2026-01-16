@@ -215,11 +215,13 @@ function FlexTimeApprovalSearchResult() {
         accessorKey: 'STATUS',
         header: t('Status'),
         enableSorting: false,
-        Cell: ({ row }) => getStatusChip(row.original)
+        Cell: ({ row }) => getStatusChip(row.original),
+        size: 140
       },
       {
         accessorKey: 'SECT_NAME',
-        header: t('Section')
+        header: t('Section'),
+        size: 140
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
@@ -227,7 +229,8 @@ function FlexTimeApprovalSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
-        header: t('Employee Name')
+        header: t('Employee Name'),
+        Cell: ({ row }) => row.original.EMPLOYEE_NAME + ' ' + row.original.EMPLOYEE_SURNAME
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',

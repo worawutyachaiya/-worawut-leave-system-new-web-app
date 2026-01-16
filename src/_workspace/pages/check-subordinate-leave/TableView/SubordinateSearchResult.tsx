@@ -96,7 +96,7 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
         header: t('Status'),
-        size: 120,
+        size: 140,
         enableSorting: false,
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ row }) => {
@@ -120,7 +120,7 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'APPROVER',
         header: t('Approval'),
-        size: 200,
+        size: 140,
         enableSorting: false,
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ row }) => <SubordinateTableApprover row={row.original} />
@@ -143,12 +143,11 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 130
+        size: 200
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
-        size: 180,
         Cell: ({ row }) => {
           const name = `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`
           return name.trim() || '-'
@@ -170,7 +169,6 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Leave Date'),
-        size: 180,
         Cell: ({ row }) => row.original.CREATE_DATE || '-'
       },
       {
@@ -196,34 +194,30 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
         header: t('Total Day'),
-        size: 100,
-        enableSorting: false,
-        muiTableBodyCellProps: { align: 'center' }
+        size: 140,
+        enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
         header: t('Reason'),
-        size: 180,
         enableSorting: false,
         Cell: ({ row }) => row.original.LEAVE_REQUEST_REASON || '-'
       },
       {
         accessorKey: 'LEAVE_REQUEST_REMARK',
         header: t('Remark'),
-        size: 180,
         enableSorting: false,
         Cell: ({ row }) => row.original.LEAVE_REQUEST_REMARK || '-'
       },
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        size: 180,
         Cell: ({ row }) => row.original.UPDATE_DATE || '-'
       },
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        size: 120,
+        size: 165,
         Cell: ({ row }) => row.original.UPDATE_BY || '-'
       }
     ],

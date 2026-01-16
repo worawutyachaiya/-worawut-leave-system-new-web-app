@@ -124,19 +124,18 @@ function SubordinateTimeRecordTableSearchResult() {
       {
         accessorKey: 'APPROVER',
         header: t('Approval'),
-        size: 200,
+        size: 140,
         enableSorting: false,
         Cell: ({ row }) => <TableApprover row={row.original} />
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 130
+        size: 200
       },
       {
         accessorKey: 'EMPLOYEE_FULL_NAME',
         header: t('Employee Name'),
-        size: 180,
         enableSorting: false,
         Cell: ({ row }) => {
           const name =
@@ -148,53 +147,51 @@ function SubordinateTimeRecordTableSearchResult() {
       {
         accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
-        size: 130,
+        size: 150,
         enableSorting: false
       },
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Leave Date'),
-        size: 180,
+        size: 230,
         Cell: ({ row }) => row.original.CREATE_DATE || '-'
       },
       {
         accessorKey: 'IN_TIME',
         header: t('in time'),
-        size: 130,
+        size: 220,
         enableSorting: false,
         Cell: ({ row }) => row.original.IN_TIME || '-'
       },
       {
         accessorKey: 'OUT_TIME',
         header: t('out time'),
-        size: 130,
+        size: 220,
         enableSorting: false,
         Cell: ({ row }) => row.original.OUT_TIME || '-'
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
         header: t('Reason'),
-        size: 180,
         enableSorting: false,
         Cell: ({ row }) => row.original.TIME_RECORD_TYPE_DESCRIPTION || '-'
       },
       {
         accessorKey: 'TIME_RECORD_REASON',
         header: t('Description'),
-        size: 180,
         enableSorting: false,
         Cell: ({ row }) => row.original.TIME_RECORD_REASON || '-'
       },
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        size: 180,
+        size: 200,
         Cell: ({ row }) => row.original.UPDATE_DATE || '-'
       },
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        size: 120,
+        size: 200,
         Cell: ({ row }) => row.original.UPDATE_BY || '-'
       }
     ],

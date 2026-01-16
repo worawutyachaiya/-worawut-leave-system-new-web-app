@@ -263,7 +263,7 @@ function TimeRecordApprovalSearchResult() {
         action={
           <Stack direction='row' spacing={2} alignItems='center'>
             <Typography variant='subtitle1' fontWeight='bold'>
-              Row Selected: {Object.keys(rowSelection).length}
+              {t('Row Selected')}: {Object.keys(rowSelection).length}
             </Typography>
             <Button
               variant='tonal'

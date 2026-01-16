@@ -7,32 +7,14 @@ import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 // Local Imports
 import { MENU_NAME } from './env'
 import ExcelForm from './ExcelForm'
+import { breadcrumbNavigation } from './env'
 
 const ExcelFormPage = () => {
-  const breadcrumbs = [
-    <Typography key='1' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Home
-    </Typography>,
-    <Typography key='2' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      {MENU_NAME}
-    </Typography>
-  ]
-
   return (
     <Grid container spacing={6}>
       {/* Header Section */}
-      <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <Typography variant='h4'>{MENU_NAME}</Typography>
-        <Divider orientation='vertical' flexItem />
-        <Breadcrumbs
-          separator='›'
-          aria-label='breadcrumb'
-          sx={{
-            display: 'inline-block'
-          }}
-        >
-          {breadcrumbs}
-        </Breadcrumbs>
+      <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+        <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
       </Grid>
 
       {/* Excel Form Section */}

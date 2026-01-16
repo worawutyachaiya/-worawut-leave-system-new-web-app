@@ -9,8 +9,9 @@ import LeaveApprovalSearchFilter from './LeaveApprovalSearchFilter'
 import LeaveApprovalSearchResult from './LeaveApprovalSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
 import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
-import { MENU_ID } from './env'
+import { breadcrumbNavigation, MENU_ID, MENU_NAME } from './env'
 import { useTranslation } from '@/contexts/TranslationContext'
+import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 const LeaveRequest = () => {
   return (
     <DxProvider>
@@ -32,24 +33,12 @@ const InnerApp = () => {
   useUpdateEffect(() => {
     setIsEnableFetching(true)
   }, [isLoadingReactHookForm])
-  const breadcrumbs = [
-    <Typography key='1' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Home
-    </Typography>,
-    <Typography key='2' sx={{ color: 'var(--mui-palette-text-secondary) !important' }}>
-      Leave Approval
-    </Typography>
-  ]
   return (
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>Leave Approval</Typography>
-          <Divider orientation='vertical' flexItem />
-          <Breadcrumbs separator='›' aria-label='breadcrumb' sx={{ display: 'inline-block' }}>
-            {breadcrumbs}
-          </Breadcrumbs>
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
         <Grid item xs={12}>
           {isLoadingReactHookForm ? (

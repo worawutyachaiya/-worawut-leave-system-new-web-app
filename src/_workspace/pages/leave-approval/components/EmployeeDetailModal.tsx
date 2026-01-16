@@ -33,6 +33,8 @@ import { LeaveEmployeeInformationInterface } from '@/_workspace/types/leave-empl
 import { ImageEmployeeFromURL } from '@/libs/react-query/hooks/common-system/useImageData'
 import TableApprover from '../../leave-history/components/TableApprover'
 import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -72,6 +74,7 @@ const InfoItem = ({
   </Box>
 )
 const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModalProps) => {
+  const { t } = useTranslation()
   const theme = useTheme()
   const { settings } = useSettings()
   const [employeeImage, setEmployeeImage] = useState<string>('')
@@ -140,7 +143,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
     () => [
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
-        header: 'Status',
+        header: t('Status'),
         size: 120,
         Cell: ({ cell, row }) => {
           if (row.original.INUSE === 0 || row.original.INUSE === '0') {
@@ -148,16 +151,16 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
               <Chip
                 variant={settings.mode === 'dark' ? 'tonal' : 'filled'}
                 size='small'
-                label='Cancelled'
+                label={t('Cancelled')}
                 color='error'
               />
             )
           }
           const status = cell.getValue<string>()
           const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            '0': { label: 'Pending', color: 'warning' },
-            '1': { label: 'Approved', color: 'success' },
-            '2': { label: 'Rejected', color: 'error' }
+            '0': { label: t('Pending'), color: 'warning' },
+            '1': { label: t('Approved'), color: 'success' },
+            '2': { label: t('Rejected'), color: 'error' }
           }
           const config = statusConfig[status] || { label: status || '-', color: 'warning' }
           return (
@@ -172,24 +175,24 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       },
       {
         accessorKey: 'APPROVER',
-        header: 'Approval',
+        header: t('Approval'),
         size: 150,
         enableSorting: false,
         Cell: ({ row }) => <TableApprover row={row.original} />
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: 'Leave Code',
-        size: 120
+        header: t('Leave Code'),
+        size: 150
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
-        header: 'Leave Type',
+        header: t('Leave Type'),
         size: 150
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: 'Request Date',
+        header: t('Request Date'),
         size: 180,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -198,36 +201,36 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
-        header: 'Leave Date',
+        header: t('Leave Date'),
         size: 180,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: 'Time',
+        header: t('Time'),
         size: 120,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: 'Total Day',
+        header: t('Total Day'),
         size: 100
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: 'Reason',
+        header: t('Reason'),
         size: 150,
         enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REQUEST_REMARK',
-        header: 'Remark',
+        header: t('Remark'),
         size: 150,
         enableSorting: false
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: 'Update Date',
+        header: t('Update Date'),
         size: 180,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
@@ -236,7 +239,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: 'Update By',
+        header: t('Update By'),
         size: 150
       }
     ],
@@ -273,7 +276,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
         }}
       >
         <Typography variant='h5' fontWeight='bold'>
-          Employee Detail
+          {t('Employee Detail')}
         </Typography>
         <DialogCloseButton onClick={onClose} disableRipple>
           <i className='tabler-x' />
@@ -288,7 +291,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
             titleTypographyProps={{ variant: 'h6', fontWeight: 'bold' }}
             sx={{ pb: 0 }}
           /> */}
-          <CardHeader title='Employee Information' />
+          <CardHeader title={t('Employee Information')} />
           <CardContent>
             {/* Centered layout like old implementation */}
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
@@ -317,43 +320,43 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <PersonIcon sx={{ color: 'primary.main', fontSize: 20 }} />
                   <Typography variant='body1'>
-                    <strong>Name :</strong>{' '}
+                    <strong>{t('Name')} :</strong>{' '}
                     {employee ? `${employee.EMPLOYEE_NAME || ''} ${employee.EMPLOYEE_SURNAME || ''}` : '-'}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <BadgeIcon sx={{ color: 'primary.main', fontSize: 20 }} />
                   <Typography variant='body1'>
-                    <strong>ID :</strong> {employee?.EMPLOYEE_CODE || '-'}
+                    <strong>{t('ID')} :</strong> {employee?.EMPLOYEE_CODE || '-'}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <BusinessIcon sx={{ color: 'primary.main', fontSize: 20 }} />
                   <Typography variant='body1'>
-                    <strong>Department :</strong>{' '}
+                    <strong>{t('Department')} :</strong>{' '}
                     {employee ? `${employee.EMPLOYEE_DEPT || ''} / ${employee.EMPLOYEE_SECTION || ''}` : '-'}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <CalendarMonthIcon sx={{ color: 'primary.main', fontSize: 20 }} />
                   <Typography variant='body1'>
-                    <strong>Start work :</strong>{' '}
+                    <strong>{t('Start Work')} :</strong>{' '}
                     {employee?.EMPLOYEE_START_WORK ? dayjs(employee.EMPLOYEE_START_WORK).format('DD / MM / YYYY') : '-'}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <WorkIcon sx={{ color: 'primary.main', fontSize: 20 }} />
                   <Typography variant='body1'>
-                    <strong>Work experience :</strong>{' '}
+                    <strong>{t('Work Experience')} :</strong>{' '}
                     {employee?.EMPLOYEE_EXP !== undefined && employee?.EMPLOYEE_EXP !== null
-                      ? `${employee.EMPLOYEE_EXP} year(s)`
+                      ? `${employee.EMPLOYEE_EXP} ${t('year(s)')}`
                       : '-'}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <CakeIcon sx={{ color: 'primary.main', fontSize: 20 }} />
                   <Typography variant='body1'>
-                    <strong>Birth date :</strong>{' '}
+                    <strong>{t('Birth date')} :</strong>{' '}
                     {employee?.EMPLOYEE_BIRTH_DAY ? dayjs(employee.EMPLOYEE_BIRTH_DAY).format('DD / MM / YYYY') : '-'}
                   </Typography>
                 </Box>
@@ -363,7 +366,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
         </Card>
         {/* Leave History Table */}
         <Card>
-          <CardHeader title='Leave History Result' />
+          <CardHeader title={t('Leave History')} />
           <DxMRTTable
             columns={columns}
             data={leaveHistoryTableData}
@@ -408,7 +411,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
             renderEmptyRowsFallback={() => (
               <Box sx={{ textAlign: 'center', py: 4 }}>
                 <Typography variant='body2' color='text.secondary'>
-                  No leave history found
+                  {t('No leave history found')}
                 </Typography>
               </Box>
             )}
@@ -419,7 +422,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       <Divider />
       <DialogActions sx={{ px: 3, py: 2 }}>
         <Button variant='outlined' color='secondary' onClick={onClose}>
-          Close
+          {t('Close')}
         </Button>
       </DialogActions>
     </Dialog>

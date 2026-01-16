@@ -296,14 +296,11 @@ function HrcheckM75SearchResult() {
         }
       },
       {
-        accessorKey: 'LEAVE_REQUEST_EMPLOYEE_CODE',
-        header: t('Employee CODE'),
-        size: 130
-      },
-      {
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
-        size: 180
+        Cell: ({ row }) => {
+          return row.original.EMPLOYEE_NAME + ' ' + row.original.EMPLOYEE_SURNAME
+        }
       },
       {
         accessorKey: 'EMPLOYEE_SECTION', // Changed from SECTION_NAME to match SQL Alias
@@ -318,7 +315,7 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE', // Changed from REQUEST_LEAVE_DATE
         header: t('Request Leave Date'),
-        size: 160,
+        size: 230,
         Cell: ({ cell }) => formatDate(cell.getValue<string>())
       },
       {
@@ -348,7 +345,7 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY', // Changed from TOTAL_DAY_LEAVE
         header: t('Total Day Leave'),
-        size: 140,
+        size: 200,
         Cell: ({ cell }) => {
           const value = cell.getValue<number>()
           return value ? value.toFixed(2) : '0.00'
@@ -362,13 +359,13 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        size: 150,
+        size: 170,
         Cell: ({ cell }) => formatDate(cell.getValue<string>())
       },
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        size: 130
+        size: 170
       }
     ],
     [t]

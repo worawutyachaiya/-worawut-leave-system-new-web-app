@@ -42,17 +42,12 @@ import { useSettings } from '@/@core/hooks/useSettings'
 import { useTranslation } from '@/contexts/TranslationContext'
 
 // Static objects moved outside component for performance //dont delete comment
-const DISPLAY_COLUMN_OPTIONS = {
-  'mrt-row-actions': {
-    muiTableHeadCellProps: { align: 'center' as const },
-    muiTableBodyCellProps: { align: 'center' as const }
-  }
-}
+
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const DocumentSearchResult = () => {
-  const { settings } = useSettings()
   const { t } = useTranslation()
+  const { settings } = useSettings()
 
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
 
@@ -219,62 +214,31 @@ const DocumentSearchResult = () => {
               color={inuse === 1 ? 'success' : 'error'}
             />
           )
+        },
+        size: 140,
+        muiTableBodyCellProps: {
+          align: 'center'
         }
       },
       {
         accessorKey: 'LEAVE_REGULARITY_NAME',
-        header: t('Document Name'),
-        size: 350,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        }
+        header: t('Document Name')
       },
       {
         accessorKey: 'LEAVE_REGULARITY_FILE_NAME',
-        header: t('Document File Name'),
-        size: 400,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        }
+        header: t('Document File Name')
       },
       {
         accessorKey: 'DESCRIPTION',
-        header: t('Description'),
-        size: 350,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        }
+        header: t('Description')
       },
       {
         accessorKey: 'MODIFIED',
-        header: t('Modified'),
-        size: 220,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        }
+        header: t('Modified')
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Modified By'),
-        size: 180,
-        muiTableHeadCellProps: {
-          align: 'center'
-        },
-        muiTableBodyCellProps: {
-          align: 'center'
-        }
+        header: t('Modified By')
       }
     ],
     [t]
@@ -305,7 +269,15 @@ const DocumentSearchResult = () => {
             columns={columns}
             enableRowActions={true}
             renderRowActions={({ row }) => <ActionsMenu row={row} onDelete={handleDeleteClick} />}
-            displayColumnDefOptions={DISPLAY_COLUMN_OPTIONS}
+            displayColumnDefOptions={{
+              'mrt-row-actions': {
+                header: t('ACTIONS'),
+                size: 100,
+                muiTableBodyCellProps: {
+                  align: 'center'
+                }
+              }
+            }}
             data={tableData}
             isError={isError}
             rowCount={totalCount}

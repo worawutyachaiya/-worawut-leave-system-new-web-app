@@ -12,9 +12,8 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 
 // Hooks
 import { useDownloadLeaveFile, downloadBlobAsFile } from '@/_workspace/react-query/hooks/useLeaveFile'
-
+import { useTranslation } from '@/contexts/TranslationContext'
 interface LeaveFileColumnProps {
-
   fileName?: string | null
 
   filePath?: string | null
@@ -22,23 +21,19 @@ interface LeaveFileColumnProps {
   size?: 'small' | 'medium' | 'large'
 }
 
-
-const LeaveFileColumn = ({
-  fileName,
-  filePath,
-  size = 'medium'
-}: LeaveFileColumnProps) => {
+const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColumnProps) => {
+  const { t } = useTranslation()
   const [isDownloading, setIsDownloading] = useState(false)
 
   // Download file hook
   const { mutateAsync: downloadFile } = useDownloadLeaveFile(
-    (response) => {
+    response => {
       if (response.data && fileName) {
         downloadBlobAsFile(response.data, fileName)
       }
       setIsDownloading(false)
     },
-    (error) => {
+    error => {
       console.error('Download error:', error)
       setIsDownloading(false)
     }
@@ -70,13 +65,9 @@ const LeaveFileColumn = ({
             size={size}
             onClick={handleDownload}
             disabled={isDownloading}
-            startIcon={
-              isDownloading
-                ? <CircularProgress size={16} color='inherit' />
-                : <DownloadIcon />
-            }
+            startIcon={isDownloading ? <CircularProgress size={16} color='inherit' /> : <DownloadIcon />}
           >
-            Download File
+            {t('Download File')}
           </Button>
         </Tooltip>
       </Box>
@@ -86,16 +77,10 @@ const LeaveFileColumn = ({
   // ไม่มีไฟล์ → แสดงปุ่ม "No File"
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Tooltip title='No File Uploaded'>
+      <Tooltip title={t('No File Uploaded')}>
         <Box component='span'>
-          <Button
-            variant='tonal'
-            color='warning'
-            size={size}
-            disabled
-            startIcon={<InsertDriveFileIcon />}
-          >
-            No File Upload
+          <Button variant='tonal' color='warning' size={size} disabled startIcon={<InsertDriveFileIcon />}>
+            {t('No File Upload')}
           </Button>
         </Box>
       </Tooltip>

@@ -315,6 +315,15 @@ function EditUserFlexTimeSearchResult() {
               columnFilterFns
             }}
             manualPagination
+            displayColumnDefOptions={{
+              'mrt-row-actions': {
+                header: t('ACTIONS'),
+                size: 100,
+                muiTableBodyCellProps: {
+                  align: 'center'
+                }
+              }
+            }}
             manualSorting
             enableColumnOrdering
             enableColumnActions={false}
