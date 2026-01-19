@@ -1,4 +1,8 @@
 {
+  "Toggle theme": "เปลี่ยนธีม",
+  "Languages": "ภาษา",
+  "Compact Mode": "โหมดกะทัด",
+  "Cool Mode": "ลูกไฟสีจ๊าบบบ",
   "Toggle Filters": "เปิด/ปิด ตัวกรอง",
   "Show/Hide Columns": "แสดง/ซ่อนคอลัมน์",
   "Toggle Dense Padding": "สลับการเว้นระยะหนาแน่น",

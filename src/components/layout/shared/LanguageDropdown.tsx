@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import MenuList from '@mui/material/MenuList'
 import MenuItem from '@mui/material/MenuItem'
+import Tooltip from '@mui/material/Tooltip'
 
 // Type Imports
 import type { Locale } from '@configs/i18n'
@@ -43,7 +44,7 @@ const LanguageDropdown = () => {
 
   // Hooks
   const { settings } = useSettings()
-  const { locale, setLocale } = useTranslation()
+  const { locale, setLocale, t } = useTranslation()
 
   const handleClose = () => {
     setOpen(false)
@@ -60,9 +61,11 @@ const LanguageDropdown = () => {
 
   return (
     <>
-      <IconButton ref={anchorRef} onClick={handleToggle} className='text-textPrimary'>
-        <i className='tabler-language' />
-      </IconButton>
+      <Tooltip title={t('Languages')}>
+        <IconButton ref={anchorRef} onClick={handleToggle} className='text-textPrimary'>
+          <i className='tabler-language' />
+        </IconButton>
+      </Tooltip>
 
       <Popper
         open={open}

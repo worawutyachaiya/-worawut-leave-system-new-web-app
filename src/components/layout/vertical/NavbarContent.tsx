@@ -22,7 +22,10 @@ import ModeScreenFullWidth from '../shared/ScreenFullWidthContainerSwitch'
 import { CoolMode } from '@/components/magicui/cool-mode'
 import { ModeDropdownToggler } from '../shared/ModeDropdownSwitch'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const NavbarContent = () => {
+  const { t } = useTranslation()
   // Hooks
   const theme = useTheme()
   const belowMdScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -43,7 +46,7 @@ const NavbarContent = () => {
       </div>
       <div className='flex items-center'>
         <CoolMode>
-          <Tooltip title={'Cool Mode'}>
+          <Tooltip title={t('Cool Mode')}>
             <IconButton className='text-textPrimary'>
               <i className='tabler-pacman text-[22px]' />
             </IconButton>
