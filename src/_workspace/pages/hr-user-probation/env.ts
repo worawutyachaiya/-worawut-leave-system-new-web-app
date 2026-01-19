@@ -3,6 +3,6 @@ export const MENU_NAME = 'User Probation'
 
 export const breadcrumbNavigation: { menuName: string; href?: string }[] = [
   { menuName: 'Home', href: '/home' },
-  { menuName: 'HR Edit' },
+  { menuName: 'Hr Edit' },
   { menuName: 'User Probation' }
 ]
