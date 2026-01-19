@@ -12,6 +12,8 @@ import { useDeleteLeave, PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks
 import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessage'
 import undraw_clean_up_re_504g from '@assets/images/common/undraw_clean_up_re_504g.svg'
 import { useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -25,6 +27,7 @@ interface LeaveCancelModalProps {
   onSuccess?: () => void
 }
 const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModalProps) => {
+  const { t } = useTranslation()
   const data = rowData?.original
   const queryClient = useQueryClient()
   const { mutateAsync: deleteLeave, isPending: isLoading } = useDeleteLeave(
@@ -32,7 +35,7 @@ const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModa
       if (response?.data?.Status === true) {
         ToastMessageSuccess({
           title: 'Cancel Leave Request',
-          message: response?.data?.Message || 'ยกเลิกการลาสำเร็จ'
+          message: t('Cancel Leave Success')
         })
         queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
         onSuccess?.()
@@ -40,14 +43,14 @@ const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModa
       } else {
         ToastMessageError({
           title: 'Cancel Leave Request',
-          message: response?.data?.Message || 'เกิดข้อผิดพลาดในการยกเลิกการลา'
+          message: t('Cancel Leave Failed')
         })
       }
     },
     error => {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: error?.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
+        message: t('Error connecting to the server')
       })
     }
   )
@@ -119,10 +122,10 @@ const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModa
               startIcon={isLoading ? <CircularProgress size={16} color='inherit' /> : null}
               sx={{ minWidth: 120 }}
             >
-              {isLoading ? 'Cancelling...' : 'Yes, Cancel !'}
+              {isLoading ? t('Cancelling...') : t('Yes, Cancel !')}
             </Button>
             <Button variant='outlined' color='secondary' onClick={onClose} disabled={isLoading} sx={{ minWidth: 120 }}>
-              No, Keep it
+              {t('No, Keep it')}
             </Button>
           </Box>
         </Box>

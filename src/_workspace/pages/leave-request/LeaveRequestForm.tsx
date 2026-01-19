@@ -832,7 +832,7 @@ function LeaveRequestForm() {
                         label={t('Leave Type')}
                         placeholder={t('Select Leave Type')}
                         error={!!error}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                       />
                     )}
                   />
@@ -850,7 +850,7 @@ function LeaveRequestForm() {
                           value={value}
                           onChange={onChange}
                           error={!!error}
-                          helperText={error?.message}
+                          helperText={t(error?.message || '')}
                         />
                       )}
                     />
@@ -867,7 +867,9 @@ function LeaveRequestForm() {
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => {
                           onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
-                          setValue('searchFilters.endDate', dayjs(date).format('YYYY-MM-DD'))
+                          setValue('searchFilters.endDate', dayjs(date).format('YYYY-MM-DD'), {
+                            shouldValidate: true
+                          })
                         }}
                         placeholderText={t('Select Date')}
                         disabled={!watchLeaveType}
@@ -877,10 +879,13 @@ function LeaveRequestForm() {
                         autoComplete='off'
                         customInput={
                           <CustomTextField
-                            label={`${t('Start Date')}${currentMaxDay > 0 ? ` (ลาได้สูงสุด ${currentMaxDay} วัน)` : ''}`}
+                            // label={`${t('Start Date')}${currentMaxDay > 0 ? ` (ลาได้สูงสุด ${currentMaxDay} วัน)` : ''}`}
+                            label={t('Start Date')}
                             fullWidth
                             error={!!error}
-                            helperText={error?.message || (!watchLeaveType ? t('Please Select Leave Type First') : '')}
+                            helperText={
+                              t(error?.message || '') || (!watchLeaveType ? t('Please Select Leave Type First') : '')
+                            }
                           />
                         }
                         // onChange={(value) => {
@@ -918,7 +923,9 @@ function LeaveRequestForm() {
                             label={t('End Date')}
                             fullWidth
                             error={!!error}
-                            helperText={error?.message || (!watchStartDate ? t('Please Select Start Date First') : '')}
+                            helperText={
+                              t(error?.message || '') || (!watchStartDate ? t('Please Select Start Date First') : '')
+                            }
                           />
                         }
                       />
@@ -943,7 +950,7 @@ function LeaveRequestForm() {
                         getOptionLabel={(option: TimeLeaveOption) => option?.label || ''}
                         classNamePrefix='select'
                         error={!!error}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                       />
                     )}
                   />
@@ -954,13 +961,14 @@ function LeaveRequestForm() {
                     control={control}
                     render={({ field, fieldState: { error } }) => (
                       <CustomTextField
+                        disabled
                         {...field}
                         fullWidth
                         label={t('Total Day Leave')}
                         placeholder='0'
                         InputProps={{ readOnly: true }}
                         error={!!error}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                       />
                     )}
                   />
@@ -971,13 +979,7 @@ function LeaveRequestForm() {
                     name='searchFilters.reason'
                     control={control}
                     render={({ field }) => (
-                      <CustomTextField
-                        {...field}
-                        fullWidth
-                        multiline
-                        rows={3}
-                        label={`${t('Reason')} (${t('Optional')})`}
-                      />
+                      <CustomTextField {...field} fullWidth rows={1} label={`${t('Reason')} (${t('Optional')})`} />
                     )}
                   />
                 </Grid>
@@ -986,17 +988,10 @@ function LeaveRequestForm() {
                     name='searchFilters.remark'
                     control={control}
                     render={({ field }) => (
-                      <CustomTextField
-                        {...field}
-                        fullWidth
-                        multiline
-                        rows={3}
-                        label={`${t('Remark')} (${t('Optional')})`}
-                      />
+                      <CustomTextField {...field} fullWidth rows={1} label={`${t('Remark')} (${t('Optional')})`} />
                     )}
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <Typography variant='body2' sx={{ mb: 2 }}>
                     {`${t('Leave Attachment')} (${t('Optional')})`}
@@ -1014,7 +1009,7 @@ function LeaveRequestForm() {
                               border: '2px dashed',
                               borderColor: isDragActive ? 'primary.main' : 'divider',
                               borderRadius: 1,
-                              p: 6,
+                              p: 3,
                               textAlign: 'center',
                               cursor: 'pointer',
                               bgcolor: isDragActive ? 'action.selected' : 'action.hover',
@@ -1042,8 +1037,8 @@ function LeaveRequestForm() {
                                 variant='rounded'
                                 sx={{
                                   bgcolor: 'primary.main',
-                                  width: 48,
-                                  height: 48,
+                                  width: 35,
+                                  height: 35,
                                   mb: 2,
                                   border: '2px solid',
                                   borderColor: 'divider'

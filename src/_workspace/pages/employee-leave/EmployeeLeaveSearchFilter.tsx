@@ -238,11 +238,11 @@ function EmployeeLeaveSearchFilters() {
                     <>
                       <AppReactDatepicker
                         selected={value ? dayjs(value, 'YYYY-MM-DD').toDate() : null}
-                        onChange={date => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
+                        onChange={date => onChange(date ? dayjs(date).format('YYYY-MMM-DD') : null)}
                         disabled
                         readOnly
                         autoComplete='off'
-                        placeholderText={dayjs(new Date()).format('YYYY-MM-DD')}
+                        placeholderText={dayjs(new Date()).format('YYYY-MMM-DD')}
                         customInput={<CustomTextField label={t('Leave Date')} fullWidth error={!!error} />}
                       />
                     </>

@@ -11,7 +11,7 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => ({
     transform: 'none',
     width: 'fit-content',
     maxWidth: '100%',
-    lineHeight: 1.153,
+    lineHeight: 1.4,
     position: 'relative',
     fontSize: theme.typography.body2.fontSize,
     marginBottom: theme.spacing(1),

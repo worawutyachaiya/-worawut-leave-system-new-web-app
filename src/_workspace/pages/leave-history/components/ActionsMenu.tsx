@@ -9,6 +9,8 @@ import dayjs from 'dayjs'
 import { useCheckPermission } from '@/_template/CheckPermission'
 import { ToastMessageError } from '@/components/ToastMessage'
 import { LeaveHistoryInterface } from '@/_workspace/types/leave-history/LeaveHistoryInterface'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const ITEM_HEIGHT = 48
 interface ActionsMenuProps<T extends MRT_RowData> {
   row: MRT_Row<T>
@@ -28,6 +30,7 @@ const ActionsMenu = <T extends MRT_RowData>({
   onCancelRequest
 }: ActionsMenuProps<T>) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const { t } = useTranslation()
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -40,7 +43,7 @@ const ActionsMenu = <T extends MRT_RowData>({
     if (rowData.INUSE === 0 || rowData.INUSE === '0') {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: 'Cannot cancel because already cancelled !'
+        message: t('Cannot cancel because already cancelled !')
       })
       return false
     }
@@ -49,7 +52,7 @@ const ActionsMenu = <T extends MRT_RowData>({
     if (!isSpecialPcode && rowData.IS_APPROVER_APPROVED === '1') {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: 'คุณไม่สามารถยกเลิกได้ เพราะได้รับการอนุมัติแล้ว'
+        message: t('You cannot cancel because it has been approved !')
       })
       return false
     }
@@ -58,14 +61,14 @@ const ActionsMenu = <T extends MRT_RowData>({
     if (startDate.isSame(today) || startDate.isBefore(today)) {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: 'คุณจำเป็นต้องยกเลิกล่วงหน้าอย่างน้อย 1 วัน'
+        message: t('You must cancel at least 1 day in advance')
       })
       return false
     }
     if (rowData.LEAVE_REQUEST_STATUS === '2') {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: 'Cannot cancel because already rejected !'
+        message: t('Cannot cancel because already rejected !')
       })
       return false
     }
@@ -105,7 +108,7 @@ const ActionsMenu = <T extends MRT_RowData>({
           <ListItemIcon>
             <i className='tabler-trash text-xl text-error' />
           </ListItemIcon>
-          <ListItemText primary='Cancel Request' />
+          <ListItemText primary={t('Cancel Request')} />
         </MenuItem>
       </Menu>
     </>

@@ -185,13 +185,12 @@ function SearchResult() {
         size: 205,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD/MM/YYYY HH:mm') : '-'
+          return value ? dayjs(value).format('DD-MMM-YYYY HH:mm') : '-'
         }
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
         header: t('Leave Date'),
-        size: 180,
         enableSorting: false
       },
       {
