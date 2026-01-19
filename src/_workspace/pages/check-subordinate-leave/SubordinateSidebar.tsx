@@ -125,7 +125,7 @@ function SubordinateSidebar({
     <Box sx={{ p: 3, width: '100%', overflowY: 'auto', '& .select__control': { boxShadow: 'none' } }}>
       {/* Search Filter Card */}
       <Card elevation={0} sx={{ mb: 3, boxShadow: 'none' }}>
-        <CardHeader title={t('Employee Leave Search Filters')} titleTypographyProps={{ variant: 'h5' }} />
+        <CardHeader title={t('Search filters')} titleTypographyProps={{ variant: 'h5' }} />
         <CardContent>
           {/* Employee Code Select */}
           <Box sx={{ mb: 4 }}>

@@ -109,7 +109,7 @@ function EmployeeLeaveSearchFilters() {
   return (
     <Card>
       <CardHeader
-        title={t('Employee Leave Search Filters')}
+        title={t('Search filters')}
         sx={{ '& .MuiCardHeader-avatar': { mr: 3 } }}
         action={
           <IconButton size='small' aria-label='collapse' onClick={() => setCollapse(!collapse)}>

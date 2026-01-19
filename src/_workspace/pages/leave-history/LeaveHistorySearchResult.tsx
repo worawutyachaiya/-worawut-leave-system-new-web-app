@@ -262,7 +262,7 @@ function SearchResult() {
   return (
     <>
       <Card>
-        <CardHeader title={t('Leave History Result')} />
+        <CardHeader title={t('Search result')} />
         <LeaveFileUploadModal
           leaveFileUploadId={String(selectedRowForUpload?.LEAVE_REQUEST_FILE_UPLOAD_ID || '')}
           open={openFileUploadModal}
