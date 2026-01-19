@@ -25,7 +25,7 @@ import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
 import UserLeaveSearchFilter from './UserLeaveSearchFilter'
 import UserLeaveSearchResult from './UserLeaveSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
-import { MENU_ID } from './env'
+import { breadcrumbNavigation, MENU_ID, MENU_NAME } from './env'
 
 const UserLeavePage = () => {
   return (
@@ -60,15 +60,8 @@ const InnerApp = () => {
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <DxBreadCrumbs
-            menuName='User Leave'
-            breadcrumbNavigation={[
-              { menuName: 'Home' },
-              { menuName: 'HR Edit' },
-              { menuName: 'User Leave' }
-            ]}
-          />
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
 
         {/* Search Filter Section */}

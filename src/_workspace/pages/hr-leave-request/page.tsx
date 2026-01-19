@@ -17,7 +17,7 @@ import RequestLeaveFormHr from './HrFormRequestLeave'
 import { FormDataPage, validationSchemaPage, defaultValues } from './validationSchema'
 
 // Environment
-import { MENU_NAME } from './env'
+import { breadcrumbNavigation, MENU_NAME } from './env'
 
 const LeaveRequestFormHr = () => {
   // no API
@@ -34,7 +34,7 @@ const LeaveRequestFormHr = () => {
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
         <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
-          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={[{ menuName: 'Home' }, { menuName: MENU_NAME }]} />
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
         {/* Employee Remain Leave Section */}
         <Grid item xs={12}>

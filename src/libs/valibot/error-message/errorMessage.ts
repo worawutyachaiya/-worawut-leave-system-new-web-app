@@ -9,7 +9,7 @@ export function typeFieldMessage({
 }
 
 export function requiredFieldMessage({ fieldName = 'This field' }: { fieldName?: string }) {
-  return `${fieldName} is required.`
+  return `${fieldName} is required`
 }
 
 export function minLengthFieldMessage({

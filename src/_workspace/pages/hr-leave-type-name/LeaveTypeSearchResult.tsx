@@ -272,6 +272,7 @@ const LeaveTypeSearchResult = () => {
   return (
     <>
       <Card sx={{ mt: 4 }}>
+        <CardHeader title={t('Search result')} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DxMRTTable
             columns={columns}

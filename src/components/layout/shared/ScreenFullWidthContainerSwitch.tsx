@@ -21,7 +21,10 @@ import type { Mode } from '@core/types'
 // Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const ModeScreenFullWidth = () => {
+  const { t } = useTranslation()
   // States
   const [open, setOpen] = useState(false)
   const [tooltipOpen, setTooltipOpen] = useState(false)
@@ -70,7 +73,7 @@ const ModeScreenFullWidth = () => {
       )
     } else {
       return (
-        <Tooltip title={'Compact Mode'}>
+        <Tooltip title={t('Compact Mode')}>
           <IconButton
             ref={anchorRef}
             onClick={() =>

@@ -174,7 +174,7 @@ function SearchResult() {
   return (
     <>
       <Card>
-        <CardHeader title={t('Leave AL Remain Result')} />
+        <CardHeader title={t('Search result')} />
         {/* Modal Area (ถ้ามี) */}
         {/* {openModalAdd && <LeaveHistoryModal openModal={openModalAdd} setOpenModal={setOpenModalAdd} mode='Add' />} */}
         <LocalizationProvider dateAdapter={AdapterDayjs}>

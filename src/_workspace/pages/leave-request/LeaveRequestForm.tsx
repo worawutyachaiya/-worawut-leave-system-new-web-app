@@ -55,6 +55,7 @@ import {
   PREFIX_QUERY_KEY as LEAVE_REQUEST_KEY
 } from '@/_workspace/react-query/hooks/useLeaveRequestCreate'
 import { useUploadLeaveFile } from '@/_workspace/react-query/hooks/useLeaveFile'
+import { useAlAccumulation } from '@/_workspace/react-query/hooks/useAlAccumulation'
 
 // Components Imports
 import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
@@ -273,6 +274,19 @@ function LeaveRequestForm() {
   const getUsedDay = (leaveTypeId: number) => getUsedDayByLeaveType(leaveBalanceData, leaveTypeId)
   const employeeStartWork = leaveBalanceData?.data?.ResultOnDb?.[0]?.EMPLOYEE_START_WORK || ''
   const isPassPro = leaveBalanceData?.data?.ResultOnDb?.[0]?.IS_PASS_PRO ?? true
+
+  const { data: alAccumulationData } = useAlAccumulation()
+  const alAccumulationList = alAccumulationData?.data?.ResultOnDb || []
+
+  const userExperience = useMemo(() => {
+    if (!employeeStartWork) return 0
+    const startDate = dayjs(employeeStartWork)
+    const now = dayjs()
+    const totalMonths = now.diff(startDate, 'month')
+    const years = Math.floor(totalMonths / 12)
+    const months = totalMonths % 12
+    return months > 0 ? years + 1 : years
+  }, [employeeStartWork])
 
   const getExperienceActual = (): string => {
     if (!employeeStartWork) return '-'
@@ -630,57 +644,70 @@ function LeaveRequestForm() {
                                 {getReceivedDay()}
                                 <Tooltip
                                   title={
-                                    <Box sx={{ minWidth: 380, p: 1 }}>
-                                      <Typography variant='subtitle1' fontWeight='bold' sx={{ mb: 2 }}>
-                                        {t('Annual Leave Received')}
+                                    <Box sx={{ minWidth: 250, p: 1, maxHeight: 400, overflow: 'auto' }}>
+                                      <Typography
+                                        variant='subtitle1'
+                                        fontWeight='bold'
+                                        sx={{ mb: 2, textAlign: 'center' }}
+                                      >
+                                        {t('Annual Leave Received Table')}
                                       </Typography>
-                                      <Table size='small'>
+                                      <Table size='small' stickyHeader>
                                         <TableHead>
                                           <TableRow
                                             sx={{
-                                              '& th': { borderBottom: '1px solid', borderColor: 'divider', py: 1 }
+                                              '& th': {
+                                                borderBottom: '1px solid',
+                                                borderColor: 'divider',
+                                                py: 1,
+                                                bgcolor: 'background.paper'
+                                              }
                                             }}
                                           >
                                             <TableCell sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                                              {t('Exp Actual')}
+                                              {t('Experience (Years)')}
                                             </TableCell>
                                             <TableCell
                                               align='center'
                                               sx={{ color: 'text.primary', fontWeight: 'bold' }}
                                             >
-                                              {t('Day')}
-                                            </TableCell>
-                                            <TableCell
-                                              align='center'
-                                              sx={{ color: 'text.primary', fontWeight: 'bold' }}
-                                            >
-                                              {t('Exp Adjust')}
-                                            </TableCell>
-                                            <TableCell align='right' sx={{ color: 'text.primary', fontWeight: 'bold' }}>
                                               {t('Received Day')}
                                             </TableCell>
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                          <TableRow sx={{ '& td': { border: 0, py: 1 } }}>
-                                            <TableCell sx={{ color: 'text.secondary' }}>
-                                              {getExperienceActual()}
-                                            </TableCell>
-                                            <TableCell align='center' sx={{ color: 'text.secondary' }}>
-                                              {getRemainDay(LEAVE_TYPE_IDS.RECEIVED_DAY)} {t('Days')}
-                                            </TableCell>
-                                            <TableCell align='center' sx={{ color: 'text.secondary' }}>
-                                              {getExperienceAdjust()}
-                                            </TableCell>
-                                            <TableCell align='right'>
-                                              <Chip
-                                                label={getReceivedDay()}
-                                                color='primary'
-                                                size='small'
-                                                sx={{ fontWeight: 'bold' }}
-                                              />
-                                            </TableCell>
-                                          </TableRow>
+                                          {alAccumulationList.map((item: any) => (
+                                            <TableRow
+                                              key={item.YEAR_EXP}
+                                              sx={{
+                                                '& td': { border: 0, py: 1 },
+                                                bgcolor:
+                                                  item.YEAR_EXP == userExperience
+                                                    ? 'rgba(var(--mui-palette-primary-mainChannel) / 0.15)'
+                                                    : 'transparent'
+                                              }}
+                                            >
+                                              <TableCell
+                                                sx={{
+                                                  color:
+                                                    item.YEAR_EXP == userExperience ? 'primary.main' : 'text.secondary',
+                                                  fontWeight: item.YEAR_EXP == userExperience ? 'bold' : 'normal'
+                                                }}
+                                              >
+                                                {item.YEAR_EXP} {t('Years')}
+                                              </TableCell>
+                                              <TableCell
+                                                align='center'
+                                                sx={{
+                                                  color:
+                                                    item.YEAR_EXP == userExperience ? 'primary.main' : 'text.secondary',
+                                                  fontWeight: item.YEAR_EXP == userExperience ? 'bold' : 'normal'
+                                                }}
+                                              >
+                                                {item.QTY_DAY} {t('Days')}
+                                              </TableCell>
+                                            </TableRow>
+                                          ))}
                                         </TableBody>
                                       </Table>
                                     </Box>
@@ -832,7 +859,7 @@ function LeaveRequestForm() {
                         label={t('Leave Type')}
                         placeholder={t('Select Leave Type')}
                         error={!!error}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                       />
                     )}
                   />
@@ -850,7 +877,7 @@ function LeaveRequestForm() {
                           value={value}
                           onChange={onChange}
                           error={!!error}
-                          helperText={error?.message}
+                          helperText={t(error?.message || '')}
                         />
                       )}
                     />
@@ -867,7 +894,9 @@ function LeaveRequestForm() {
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => {
                           onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
-                          setValue('searchFilters.endDate', dayjs(date).format('YYYY-MM-DD'))
+                          setValue('searchFilters.endDate', dayjs(date).format('YYYY-MM-DD'), {
+                            shouldValidate: true
+                          })
                         }}
                         placeholderText={t('Select Date')}
                         disabled={!watchLeaveType}
@@ -877,10 +906,13 @@ function LeaveRequestForm() {
                         autoComplete='off'
                         customInput={
                           <CustomTextField
-                            label={`${t('Start Date')}${currentMaxDay > 0 ? ` (ลาได้สูงสุด ${currentMaxDay} วัน)` : ''}`}
+                            // label={`${t('Start Date')}${currentMaxDay > 0 ? ` (ลาได้สูงสุด ${currentMaxDay} วัน)` : ''}`}
+                            label={t('Start Date')}
                             fullWidth
                             error={!!error}
-                            helperText={error?.message || (!watchLeaveType ? t('Please Select Leave Type First') : '')}
+                            helperText={
+                              t(error?.message || '') || (!watchLeaveType ? t('Please Select Leave Type First') : '')
+                            }
                           />
                         }
                         // onChange={(value) => {
@@ -918,7 +950,9 @@ function LeaveRequestForm() {
                             label={t('End Date')}
                             fullWidth
                             error={!!error}
-                            helperText={error?.message || (!watchStartDate ? t('Please Select Start Date First') : '')}
+                            helperText={
+                              t(error?.message || '') || (!watchStartDate ? t('Please Select Start Date First') : '')
+                            }
                           />
                         }
                       />
@@ -943,7 +977,7 @@ function LeaveRequestForm() {
                         getOptionLabel={(option: TimeLeaveOption) => option?.label || ''}
                         classNamePrefix='select'
                         error={!!error}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                       />
                     )}
                   />
@@ -954,13 +988,14 @@ function LeaveRequestForm() {
                     control={control}
                     render={({ field, fieldState: { error } }) => (
                       <CustomTextField
+                        disabled
                         {...field}
                         fullWidth
                         label={t('Total Day Leave')}
                         placeholder='0'
                         InputProps={{ readOnly: true }}
                         error={!!error}
-                        helperText={error?.message}
+                        helperText={t(error?.message || '')}
                       />
                     )}
                   />
@@ -971,13 +1006,7 @@ function LeaveRequestForm() {
                     name='searchFilters.reason'
                     control={control}
                     render={({ field }) => (
-                      <CustomTextField
-                        {...field}
-                        fullWidth
-                        multiline
-                        rows={3}
-                        label={`${t('Reason')} (${t('Optional')})`}
-                      />
+                      <CustomTextField {...field} fullWidth rows={1} label={`${t('Reason')} (${t('Optional')})`} />
                     )}
                   />
                 </Grid>
@@ -986,17 +1015,10 @@ function LeaveRequestForm() {
                     name='searchFilters.remark'
                     control={control}
                     render={({ field }) => (
-                      <CustomTextField
-                        {...field}
-                        fullWidth
-                        multiline
-                        rows={3}
-                        label={`${t('Remark')} (${t('Optional')})`}
-                      />
+                      <CustomTextField {...field} fullWidth rows={1} label={`${t('Remark')} (${t('Optional')})`} />
                     )}
                   />
                 </Grid>
-
                 <Grid item xs={12}>
                   <Typography variant='body2' sx={{ mb: 2 }}>
                     {`${t('Leave Attachment')} (${t('Optional')})`}
@@ -1014,7 +1036,7 @@ function LeaveRequestForm() {
                               border: '2px dashed',
                               borderColor: isDragActive ? 'primary.main' : 'divider',
                               borderRadius: 1,
-                              p: 6,
+                              p: 3,
                               textAlign: 'center',
                               cursor: 'pointer',
                               bgcolor: isDragActive ? 'action.selected' : 'action.hover',
@@ -1042,8 +1064,8 @@ function LeaveRequestForm() {
                                 variant='rounded'
                                 sx={{
                                   bgcolor: 'primary.main',
-                                  width: 48,
-                                  height: 48,
+                                  width: 35,
+                                  height: 35,
                                   mb: 2,
                                   border: '2px solid',
                                   borderColor: 'divider'

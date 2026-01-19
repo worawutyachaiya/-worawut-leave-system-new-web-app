@@ -22,7 +22,8 @@ import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
 import DocumentSearchFilter from './DocumentSearchFilter'
 import DocumentSearchResult from './DocumentSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
-import { MENU_ID } from './env'
+import { breadcrumbNavigation, MENU_ID, MENU_NAME } from './env'
+import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 
 const DocumentPage = () => {
   return (
@@ -69,18 +70,8 @@ const InnerApp = () => {
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/*--------- Header Section ---------*/}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Typography variant='h4'>Document</Typography>
-          <Divider orientation='vertical' flexItem />
-          <Breadcrumbs
-            separator='›'
-            aria-label='breadcrumb'
-            sx={{
-              display: 'inline-block'
-            }}
-          >
-            {breadcrumbs}
-          </Breadcrumbs>
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
 
         {/*--------- Search Filter Section ---------*/}

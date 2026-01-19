@@ -25,7 +25,7 @@ import DxWatchSearchFilters from '@/_template/DxWatchSearchFilters'
 import LeaveTypeSearchFilter from './LeaveTypeSearchFilter'
 import LeaveTypeSearchResult from './LeaveTypeSearchResult'
 import { fetchDefaultValues, FormDataPage, validationSchemaPage } from './validationSchema'
-import { MENU_ID } from './env'
+import { breadcrumbNavigation, MENU_ID, MENU_NAME } from './env'
 
 const LeaveTypePage = () => {
   return (
@@ -60,15 +60,8 @@ const InnerApp = () => {
     <Grid container spacing={6}>
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
-        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <DxBreadCrumbs
-            menuName='Leave Type Name'
-            breadcrumbNavigation={[
-              { menuName: 'Home' },
-              { menuName: 'HR Setting' },
-              { menuName: 'Leave Type Name' }
-            ]}
-          />
+        <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
 
         {/* Search Filter Section */}

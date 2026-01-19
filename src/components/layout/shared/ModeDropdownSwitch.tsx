@@ -1,5 +1,7 @@
 'use client'
 
+import Tooltip from '@mui/material/Tooltip'
+
 import { Moon, Sun } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
@@ -8,6 +10,7 @@ import { flushSync } from 'react-dom'
 // Hook Imports
 import { cn } from '@/libs/utils'
 import { useSettings } from '@core/hooks/useSettings'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<'button'> {
   duration?: number
@@ -49,10 +52,14 @@ export const ModeDropdownToggler = ({ className, duration = 500, ...props }: Ani
     )
   }, [isDark, duration])
 
+  const { t } = useTranslation()
+
   return (
-    <button ref={buttonRef} onClick={toggleTheme} className={cn(className)} {...props}>
-      {isDark ? <Sun /> : <Moon />}
-      <span className='sr-only'>Toggle theme</span>
-    </button>
+    <Tooltip title={t('Toggle theme')}>
+      <button ref={buttonRef} onClick={toggleTheme} className={cn(className)} {...props}>
+        {isDark ? <Sun /> : <Moon />}
+        <span className='sr-only'>Toggle theme</span>
+      </button>
+    </Tooltip>
   )
 }

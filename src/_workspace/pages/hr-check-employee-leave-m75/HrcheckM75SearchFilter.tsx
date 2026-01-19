@@ -94,7 +94,7 @@ const HrCheckM75SearchFilter = () => {
   return (
     <Card sx={{ marginBottom: 4 }}>
       <CardHeader
-        title='Search filters'
+        title={t('Search filters')}
         titleTypographyProps={{ variant: 'h5' }}
         action={
           <IconButton onClick={() => setCollapse(!collapse)}>

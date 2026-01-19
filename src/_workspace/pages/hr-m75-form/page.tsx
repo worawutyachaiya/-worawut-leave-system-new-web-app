@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import SkeletonCustom from '@/components/SkeletonCustom'
 import DxBreadCrumbs from '@/_template/DxBreadCrumbs'
 //env
-import { MENU_NAME } from './env'
+import { breadcrumbNavigation, MENU_NAME } from './env'
 // Local Imports
 import { FormDataPage, validationSchemaPage, defaultValues } from './validationSchema'
 import M75Form from './M75Form'
@@ -26,7 +26,7 @@ const M75Page = () => {
       <FormProvider {...reactHookFormMethods}>
         {/* Header Section */}
         <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
-          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={[{ menuName: 'Home' }, { menuName: MENU_NAME }]} />
+          <DxBreadCrumbs menuName={MENU_NAME} breadcrumbNavigation={breadcrumbNavigation} />
         </Grid>
 
         {/* Request Leave Form Section */}

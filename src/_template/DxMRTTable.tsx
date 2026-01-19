@@ -30,6 +30,12 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
   const table = useMaterialReactTable({
     columns,
     data,
+    localization: {
+      showHideFilters: t('Toggle Filters'),
+      showHideColumns: t('Show/Hide Columns'),
+      toggleDensity: t('Toggle Dense Padding'),
+      toggleFullScreen: t('Toggle Full Screen')
+    },
     initialState: { showColumnFilters: false },
     manualFiltering: true,
     manualPagination: true,
@@ -101,14 +107,14 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
           />
           <Typography className='hidden sm:block'>{t('Entries')}</Typography>
         </div>
-        <Tooltip arrow title='Clear All Sorting' onClick={() => table.resetSorting(true)}>
+        <Tooltip arrow title={t('Clear All Sorting')} onClick={() => table.resetSorting(true)}>
           <IconButton>
             <Badge badgeContent={table.getState().sorting.length ?? 0} color='primary'>
               <SwapVertIcon />
             </Badge>
           </IconButton>
         </Tooltip>
-        <Tooltip arrow title='Clear All Filters' onClick={() => table.resetColumnFilters(true)}>
+        <Tooltip arrow title={t('Clear All Filters')} onClick={() => table.resetColumnFilters(true)}>
           <IconButton>
             <Badge badgeContent={table.getState().columnFilters.length ?? 0} color='primary'>
               <FilterListIcon />
