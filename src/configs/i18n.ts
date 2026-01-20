@@ -1,5 +1,5 @@
 export const i18n = {
-  defaultLocale: 'en',
+  defaultLocale: 'th',
 
   // *** DX edit
   locales: ['en', 'th'],

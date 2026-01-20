@@ -1,4 +1,10 @@
 {
+  "Company Holiday": "วันหยุดบริษัท",
+  "Traditional Holiday": "วันหยุดนักขัตฤกษ์",
+  "Yes, Approve": "ใช่, อนุมัติ!",
+  "Yes, Reject": "ใช่, ปฏิเสธ!",
+  "Approving...": "กำลังอนุมัติ...",
+  "Rejecting...": "กำลังปฏิเสธ...",
   "Exceed 30 days": "ลาป่วยเกิน 30 วันแล้ว",
   "See More": "ดูเพิ่มเติม",
   "See Less": "ดูน้อยลง",
