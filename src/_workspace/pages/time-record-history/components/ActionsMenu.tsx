@@ -132,7 +132,7 @@ const ActionsMenu = <T extends MRT_RowData>({
         ) : null} */}
         <MenuItem
           onClick={() => {
-              onClickCancelRequest()
+            onClickCancelRequest()
           }}
         >
           <ListItemIcon>

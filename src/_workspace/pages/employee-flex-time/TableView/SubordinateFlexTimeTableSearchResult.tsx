@@ -144,12 +144,14 @@ function SubordinateFlexTimeTableSearchResult() {
         accessorKey: 'APPROVER',
         header: t('Approval'),
         enableSorting: false,
-        Cell: ({ row }) => <TableApprover row={row.original} />
+        Cell: ({ row }) => <TableApprover row={row.original} />,
+        size: 140
       },
       {
-        accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_ID',
+        accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       },
       {
         accessorKey: 'EMPLOYEE_FULL_NAME',
@@ -159,7 +161,8 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
         header: t('Time'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_START_DATE',
@@ -181,7 +184,8 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       }
     ],
     [settings.mode, t]

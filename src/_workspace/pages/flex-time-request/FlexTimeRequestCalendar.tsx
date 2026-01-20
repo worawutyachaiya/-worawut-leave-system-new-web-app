@@ -41,7 +41,7 @@ const FlexTimeRequestCalendar = () => {
     const isHoliday = item.title?.toLowerCase().includes('holiday')
     return {
       id: item.id?.toString() || `${item.title}-${item.start}`,
-      title: item.title,
+      title: t(item.title || 'Leave'),
       start: item.start,
       end: item.end,
       allDay: true,

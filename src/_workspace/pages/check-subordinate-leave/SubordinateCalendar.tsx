@@ -8,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import type { CalendarOptions, EventInput } from '@fullcalendar/core'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 dayjs.extend(isSameOrBefore)
 
@@ -45,7 +46,7 @@ const LEAVE_TYPE_COLORS: Record<string, string> = {
 
 import type { CalendarEvent } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
 
-const processEvents = (events: CalendarEvent[]): CalendarEvent[] => {
+const processEvents = (events: CalendarEvent[], t: (key: string) => string): CalendarEvent[] => {
   const processedEvents: CalendarEvent[] = []
 
   events.forEach(event => {
@@ -54,11 +55,9 @@ const processEvents = (events: CalendarEvent[]): CalendarEvent[] => {
       (event.title && event.title.toLowerCase().includes('holiday')) ||
       (event.extendedProps?.leaveType && event.extendedProps.leaveType.toLowerCase().includes('holiday'))
 
-    const title =
-      event.title ||
-      event.extendedProps?.LEAVE_TYPE_DESCRIPTION_EN ||
-      event.extendedProps?.leaveType ||
-      'Leave'
+    const rawTitle =
+      event.title || event.extendedProps?.LEAVE_TYPE_DESCRIPTION_EN || event.extendedProps?.leaveType || 'Leave'
+    const title = t(rawTitle)
 
     if (isHoliday) {
       processedEvents.push({
@@ -112,6 +111,7 @@ function SubordinateCalendar({
   setCalendarApi,
   handleLeftSidebarToggle
 }: Props) {
+  const { t } = useTranslation()
   const calendarRef = useRef<any>(null)
   const theme = useTheme()
 
@@ -125,7 +125,7 @@ function SubordinateCalendar({
     return LEAVE_TYPE_COLORS[leaveType] || LEAVE_TYPE_COLORS['default']
   }
 
-  const processedEvents = useMemo(() => processEvents(events), [events])
+  const processedEvents = useMemo(() => processEvents(events, t), [events, t])
 
   const calendarOptions: CalendarOptions = {
     events: processedEvents as EventInput[],

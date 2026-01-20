@@ -321,7 +321,7 @@ const RemainLeaveSearchResult = () => {
       {
         id: 'detail',
         header: t('ACTIONS'),
-        size: 130,
+        size: 140,
         Cell: ({ row }) => (
           <Button size='small' onClick={() => handleOpenEditModal(row.original)}>
             <BorderColorIcon fontSize='small' />
@@ -332,7 +332,8 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: t('Employee Code')
+        header: t('Employee Code'),
+        size: 180
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
@@ -341,7 +342,8 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: t('Section')
+        header: t('Section'),
+        size: 140
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
@@ -353,7 +355,8 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: t('Leave Type')
+        header: t('Leave Type'),
+        size: 170
       },
       {
         accessorKey: 'LEAVE_REMAIN_DAY',

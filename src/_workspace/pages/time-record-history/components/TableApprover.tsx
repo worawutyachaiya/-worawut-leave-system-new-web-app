@@ -9,14 +9,17 @@ interface TableApproverProps {
   row: TimeRecordHistoryInterface
 }
 interface ApproverItem {
-  TIME_RECORD_APPROVAL_BY: string
-  TIME_RECORD_APPROVAL_STATUS: number | string
+  APPROVAL_BY_APPROVER_EMPLOYEE_CODE: string
+  APPROVAL_STATUS_ID: number | string
 }
 const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
   const { settings } = useSettings()
-  const params = useMemo(() => ({
-    TIME_RECORD_REQUEST_ID: row?.TIME_RECORD_REQUEST_ID || '',
-  }), [row?.TIME_RECORD_REQUEST_ID])
+  const params = useMemo(
+    () => ({
+      TIME_RECORD_REQUEST_ID: row?.TIME_RECORD_REQUEST_ID || ''
+    }),
+    [row?.TIME_RECORD_REQUEST_ID]
+  )
   const approverList = row?.APPROVER || []
   const shouldFetch = !!row?.TIME_RECORD_REQUEST_ID && approverList.length >= 0
   const { data, isLoading, isError } = useTimeRecordApprover(params, shouldFetch)
@@ -28,23 +31,26 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
         approverList.forEach((elem: any) => {
           const approverId = typeof elem === 'string' ? elem : elem?.APPROVER_ID || elem
           resultArray.push({
-            TIME_RECORD_APPROVAL_BY: String(approverId),
-            TIME_RECORD_APPROVAL_STATUS: 0
+            APPROVAL_BY_APPROVER_EMPLOYEE_CODE: String(approverId),
+            APPROVAL_STATUS_ID: 0
           })
         })
       }
     } else {
       apiData.forEach((elem: any) => {
         resultArray.push({
-          TIME_RECORD_APPROVAL_BY: elem.TIME_RECORD_APPROVAL_BY,
-          TIME_RECORD_APPROVAL_STATUS: elem.TIME_RECORD_APPROVAL_STATUS  
+          APPROVAL_BY_APPROVER_EMPLOYEE_CODE: elem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE,
+          APPROVAL_STATUS_ID: elem.APPROVAL_STATUS_ID
         })
       })
     }
-    resultArray.forEach((el) => {
+    resultArray.forEach(el => {
       apiData.forEach((apiItem: any) => {
-        if (el.TIME_RECORD_APPROVAL_BY.toString().toLowerCase() === apiItem.TIME_RECORD_APPROVAL_BY?.toLowerCase()) {
-          el.TIME_RECORD_APPROVAL_STATUS = apiItem.TIME_RECORD_APPROVAL_STATUS
+        if (
+          el.APPROVAL_BY_APPROVER_EMPLOYEE_CODE.toString().toLowerCase() ===
+          apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE?.toLowerCase()
+        ) {
+          el.APPROVAL_STATUS_ID = apiItem.APPROVAL_STATUS_ID
         }
       })
     })
@@ -99,10 +105,10 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
   }
   return (
     <Box component='ol' sx={{ m: 0, pl: 2 }}>
-      {result.map(({ TIME_RECORD_APPROVAL_BY, TIME_RECORD_APPROVAL_STATUS }, index) => (
+      {result.map(({ APPROVAL_BY_APPROVER_EMPLOYEE_CODE, APPROVAL_STATUS_ID }, index) => (
         <Box
           component='li'
-          key={`${TIME_RECORD_APPROVAL_BY}-${TIME_RECORD_APPROVAL_STATUS}-${index}`}
+          key={`${APPROVAL_BY_APPROVER_EMPLOYEE_CODE}-${APPROVAL_STATUS_ID}-${index}`}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -110,9 +116,9 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
             fontSize: '0.875rem'
           }}
         >
-          {getStatusChip(TIME_RECORD_APPROVAL_STATUS)}
+          {getStatusChip(APPROVAL_STATUS_ID)}
           <span style={{ margin: '0 4px' }}>:</span>
-          <span>{TIME_RECORD_APPROVAL_BY}</span>
+          <span>{APPROVAL_BY_APPROVER_EMPLOYEE_CODE}</span>
         </Box>
       ))}
     </Box>

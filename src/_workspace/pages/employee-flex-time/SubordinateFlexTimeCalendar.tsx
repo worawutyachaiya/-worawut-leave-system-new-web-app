@@ -8,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import type { CalendarOptions, EventInput } from '@fullcalendar/core'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { useTranslation } from '@/contexts/TranslationContext'
 import type { FlexTimeCalendarEvent } from '@/_workspace/types/subordinate-flex-time/SubordinateFlexTimeTypes'
 
 dayjs.extend(isSameOrBefore)
@@ -25,7 +26,7 @@ const FLEX_TIME_COLORS: Record<string, string> = {
   default: 'primary'
 }
 
-const processEvents = (events: FlexTimeCalendarEvent[]): FlexTimeCalendarEvent[] => {
+const processEvents = (events: FlexTimeCalendarEvent[], t: (key: string) => string): FlexTimeCalendarEvent[] => {
   const processedEvents: FlexTimeCalendarEvent[] = []
 
   events.forEach(event => {
@@ -34,7 +35,8 @@ const processEvents = (events: FlexTimeCalendarEvent[]): FlexTimeCalendarEvent[]
       (event.title && event.title.toLowerCase().includes('holiday')) ||
       (event.extendedProps?.holidayType && event.extendedProps.holidayType.toLowerCase().includes('holiday'))
 
-    const title = event.title || 'Flex Time'
+    const rawTitle = event.title || 'Flex Time'
+    const title = t(rawTitle)
 
     if (isHoliday) {
       processedEvents.push({
@@ -87,6 +89,7 @@ function SubordinateFlexTimeCalendar({
   setCalendarApi,
   handleLeftSidebarToggle
 }: Props) {
+  const { t } = useTranslation()
   const calendarRef = useRef<any>(null)
   const theme = useTheme()
 
@@ -100,7 +103,7 @@ function SubordinateFlexTimeCalendar({
     return FLEX_TIME_COLORS[title] || FLEX_TIME_COLORS['default']
   }
 
-  const processedEvents = useMemo(() => processEvents(events), [events])
+  const processedEvents = useMemo(() => processEvents(events, t), [events, t])
 
   const calendarOptions: CalendarOptions = {
     events: processedEvents as EventInput[],

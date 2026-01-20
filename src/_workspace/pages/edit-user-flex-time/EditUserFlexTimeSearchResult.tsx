@@ -236,7 +236,8 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       },
       {
         accessorKey: 'EMPLOYEE_FULL_NAME',
@@ -247,7 +248,8 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
-        enableSorting: false
+        enableSorting: false,
+        size: 150
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
@@ -257,13 +259,15 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
         header: t('Time'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_TOTAL_DAY',
         header: t('Total Day Leave'),
         enableSorting: false,
-        Cell: ({ row }) => row.original.FLEX_TIME_REQUEST_TOTAL_DAY || 1
+        Cell: ({ row }) => row.original.FLEX_TIME_REQUEST_TOTAL_DAY,
+        size: 140
       },
       {
         accessorKey: 'UPDATE_DATE',
@@ -273,7 +277,8 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'UPDATE_BY',
         header: t('Modified By'),
-        enableSorting: true
+        enableSorting: true,
+        size: 140
       }
     ],
     [t, settings.mode]

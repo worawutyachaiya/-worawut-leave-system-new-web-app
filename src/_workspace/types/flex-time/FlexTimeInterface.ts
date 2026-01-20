@@ -236,8 +236,8 @@ export interface SubordinateFlexTimeSearchParams {
   EMPLOYEE_CODE?: string
   EMPLOYEE_NAME?: string
   EMPLOYEE_SECTION?: string
-  Start?: number
-  Limit?: number
+  Start?: string
+  Limit?: string
   Order?: any
 }
 

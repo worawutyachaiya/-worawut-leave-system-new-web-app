@@ -222,7 +222,7 @@ function SearchResult() {
         size: 195,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD/MM/YYYY HH:mm') : '-'
+          return value ? dayjs(value).format('DD-MMM-YYYY HH:mm') : '-'
         }
       },
       {

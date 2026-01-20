@@ -57,7 +57,7 @@ const getExperienceDate = (dateString: string, t: (key: string) => string): stri
 }
 
 function LeaveRequestEmployeeInfo() {
-  const [collapse, setCollapse] = useState(false)
+  const [collapse, setCollapse] = useState(true)
   const { t } = useTranslation()
 
   const paramForSearch = { EMPLOYEE_CODE: `${getUserData().EMPLOYEE_CODE}` }

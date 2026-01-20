@@ -26,7 +26,8 @@ import {
   TableHead,
   TableRow,
   Chip,
-  Tooltip
+  Tooltip,
+  Collapse
 } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
@@ -81,6 +82,7 @@ import {
 } from './timeLeaveOptions'
 import { oneDayTimeLeaveArrWithFlexTimeTypeFaster, oneDayTimeLeaveArrWithFlexTimeTypeSlower } from './timeLeaveOptions'
 import { useSearchFlexTimeBySpecificDate } from '@/_workspace/react-query/hooks/useFlexTime'
+import classNames from 'classnames'
 
 const getDayFromTimeLeave = (timeLeaveValue: string | undefined): number => {
   if (!timeLeaveValue) return 0
@@ -187,6 +189,7 @@ function LeaveRequestForm() {
     type: 'success' as MessageType
   })
   const [confirmModal, setConfirmModal] = useState(false)
+  const [collapse, setCollapse] = useState(true)
 
   // React Query Client
   const queryClient = useQueryClient()
@@ -318,7 +321,7 @@ function LeaveRequestForm() {
 
   const getReceivedDay = (): string => {
     if (!employeeStartWork) return '-'
-    if (!isPassPro) return `0 ${t('Days')}`
+    if (!isPassPro) return `0 ${t(getLeaveTypeUnit(LEAVE_TYPE_IDS.ANNUAL_LEAVE_ACCUMULATE))}`
 
     const startDate = dayjs(employeeStartWork)
     const now = dayjs()
@@ -328,35 +331,20 @@ function LeaveRequestForm() {
     const months = totalMonths % 12
     const experience = months > 0 ? years + 1 : years
 
+    const found = alAccumulationList.find((item: any) => item.YEAR_EXP === experience)
+
     let receivedDays = 0
-    switch (experience) {
-      case 0:
-        receivedDays = 6
-        break
-      case 1:
-        receivedDays = 7
-        break
-      case 2:
-        receivedDays = 8
-        break
-      case 3:
-        receivedDays = 9
-        break
-      case 4:
-        receivedDays = 10
-        break
-      case 5:
-        receivedDays = 11
-        break
-      case 6:
-        receivedDays = 12
-        break
-      default:
-        receivedDays = experience > 6 ? 13 : 0
-        break
+    if (found) {
+      receivedDays = (found as any).QTY_DAY
+    } else {
+      const maxItem = alAccumulationList.reduce(
+        (max: any, item: any) => (item.YEAR_EXP > (max?.YEAR_EXP ?? -1) ? item : max),
+        null
+      )
+      receivedDays = maxItem?.QTY_DAY
     }
 
-    return `${receivedDays} ${t('Days')}`
+    return `${receivedDays} ${t(getLeaveTypeUnit(LEAVE_TYPE_IDS.ANNUAL_LEAVE_ACCUMULATE))}`
   }
 
   const businessLeaveMaxDay =
@@ -375,12 +363,17 @@ function LeaveRequestForm() {
     setValue('searchFilters.total', total)
   }, [watchStartDate, watchEndDate, watchTimeLeave, companyHolidays, setValue])
 
-  const getMaxDayByLeaveTypeId = (leaveTypeId: number): number => {
-    const found = leaveTypeMaxDayData?.data?.ResultOnDb?.find(item => item.LEAVE_TYPE_ID === leaveTypeId)
-    return found ? parseFloat(found.LEAVE_TYPE_MAX_DAY) : 0
+  const getLeaveTypeUnit = (leaveTypeId: number): string => {
+    const found = leaveTypeMaxDayData?.data?.ResultOnDb?.find((item: any) => item.LEAVE_TYPE_ID === leaveTypeId)
+    return found?.LEAVE_TYPE_UNIT || ''
   }
 
-  const currentMaxDay = watchLeaveType?.LEAVE_TYPE_ID ? getMaxDayByLeaveTypeId(watchLeaveType.LEAVE_TYPE_ID) : 0
+  const unlimitedLeaveTypes = [9] // 9 ลาได้ไม่จำกัด
+  const currentMaxDay = watchLeaveType?.LEAVE_TYPE_ID
+    ? unlimitedLeaveTypes.includes(watchLeaveType.LEAVE_TYPE_ID)
+      ? 0
+      : getRemainDay(watchLeaveType.LEAVE_TYPE_ID)
+    : 0
 
   const getMaxEndDate = (): Date | undefined => {
     return getMaxEndDateFromStart(watchStartDate, currentMaxDay, companyHolidays)
@@ -595,7 +588,8 @@ function LeaveRequestForm() {
                                 fontWeight='bold'
                                 sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
                               >
-                                {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE)} {t('Days')}
+                                {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE)}{' '}
+                                {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.ANNUAL_LEAVE))}
                               </Typography>
                               <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
                                 {t('Available Annual Leave')}
@@ -607,7 +601,8 @@ function LeaveRequestForm() {
                                 fontWeight='bold'
                                 sx={{ display: 'flex', alignItems: 'center', fontSize: { xs: '1rem', md: '1.25rem' } }}
                               >
-                                {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE_ACCUMULATE)} {t('Days')}
+                                {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE_ACCUMULATE)}{' '}
+                                {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.ANNUAL_LEAVE_ACCUMULATE))}
                                 <Tooltip
                                   title={t('Available Annual Leave (from Previous Year)')}
                                   slotProps={{
@@ -755,7 +750,8 @@ function LeaveRequestForm() {
                                 fontWeight='bold'
                                 sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
                               >
-                                {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE_EMERGENCY)} {t('Times')}
+                                {getRemainDay(LEAVE_TYPE_IDS.ANNUAL_LEAVE_EMERGENCY)}{' '}
+                                {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.ANNUAL_LEAVE_EMERGENCY))}
                               </Typography>
                               <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
                                 {t('Annual Leave Emergency Remaining')}
@@ -767,7 +763,8 @@ function LeaveRequestForm() {
                                 fontWeight='bold'
                                 sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
                               >
-                                {getRemainDay(LEAVE_TYPE_IDS.BUSINESS_LEAVE)} / {businessLeaveMaxDay} {t('Days')}
+                                {getRemainDay(LEAVE_TYPE_IDS.BUSINESS_LEAVE)}{' '}
+                                {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.BUSINESS_LEAVE))}
                                 {getRemainDay(LEAVE_TYPE_IDS.BUSINESS_LEAVE) < 0 && (
                                   <Typography
                                     component='span'
@@ -788,7 +785,8 @@ function LeaveRequestForm() {
                                 fontWeight='bold'
                                 sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
                               >
-                                {getUsedDay(LEAVE_TYPE_IDS.OTHER_LEAVE)} {t('Days')}
+                                {getUsedDay(LEAVE_TYPE_IDS.OTHER_LEAVE)}{' '}
+                                {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.OTHER_LEAVE))}
                               </Typography>
                               <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
                                 {t('Other Leave Used')}
@@ -808,22 +806,113 @@ function LeaveRequestForm() {
                       <Grid container spacing={5} alignItems='center'>
                         <Grid item xs={12}>
                           <Typography variant='h5' fontWeight='bold' sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
-                            {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE)} / {sickLeaveMaxDay} {t('Days')}
+                            {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) > 30 ? (
+                              <Typography
+                                component='span'
+                                color='error'
+                                variant='h5'
+                                fontWeight='bold'
+                                sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}
+                              >
+                                {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE)}
+                              </Typography>
+                            ) : (
+                              getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE)
+                            )}{' '}
+                            / {sickLeaveMaxDay} {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.SICK_LEAVE))}
                             {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) > 30 && (
-                              <Typography component='span' color='error' sx={{ fontSize: '0.75rem', ml: 0.5 }}>
-                                {t('Already exceed 30 days')}
+                              <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
+                                {t('Exceed 30 days')}
                               </Typography>
                             )}
                           </Typography>
-                          <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
-                            {t('Sick Leave Used')}
-                          </Typography>
+                          {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) < 30 && (
+                            <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
+                              {t('Sick Leave Used')}
+                            </Typography>
+                          )}
                         </Grid>
                       </Grid>
                     </CardContent>
                   </Card>
                 </Grid>
               </Grid>
+              {/* See More Button */}
+              <Box sx={{ display: 'flex', justifyContent: 'end', mt: 2 }}>
+                <Button
+                  variant='text'
+                  size='small'
+                  disableRipple
+                  onClick={() => setCollapse(!collapse)}
+                  endIcon={
+                    <i className={classNames(collapse ? 'tabler-chevron-down' : 'tabler-chevron-up', 'text-sm')} />
+                  }
+                  sx={{
+                    textTransform: 'none',
+                    color: 'primary.main'
+                  }}
+                >
+                  {collapse ? t('See More') : t('See Less')}
+                </Button>
+              </Box>
+
+              {/* Collapse Leave  Balance */}
+              <Collapse in={!collapse}>
+                <Box sx={{ mx: 4, mb: 2 }}>
+                  {/* <Typography variant='subtitle1' fontWeight='bold' sx={{ mb: 2 }}>
+                    {t('All Leave Type Balance')}
+                  </Typography> */}
+                  <Grid container spacing={2}>
+                    {leaveBalanceData?.data?.ResultOnDb?.filter(
+                      (leaveType: any) =>
+                        // Filter out leave types already shown above
+                        ![1, 3, 9, 12, 13, 16, 21].includes(leaveType.LEAVE_TYPE_ID)
+                    )?.map((leaveType: any) => (
+                      <Grid item xs={6} sm={4} md={3} lg={2} key={leaveType.LEAVE_TYPE_ID}>
+                        <Box
+                        // sx={{
+                        //   p: 2,
+                        //   borderRadius: 2,
+                        //   // border: '1px solid',
+                        //   borderColor: 'divider',
+                        //   bgcolor: 'background.paper',
+                        //   height: '100%'
+                        //   // transition: 'all 0.2s ease-in-out',
+                        //   // '&:hover': {
+                        //   //   borderColor: 'primary.main',
+                        //   //   boxShadow: 1
+                        //   // }
+                        // }}
+                        >
+                          <Typography
+                            variant='h6'
+                            color='textPrimary'
+                            fontWeight='bold'
+                            sx={{ fontSize: { xs: '1rem', md: '1.1rem' } }}
+                          >
+                            {leaveType.LEAVE_REMAIN_DAY} {t(getLeaveTypeUnit(leaveType.LEAVE_TYPE_ID))}
+                          </Typography>
+                          {/* <Tooltip title={leaveType.LEAVE_TYPE_DESCRIPTION_TH || ''} arrow> */}
+                          <Typography
+                            variant='caption'
+                            color='textSecondary'
+                            sx={{
+                              display: 'block',
+                              mt: 0.5,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            {t(leaveType.LEAVE_TYPE_DESCRIPTION_EN)}
+                          </Typography>
+                          {/* </Tooltip> */}
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              </Collapse>
               <Divider sx={{ my: 6 }} />
               <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
