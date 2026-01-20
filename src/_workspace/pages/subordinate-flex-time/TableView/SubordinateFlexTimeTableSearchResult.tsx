@@ -130,12 +130,14 @@ function SubordinateFlexTimeTableSearchResult() {
         accessorKey: 'APPROVER',
         header: t('Approval'),
         enableSorting: false,
-        Cell: ({ row }) => <TableApprover row={row.original} />
+        Cell: ({ row }) => <TableApprover row={row.original} />,
+        size: 140
       },
 
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
-        header: t('TIME TO WORK')
+        header: t('TIME TO WORK'),
+        size: 180
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_START_DATE',
@@ -158,7 +160,8 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        enableSorting: false
+        enableSorting: false,
+        size: 140
       }
     ],
     [settings.mode, t]

@@ -139,16 +139,17 @@ const EmployeeLeaveSearchResultTable = () => {
           const endDate = row.original?.LEAVE_REQUEST_END_DATE
           return (
             <>
-              {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '-'}
+              {startDate ? dayjs(startDate).format('DD-MMM-YYYY') : '-'}
               {' ' + t('to') + ' '}
-              {endDate ? dayjs(endDate).format('YYYY-MM-DD') : '-'}
+              {endDate ? dayjs(endDate).format('DD-MMM-YYYY') : '-'}
             </>
           )
         }
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: t('Employee Code')
+        header: t('Employee Code'),
+        size: 180
       },
       {
         accessorKey: 'FULL_NAME',
@@ -156,11 +157,13 @@ const EmployeeLeaveSearchResultTable = () => {
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: t('Employee Section')
+        header: t('Employee Section'),
+        size: 140
       },
       {
         accessorKey: 'EMPLOYEE_DEPT',
-        header: t('Employee Dept')
+        header: t('Employee Dept'),
+        size: 170
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
@@ -169,11 +172,13 @@ const EmployeeLeaveSearchResultTable = () => {
           const desc =
             (row.original as any).LEAVE_TYPE_DESCRIPTION_EN || (row.original as any).LEAVE_TYPE_DESCRIPTION_TH || ''
           return desc
-        }
+        },
+        size: 200
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: t('Time')
+        header: t('Time'),
+        size: 150
       }
     ],
     [t]

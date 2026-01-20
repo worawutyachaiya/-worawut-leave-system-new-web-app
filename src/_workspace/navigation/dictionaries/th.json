@@ -1,4 +1,8 @@
 {
+  "Exceed 30 days": "ลาป่วยเกิน 30 วันแล้ว",
+  "See More": "ดูเพิ่มเติม",
+  "See Less": "ดูน้อยลง",
+  "Annual Leave Exceed": "วันลาพักร้อนที่เกินมาของปีที่แล้ว",
   "Leave Type is required": "กรุณาเลือกประเภทการลา",
   "Start Date is required": "กรุณาเลือกวันที่เริ่มต้น",
   "End Date is required": "กรุณาเลือกวันที่สิ้นสุด",
@@ -282,7 +286,7 @@
   "Priesthood Leave": "ลาบวช",
   "Special Leave": "ลาพิเศษ",
   "Other Leave": "ลาอื่นๆ",
-  "Work from home": "ทำงานที่บ้าน",
+  "Work from home": "ลาทำงานที่บ้านที่ใช้ไปแล้ว",
   "Vaccine Covid Leave": "ลาฉีดวัคซีนโควิด",
   "No Leave": "ไม่มีวันลา",
   "Select Leave Type": "เลือกประเภทการลา",

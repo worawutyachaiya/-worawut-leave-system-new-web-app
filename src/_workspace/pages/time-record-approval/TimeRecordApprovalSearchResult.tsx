@@ -178,7 +178,7 @@ function TimeRecordApprovalSearchResult() {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 120
+        size: 180
       },
       {
         accessorKey: 'EMPLOYEE_NAME',

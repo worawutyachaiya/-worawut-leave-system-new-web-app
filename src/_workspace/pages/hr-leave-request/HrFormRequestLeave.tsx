@@ -577,8 +577,6 @@ function RequestLeaveFormHr() {
                     {...field}
                     label={t('Reason (Optional)')}
                     fullWidth
-                    multiline
-                    rows={4}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -594,8 +592,6 @@ function RequestLeaveFormHr() {
                     {...field}
                     label={t('Remark (Optional)')}
                     fullWidth
-                    multiline
-                    rows={4}
                     error={!!error}
                     helperText={error?.message}
                   />
@@ -621,7 +617,7 @@ function RequestLeaveFormHr() {
                           border: '2px dashed',
                           borderColor: isDragActive ? 'primary.main' : 'divider',
                           borderRadius: 1,
-                          p: 6,
+                          p: 3,
                           textAlign: 'center',
                           cursor: 'pointer',
                           bgcolor: isDragActive ? 'action.selected' : 'action.hover',
@@ -649,8 +645,8 @@ function RequestLeaveFormHr() {
                             variant='rounded'
                             sx={{
                               bgcolor: 'primary.main',
-                              width: 48,
-                              height: 48,
+                              width: 35,
+                              height: 35,
                               mb: 2,
                               border: '2px solid',
                               borderColor: 'divider'

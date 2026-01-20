@@ -174,7 +174,6 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'LEAVE_DATE_RANGE',
         header: t('Leave Date'),
-        size: 220,
         enableSorting: false,
         Cell: ({ row }) => {
           const startDate = row.original.LEAVE_REQUEST_START_DATE

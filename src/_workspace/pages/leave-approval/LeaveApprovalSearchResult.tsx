@@ -216,7 +216,7 @@ const EmployeeLeaveSearchResultTable = () => {
         size: 180,
         Cell: ({ row }) => {
           const reqDate = (row.original as any).CREATE_DATE
-          return reqDate ? dayjs(reqDate).format('YYYY-MM-DD') : '-'
+          return reqDate ? dayjs(reqDate).format('DD-MMM-YYYY') : '-'
         }
       },
       {
@@ -228,9 +228,9 @@ const EmployeeLeaveSearchResultTable = () => {
           const endDate = row.original?.LEAVE_REQUEST_END_DATE
           return (
             <>
-              {startDate ? dayjs(startDate).format('YYYY-MM-DD') : '-'}
+              {startDate ? dayjs(startDate).format('DD-MMM-YYYY') : '-'}
               {' ' + t('to') + ' '}
-              {endDate ? dayjs(endDate).format('YYYY-MM-DD') : '-'}
+              {endDate ? dayjs(endDate).format('DD-MMM-YYYY') : '-'}
             </>
           )
         }
@@ -285,7 +285,7 @@ const EmployeeLeaveSearchResultTable = () => {
         size: 170,
         Cell: ({ row }) => {
           const uDate = (row.original as any).UPDATE_DATE
-          return uDate ? dayjs(uDate).format('YYYY-MM-DD') : '-'
+          return uDate ? dayjs(uDate).format('DD-MMM-YYYY') : '-'
         }
       },
       {

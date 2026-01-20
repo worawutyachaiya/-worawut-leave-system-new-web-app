@@ -307,11 +307,13 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
-        header: t('Section')
+        header: t('Section'),
+        size: 180
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
-        header: t('Leave Type')
+        header: t('Leave Type'),
+        size: 200
       },
       {
         accessorKey: 'REAL_CREATE_DATE',
@@ -329,19 +331,23 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'IN_TIME',
-        header: t('in time')
+        header: t('in time'),
+        size: 180
       },
       {
         accessorKey: 'OUT_TIME',
-        header: t('out time')
+        header: t('out time'),
+        size: 180
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
-        header: t('Leave Time')
+        header: t('Leave Time'),
+        size: 180
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: t('Total Days')
+        header: t('Total Days'),
+        size: 200
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
@@ -349,11 +355,13 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'CREATE_BY',
-        header: t('Created By')
+        header: t('Created By'),
+        size: 200
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Updated By')
+        header: t('Updated By'),
+        size: 200
       },
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
