@@ -17,6 +17,7 @@ import type {
 import { useFormContext } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { useSettings } from '@/@core/hooks/useSettings'
@@ -53,7 +54,8 @@ const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 function HrcheckM75SearchResult() {
   const { settings } = useSettings()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue } = useFormContext<FormDataPage>()
   const [columnVisibility, setColumnVisibility] = useState<MRT_VisibilityState>(
@@ -316,7 +318,7 @@ function HrcheckM75SearchResult() {
         accessorKey: 'LEAVE_REQUEST_START_DATE', // Changed from REQUEST_LEAVE_DATE
         header: t('Request Leave Date'),
         size: 230,
-        Cell: ({ cell }) => formatDate(cell.getValue<string>())
+        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format('DD-MMM-YYYY')
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
@@ -324,23 +326,18 @@ function HrcheckM75SearchResult() {
         size: 250,
         enableSorting: false,
         Cell: ({ row }) => {
-          // Use LEAVE_DATE_RANGE if available, otherwise construct from dates
-          if (row.original.LEAVE_DATE_RANGE) {
-            return row.original.LEAVE_DATE_RANGE
-          }
-          // Fallback: construct date range from start and end dates
           const startDate = row.original.LEAVE_REQUEST_START_DATE
           const endDate = row.original.LEAVE_REQUEST_END_DATE
           if (!startDate) return '-'
           const formattedStart = dayjs(startDate).format('DD-MMM-YYYY')
           const formattedEnd = endDate ? dayjs(endDate).format('DD-MMM-YYYY') : formattedStart
-          return `${formattedStart} - ${formattedEnd}`
+          return `${formattedStart} ${t('to')} ${formattedEnd}`
         }
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME', // Changed from LEAVE_TIME
         header: t('Time'),
-        size: 100
+        size: 150
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY', // Changed from TOTAL_DAY_LEAVE
@@ -360,7 +357,7 @@ function HrcheckM75SearchResult() {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
         size: 170,
-        Cell: ({ cell }) => formatDate(cell.getValue<string>())
+        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format('DD-MMM-YYYY')
       },
       {
         accessorKey: 'UPDATE_BY',
@@ -411,7 +408,7 @@ function HrcheckM75SearchResult() {
     if (!isFirstRender.current) setValue('searchResults.columnFilterFns', columnFilterFns)
   }, [setValue, columnFilterFns])
   return (
-    <Card sx={{ mt: 4 }}>
+    <Card>
       <CardHeader
         title={t('Search result')}
         titleTypographyProps={{ variant: 'h5' }}

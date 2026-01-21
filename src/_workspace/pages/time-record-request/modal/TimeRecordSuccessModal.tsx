@@ -106,9 +106,7 @@ const TimeRecordSuccessModal = ({
       <DialogContent sx={{ py: 8, px: 5 }}>
         <Box sx={{ textAlign: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
           {/* Icon */}
-          <Box sx={{ mb: 3 }}>
-            {icon}
-          </Box>
+          <Box sx={{ mb: 3 }}>{icon}</Box>
           {/* Title */}
           <Typography variant='h4' fontWeight='bold' sx={{ mb: 2, color: color }}>
             {title || defaultTitle}

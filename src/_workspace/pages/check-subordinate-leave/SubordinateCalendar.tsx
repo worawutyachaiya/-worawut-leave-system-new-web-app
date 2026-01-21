@@ -6,6 +6,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import type { CalendarOptions, EventInput } from '@fullcalendar/core'
+import thLocale from '@fullcalendar/core/locales/th'
+import enLocale from '@fullcalendar/core/locales/en-gb'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useTranslation } from '@/contexts/TranslationContext'
@@ -111,7 +113,7 @@ function SubordinateCalendar({
   setCalendarApi,
   handleLeftSidebarToggle
 }: Props) {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const calendarRef = useRef<any>(null)
   const theme = useTheme()
 
@@ -131,6 +133,7 @@ function SubordinateCalendar({
     events: processedEvents as EventInput[],
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
+    locale: locale === 'th' ? thLocale : enLocale,
     headerToolbar: {
       start: 'sidebarToggle, prev, next, title',
       end: 'dayGridMonth,timeGridWeek,listMonth'

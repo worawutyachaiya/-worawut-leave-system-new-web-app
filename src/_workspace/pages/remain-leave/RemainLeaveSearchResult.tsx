@@ -17,6 +17,7 @@ import type {
 } from 'material-react-table'
 import { useFormContext } from 'react-hook-form'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import { utils, writeFile } from 'xlsx'
@@ -130,7 +131,8 @@ const RemainLeaveSearchResult = () => {
     21: 'AL_ACCUMULATE',
     22: 'AL_EXCEED'
   }
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
 
   const transformDataForExport = (dataList: RemainLeaveInterface[]) => {
     // Group by employee
@@ -197,7 +199,7 @@ const RemainLeaveSearchResult = () => {
         const rawData = getExportData(exportRemainLeaveData.data.ResultOnDb)
         if (rawData.length === 0) {
           toast.update('export-remain-leave', {
-            render: 'No data to export',
+            render: t('No data to export'),
             type: 'error',
             isLoading: false,
             autoClose: 3000
@@ -210,7 +212,7 @@ const RemainLeaveSearchResult = () => {
           const fileName = `RemainLeave_${dayjs().format('YYYY-MM-DD_HHmmss')}.xlsx`
           writeFile(workbook, fileName)
           toast.update('export-remain-leave', {
-            render: 'Export successfully',
+            render: t('Export successfully'),
             type: 'success',
             isLoading: false,
             autoClose: 3000
@@ -219,7 +221,7 @@ const RemainLeaveSearchResult = () => {
       } catch (error) {
         console.error('Export error:', error)
         toast.update('export-remain-leave', {
-          render: 'Export failed',
+          render: t('Export failed'),
           type: 'error',
           isLoading: false,
           autoClose: 3000
@@ -244,7 +246,8 @@ const RemainLeaveSearchResult = () => {
         const fileName = `ALExceed_${dayjs().format('YYYY-MM-DD_HHmmss')}.xlsx`
         writeFile(workbook, fileName)
         toast.update('export-al-exceed', {
-          render: exportData.length > 0 ? 'Export AL Exceed successfully' : 'Export AL Exceed successfully (No data)',
+          render:
+            exportData.length > 0 ? t('Export AL Exceed successfully') : t('Export AL Exceed successfully (No data)'),
           type: 'success',
           isLoading: false,
           autoClose: 3000
@@ -252,7 +255,7 @@ const RemainLeaveSearchResult = () => {
       } catch (error) {
         console.error('Export AL Exceed error:', error)
         toast.update('export-al-exceed', {
-          render: 'Export AL Exceed failed',
+          render: t('Export AL Exceed failed'),
           type: 'error',
           isLoading: false,
           autoClose: 3000

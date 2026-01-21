@@ -7,6 +7,8 @@ import { Button, Dialog, DialogContent, Typography, Box, type SlideProps, Slide,
 // Assets
 import undraw_clean_up_re_504g from '@assets/images/common/undraw_clean_up_re_504g.svg'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 // Dialog Transition
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
@@ -32,6 +34,7 @@ const DeleteConfirmDialog = ({
   title = 'Delete Confirmation',
   content = 'Are you sure you want to delete this item?'
 }: Props) => {
+  const { t } = useTranslation()
   return (
     <Dialog
       maxWidth='xs'
@@ -85,10 +88,10 @@ const DeleteConfirmDialog = ({
               startIcon={loading ? <CircularProgress size={16} color='inherit' /> : null}
               sx={{ minWidth: 120 }}
             >
-              {loading ? 'Deleting...' : 'Yes, Delete !'}
+              {loading ? t('Deleting...') : t('Yes, Delete !')}
             </Button>
             <Button onClick={onClose} color='secondary' variant='outlined' disabled={loading} sx={{ minWidth: 120 }}>
-              No, Keep it
+              {t('No, Keep it')}
             </Button>
           </Box>
         </Box>

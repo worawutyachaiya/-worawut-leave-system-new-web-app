@@ -128,7 +128,7 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                       placeholder={t('Select flex time type')}
                       isClearable
                       error={!!methods.formState.errors.formData?.flexTimeType}
-                      helperText={methods.formState.errors.formData?.flexTimeType?.message}
+                      helperText={t(methods.formState.errors.formData?.flexTimeType?.message || '')}
                       classNamePrefix='select'
                     />
                   )}

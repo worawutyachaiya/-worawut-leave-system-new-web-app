@@ -41,12 +41,16 @@ import EditPassProModal from './modal/EditPassProModal'
 import { useSettings } from '@/@core/hooks/useSettings'
 import { useTranslation } from '@/contexts/TranslationContext'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
+
 // Static objects moved outside component for performance //dont delete comment
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const UserProbationSearchResult = () => {
   const { settings } = useSettings()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
 
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
 
@@ -233,7 +237,10 @@ const UserProbationSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
-        header: t('Start Work')
+        header: t('Start Work'),
+        Cell: ({ row }) => {
+          return dayjs(row.original.EMPLOYEE_START_WORK).format('DD-MMM-YYYY')
+        }
       },
       {
         accessorKey: 'PASS_PRD_DATE',

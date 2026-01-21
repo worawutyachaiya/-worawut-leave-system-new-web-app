@@ -15,6 +15,7 @@ import type {
 } from 'material-react-table'
 import { useFormContext } from 'react-hook-form'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useUpdateEffect } from 'react-use'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
@@ -25,7 +26,9 @@ import type { FormDataPage } from './validationSchema'
 import { useTranslation } from '@/contexts/TranslationContext'
 
 const EmployeeLeaveSearchResultTable = () => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
+
   const theme = useTheme()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()

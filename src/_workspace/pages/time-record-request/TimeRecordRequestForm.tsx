@@ -154,7 +154,7 @@ function TimeRecordRequestForm() {
                               label={t('in time')}
                               placeholder='Select time'
                               error={!!errors.searchFilters?.timeIn}
-                              helperText={errors.searchFilters?.timeIn?.message}
+                              helperText={t(errors.searchFilters?.timeIn?.message || '')}
                               InputProps={{
                                 endAdornment: (
                                   <i
@@ -188,7 +188,7 @@ function TimeRecordRequestForm() {
                             label={t('date in')}
                             placeholder={t('Choose a date')}
                             error={!!errors.searchFilters?.dateIn}
-                            helperText={errors.searchFilters?.dateIn?.message}
+                            helperText={t(errors.searchFilters?.dateIn?.message || '')}
                           />
                         }
                       />
@@ -224,7 +224,7 @@ function TimeRecordRequestForm() {
                               label={t('out time')}
                               placeholder='Select time'
                               error={!!errors.searchFilters?.timeOut}
-                              helperText={errors.searchFilters?.timeOut?.message}
+                              helperText={t(errors.searchFilters?.timeOut?.message || '')}
                               InputProps={{
                                 endAdornment: (
                                   <i
@@ -257,7 +257,7 @@ function TimeRecordRequestForm() {
                             label={t('date out')}
                             placeholder={t('Choose a date')}
                             error={!!errors.searchFilters?.dateOut}
-                            helperText={errors.searchFilters?.dateOut?.message}
+                            helperText={t(errors.searchFilters?.dateOut?.message || '')}
                           />
                         }
                       />
@@ -281,7 +281,7 @@ function TimeRecordRequestForm() {
                         getOptionValue={(option: TimeRecordTypeI) => option.TIME_RECORD_TYPE_ID.toString()}
                         placeholder={t('select a reason')}
                         error={!!errors.searchFilters?.timeRecordType}
-                        helperText={errors.searchFilters?.timeRecordType?.message}
+                        helperText={t(errors.searchFilters?.timeRecordType?.message || '')}
                         classNamePrefix='select'
                       />
                     )}

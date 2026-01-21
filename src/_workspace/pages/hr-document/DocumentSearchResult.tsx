@@ -21,6 +21,7 @@ import type {
 import { useFormContext } from 'react-hook-form'
 
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useUpdateEffect } from 'react-use'
 import { toast } from 'react-toastify'
 
@@ -46,7 +47,8 @@ import { useTranslation } from '@/contexts/TranslationContext'
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const DocumentSearchResult = () => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { settings } = useSettings()
 
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
@@ -234,7 +236,8 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'MODIFIED',
-        header: t('Modified')
+        header: t('Modified'),
+        Cell: ({ row }) => dayjs(row.original.MODIFIED).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

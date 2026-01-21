@@ -8,6 +8,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 // Third-party Imports
 import { useUpdateEffect } from 'react-use'
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 
 // Material React Table Imports
 import type {
@@ -57,7 +59,8 @@ const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 const UserLeaveSearchResult = () => {
   const { settings } = useSettings()
 
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
 
   // Context
@@ -292,7 +295,8 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: t('Request Date')
+        header: t('Request Date'),
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'LEAVE_ATTACHMENT',
@@ -327,14 +331,8 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
         header: t('Leave Date'),
-        Cell: ({ cell }) => {
-          const date = cell.getValue<string>()
-          if (!date) return '-'
-          try {
-            return new Date(date).toLocaleDateString('th-TH')
-          } catch {
-            return date
-          }
+        Cell: ({ row }) => {
+          return dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm')
         }
       },
       {
@@ -352,7 +350,8 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: t('Modified')
+        header: t('Modified'),
+        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

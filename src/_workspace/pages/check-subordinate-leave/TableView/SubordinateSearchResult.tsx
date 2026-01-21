@@ -4,6 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useFormContext } from 'react-hook-form'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useUpdateEffect } from 'react-use'
 import type {
   MRT_ColumnDef,
@@ -28,7 +29,8 @@ import SubordinateLeaveFileColumn from './components/SubordinateLeaveFileColumn'
 import { useTranslation } from '@/contexts/TranslationContext'
 
 function SubordinateSearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue, watch } = useFormContext<FormDataPage>()
@@ -169,7 +171,7 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Leave Date'),
-        Cell: ({ row }) => row.original.CREATE_DATE || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
@@ -211,7 +213,7 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        Cell: ({ row }) => row.original.UPDATE_DATE || '-'
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'UPDATE_BY',

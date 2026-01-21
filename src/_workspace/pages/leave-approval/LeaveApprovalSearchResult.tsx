@@ -6,6 +6,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import { useFormContext } from 'react-hook-form'
 import { useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useUpdateEffect } from 'react-use'
 import type {
   MRT_ColumnDef,
@@ -41,7 +42,8 @@ import { EmployeeLeaveInterface } from '@/_workspace/types/employee-leave/Employ
 import { useTranslation } from '@/contexts/TranslationContext'
 
 const EmployeeLeaveSearchResultTable = () => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const theme = useTheme()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue, watch } = useFormContext<FormDataPage>()

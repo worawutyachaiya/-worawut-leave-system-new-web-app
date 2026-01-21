@@ -52,11 +52,14 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from '@/contexts/TranslationContext'
 import { useSettings } from '@/@core/hooks/useSettings'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 // Static objects moved outside component for performance //dont delete comment
 const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const LeaveTypeSearchResult = () => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { settings } = useSettings()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
@@ -233,7 +236,8 @@ const LeaveTypeSearchResult = () => {
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: t('Modified Date')
+        header: t('Modified Date'),
+        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

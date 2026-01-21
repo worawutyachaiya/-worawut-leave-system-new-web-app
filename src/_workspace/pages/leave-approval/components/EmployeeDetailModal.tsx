@@ -24,6 +24,7 @@ import CakeIcon from '@mui/icons-material/Cake'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import type { MRT_ColumnDef, MRT_PaginationState } from 'material-react-table'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useSettings } from '@/@core/hooks/useSettings'
 import { useSearchEmployeeInformation } from '@/_workspace/react-query/hooks/useLeaveEmployeeInformation'
@@ -74,7 +75,8 @@ const InfoItem = ({
   </Box>
 )
 const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModalProps) => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const theme = useTheme()
   const { settings } = useSettings()
   const [employeeImage, setEmployeeImage] = useState<string>('')
@@ -193,10 +195,14 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
-        size: 180,
-        Cell: ({ cell }) => {
-          const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD-MMM-YYYY HH:mm') : '-'
+        Cell: ({ row }) => {
+          return (
+            dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm') +
+            ' ' +
+            t('to') +
+            ' ' +
+            dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD-MMM-YYYY HH:mm')
+          )
         }
       },
       {

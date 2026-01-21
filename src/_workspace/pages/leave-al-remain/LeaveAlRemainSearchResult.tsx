@@ -18,6 +18,7 @@ import type {
 import { useFormContext } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useSettings } from '@/@core/hooks/useSettings'
 import { useCheckPermission } from '@/_template/CheckPermission'
 import { useDxContext } from '@/_template/DxContextProvider'
@@ -31,7 +32,8 @@ import { LeaveAlRemainInterface } from '@/_workspace/types/leave-employee-inform
 import { useTranslation } from '@/contexts/TranslationContext'
 
 function SearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue } = useFormContext<FormDataPage>()
   const { settings } = useSettings()

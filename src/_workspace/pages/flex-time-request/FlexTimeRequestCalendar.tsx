@@ -14,12 +14,14 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import enLocale from '@fullcalendar/core/locales/en-gb'
+import thLocale from '@fullcalendar/core/locales/th'
 import { useTranslation } from '@/contexts/TranslationContext'
 import { toast } from 'react-toastify'
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
 const FlexTimeRequestCalendar = () => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const [openForm, setOpenForm] = useState(false)
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false)
@@ -121,6 +123,7 @@ const FlexTimeRequestCalendar = () => {
             }}
           >
             <FullCalendar
+              locale={locale === 'th' ? thLocale : enLocale}
               ref={calendarRef}
               plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin, listPlugin]}
               initialView='dayGridMonth'

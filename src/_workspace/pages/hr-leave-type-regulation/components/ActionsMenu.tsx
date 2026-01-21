@@ -6,6 +6,8 @@ import { MouseEvent, useState } from 'react'
 import type { MRT_Row } from 'material-react-table'
 import type { LeaveTypeRegulationData } from '../modal/validationSchema'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 interface ActionsMenuProps {
   row: MRT_Row<LeaveTypeRegulationData>
   onEdit: (row: LeaveTypeRegulationData) => void
@@ -13,6 +15,7 @@ interface ActionsMenuProps {
 }
 
 const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
+  const { t } = useTranslation()
   // State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const rowOpen = Boolean(anchorEl)
@@ -59,13 +62,13 @@ const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
           <ListItemIcon>
             <i className='tabler-edit text-xl' />
           </ListItemIcon>
-          <ListItemText primary='Edit' />
+          <ListItemText primary={t('Edit')} />
         </MenuItem>
         <MenuItem onClick={handleDelete} sx={{ '& svg': { mr: 2 } }}>
           <ListItemIcon>
             <i className='tabler-trash text-xl text-error' />
           </ListItemIcon>
-          <ListItemText primary='Delete' />
+          <ListItemText primary={t('Delete')} />
         </MenuItem>
       </Menu>
     </>

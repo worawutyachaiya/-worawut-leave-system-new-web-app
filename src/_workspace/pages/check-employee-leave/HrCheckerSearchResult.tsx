@@ -20,6 +20,7 @@ import type {
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { useSettings } from '@/@core/hooks/useSettings'
@@ -36,7 +37,8 @@ import HrCheckConfirmModal from './components/HrCheckConfirmModal'
 import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessage'
 function HrCheckerSearchResult() {
   const { settings } = useSettings()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   useWatch({ control, name: 'searchFilters' })
@@ -96,7 +98,7 @@ function HrCheckerSearchResult() {
         setIsSelectAllData(false)
         setRowSelection({})
       } else {
-        ToastMessageError({ message: data?.data?.Message || t('HR Check failed') })
+        ToastMessageError({ message: t(data?.data?.Message || 'HR Check failed') })
       }
     },
     () => {
@@ -247,20 +249,20 @@ function HrCheckerSearchResult() {
   useUpdateEffect(() => {
     setIsEnableFetching(true)
   }, [JSON.stringify([columnFilters, sorting, pagination])])
-  const getStatusChip = (status: string) => {
-    switch (status?.toLowerCase()) {
-      case 'approved':
-        return <Chip label={t('Approved')} color='success' size='small' />
-      case 'rejected':
-        return <Chip label={t('Rejected')} color='error' size='small' />
-      case 'pending':
-        return <Chip label={t('Pending')} color='warning' size='small' />
-      case 'cancelled':
-        return <Chip label={t('Cancelled')} color='default' size='small' />
-      default:
-        return <Chip label={status || '-'} color='default' size='small' />
-    }
-  }
+  // const getStatusChip = (status: string) => {
+  //   switch (status?.toLowerCase()) {
+  //     case 'approved':
+  //       return <Chip label={t('Approved')} color='success' size='small' />
+  //     case 'rejected':
+  //       return <Chip label={t('Rejected')} color='error' size='small' />
+  //     case 'pending':
+  //       return <Chip label={t('Pending')} color='warning' size='small' />
+  //     case 'cancelled':
+  //       return <Chip label={t('Cancelled')} color='default' size='small' />
+  //     default:
+  //       return <Chip label={status || '-'} color='default' size='small' />
+  //   }
+  // }
   const columns = useMemo<MRT_ColumnDef<HrCheckerResponseData>[]>(
     () => [
       {
@@ -351,7 +353,11 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
-        header: t('Leave Date')
+        header: t('Leave Date'),
+        Cell: ({ row }) =>
+          dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm') +
+          ' - ' +
+          dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'CREATE_BY',
@@ -384,9 +390,9 @@ function HrCheckerSearchResult() {
           }
           const status = cell.getValue<string>()
           const statusConfig: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
-            0: { label: 'Pending', color: 'warning' },
-            1: { label: 'Approved', color: 'success' },
-            2: { label: 'Rejected', color: 'error' }
+            0: { label: t('Pending'), color: 'warning' },
+            1: { label: t('Approved'), color: 'success' },
+            2: { label: t('Rejected'), color: 'error' }
           }
           const config = statusConfig[status] || { label: status || '-', color: 'warning' }
           return (
