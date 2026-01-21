@@ -106,7 +106,7 @@ const LeaveDocsPane = ({ document, tabIndex }: LeaveDocsPaneProps) => {
         </Box>
         <Box sx={{ borderTop: 1, borderColor: 'divider', pt: 2 }}>
           <Typography variant='body2' color='text.secondary' sx={{ mb: 1 }}>
-            {t("If you can't see the document. Please download below.")}
+            {t("If you can't")}
           </Typography>
           <Button
             variant='contained'

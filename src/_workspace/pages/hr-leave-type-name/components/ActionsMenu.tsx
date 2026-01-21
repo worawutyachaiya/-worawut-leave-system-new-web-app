@@ -14,6 +14,8 @@ import type { MRT_Row } from 'material-react-table'
 // Types
 import type { LeaveTypeData } from '../modal/validationSchema'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 interface ActionsMenuProps {
   row: MRT_Row<LeaveTypeData>
   onEdit: (row: LeaveTypeData) => void
@@ -21,6 +23,7 @@ interface ActionsMenuProps {
 }
 
 const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
+  const { t } = useTranslation()
   // States
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
@@ -44,12 +47,7 @@ const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
 
   return (
     <>
-      <IconButton 
-        aria-label='more' 
-        aria-controls='actions-menu' 
-        aria-haspopup='true' 
-        onClick={handleClick}
-      >
+      <IconButton aria-label='more' aria-controls='actions-menu' aria-haspopup='true' onClick={handleClick}>
         <i className='tabler-dots-vertical' />
       </IconButton>
 
@@ -66,13 +64,13 @@ const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
           <ListItemIcon>
             <i className='tabler-edit text-xl' />
           </ListItemIcon>
-          <ListItemText primary='Edit' />
+          <ListItemText primary={t('Edit')} />
         </MenuItem>
         <MenuItem onClick={handleDelete}>
           <ListItemIcon>
             <i className='tabler-trash text-xl text-error' />
           </ListItemIcon>
-          <ListItemText primary='Delete' />
+          <ListItemText primary={t('Delete')} />
         </MenuItem>
       </Menu>
     </>

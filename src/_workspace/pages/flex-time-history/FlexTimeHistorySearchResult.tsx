@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import type {
   MRT_ColumnDef,
   MRT_ColumnFilterFnsState,
@@ -30,7 +31,8 @@ import { MENU_ID } from './env'
 import type { FormDataPage } from './validationSchema'
 import type { FlexTimeRequestData, FlexTimeHistorySearchParams } from '@/_workspace/types/flex-time/FlexTimeInterface'
 function FlexTimeHistorySearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
@@ -190,11 +192,13 @@ function FlexTimeHistorySearchResult() {
       },
       {
         accessorKey: 'CREATE_DATE',
-        header: t('Request Flex Time Date')
+        header: t('Request Flex Time Date'),
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: t('Update Date')
+        header: t('Update Date'),
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

@@ -1,12 +1,14 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Box, Tab, Tabs, Typography, CircularProgress, Paper } from '@mui/material'
 import type { LeaveDocumentData } from '@/_workspace/types/leave-document/LeaveDocumentInterface'
+import { useTranslation } from '@/contexts/TranslationContext'
 interface LeaveDocsNavProps {
   documents: LeaveDocumentData[]
   activeTab: number
   isLoading: boolean
 }
 const LeaveDocsNav = ({ documents, activeTab, isLoading }: LeaveDocsNavProps) => {
+  const { t } = useTranslation()
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 3 }}>
@@ -27,7 +29,7 @@ const LeaveDocsNav = ({ documents, activeTab, isLoading }: LeaveDocsNavProps) =>
             textAlign: 'left',
             minHeight: 48,
             py: 1.5,
-            px: 4.5,
+            px: 4.5
           },
           '& .MuiTabs-indicator': {
             left: 0,
@@ -40,7 +42,7 @@ const LeaveDocsNav = ({ documents, activeTab, isLoading }: LeaveDocsNavProps) =>
             key={doc.LEAVE_REGULARITY_ID}
             label={
               <Typography variant='body2' fontWeight={activeTab === index ? 600 : 400} fontSize={16}>
-                {doc.LEAVE_REGULARITY_NAME}
+                {t(doc.LEAVE_REGULARITY_NAME)}
               </Typography>
             }
             id={`leave-doc-tab-${index}`}

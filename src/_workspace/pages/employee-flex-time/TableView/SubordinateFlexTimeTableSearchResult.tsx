@@ -4,6 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useFormContext } from 'react-hook-form'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useUpdateEffect } from 'react-use'
 import type {
   MRT_ColumnDef,
@@ -27,7 +28,8 @@ import TableApprover from './components/TableApprover'
 import ExportModal from './components/ExportModal'
 
 function SubordinateFlexTimeTableSearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue } = useFormContext<FormDataPage>()
@@ -169,17 +171,18 @@ function SubordinateFlexTimeTableSearchResult() {
         header: t('Flex Time Date'),
         enableSorting: false,
         Cell: ({ row }) =>
-          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')}  to  ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY')}` ||
+          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')}  ${t('to')}  ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY')}` ||
           '-'
       },
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Flex Time Date'),
-        Cell: ({ row }) => row.original.CREATE_DATE || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
       },
       {
         accessorKey: 'UPDATE_DATE',
-        header: t('Update Date')
+        header: t('Update Date'),
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-'
       },
       {
         accessorKey: 'UPDATE_BY',

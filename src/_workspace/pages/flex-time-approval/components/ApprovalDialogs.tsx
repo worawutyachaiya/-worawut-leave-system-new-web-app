@@ -13,6 +13,8 @@ import { z } from 'zod'
 import CustomTextField from '@/components/mui/TextField'
 import CheckCircleOutlined from '@mui/icons-material/CheckCircleOutlined'
 import CancelOutlined from '@mui/icons-material/CancelOutlined'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -37,6 +39,7 @@ export const ApproveConfirmDialog = ({
   isLoading = false,
   selectedCount
 }: ApproveConfirmDialogProps) => {
+  const { t } = useTranslation()
   return (
     <Dialog
       maxWidth='xs'
@@ -64,7 +67,7 @@ export const ApproveConfirmDialog = ({
       <DialogContent sx={{ py: 4, px: 5 }}>
         <Box sx={{ textAlign: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ mb: 6 }}>
-            <CheckCircleOutlined sx={{ fontSize: 100, color: 'primary.main' }} />
+            <CheckCircleOutlined sx={{ fontSize: 100, color: 'success.main' }} />
           </Box>
           <Typography variant='h4' fontWeight='bold'>
             Confirm Approval
@@ -78,19 +81,13 @@ export const ApproveConfirmDialog = ({
               loading={isLoading}
               loadingIndicator='Approving...'
               variant='contained'
-              color='primary'
+              color='success'
               sx={{ minWidth: 120 }}
             >
-              <span>Yes, Approve</span>
+              <span>{t('Yes, Approve')}</span>
             </LoadingButton>
-            <Button
-              variant='outlined'
-              color='secondary'
-              onClick={onClose}
-              disabled={isLoading}
-              sx={{ minWidth: 120 }}
-            >
-              Cancel
+            <Button variant='outlined' color='secondary' onClick={onClose} disabled={isLoading} sx={{ minWidth: 120 }}>
+              {t('Cancel')}
             </Button>
           </Box>
         </Box>
@@ -112,6 +109,7 @@ export const RejectRemarkDialog = ({
   isLoading = false,
   selectedCount
 }: RejectRemarkDialogProps) => {
+  const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement>(null)
   const { control, handleSubmit, reset } = useForm<RejectRemarkFormData>({
     resolver: zodResolver(rejectRemarkSchema),
@@ -177,8 +175,8 @@ export const RejectRemarkDialog = ({
                   {...field}
                   inputRef={inputRef}
                   fullWidth
-                  label='Remark'
-                  placeholder='Enter remark (optional)'
+                  label={t('Remark')}
+                  placeholder={t('Enter remark (optional)')}
                   multiline
                   rows={3}
                   error={!!errors.remark}
@@ -191,12 +189,12 @@ export const RejectRemarkDialog = ({
               <LoadingButton
                 type='submit'
                 loading={isLoading}
-                loadingIndicator='Rejecting...'
+                loadingIndicator={t('Rejecting...')}
                 variant='contained'
                 color='error'
                 sx={{ minWidth: 120 }}
               >
-                <span>Yes, Reject</span>
+                <span>{t('Yes, Reject')}</span>
               </LoadingButton>
               <Button
                 variant='outlined'
@@ -205,7 +203,7 @@ export const RejectRemarkDialog = ({
                 disabled={isLoading}
                 sx={{ minWidth: 120 }}
               >
-                Cancel
+                {t('Cancel')}
               </Button>
             </Box>
           </form>

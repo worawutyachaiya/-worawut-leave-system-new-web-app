@@ -10,6 +10,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import dayjs, { Dayjs } from 'dayjs'
+import 'dayjs/locale/th'
 
 // Components
 import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
@@ -42,7 +43,7 @@ interface EditPassProModalProps {
 }
 
 const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassProModalProps) => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [pendingPayload, setPendingPayload] = useState<SetPassProParams | null>(null)
 
@@ -183,7 +184,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
               <CustomTextField
                 fullWidth
                 label={t('Start Work')}
-                value={selectedEmployee.EMPLOYEE_START_WORK || ''}
+                value={dayjs(selectedEmployee.EMPLOYEE_START_WORK).format('DD-MMM-YYYY')}
                 InputProps={{
                   readOnly: true
                 }}
@@ -206,10 +207,10 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
                         fullWidth
                         label={t('Pass Pro Date')}
                         error={!!errors.passProDate}
-                        helperText={errors.passProDate?.message as string}
+                        helperText={t((errors.passProDate?.message as string) || '')}
                       />
                     }
-                    dateFormat='dd-MMM-yyyy'
+                    dateFormat={dayjs().format('DD-MMM-YYYY')}
                   />
                 )}
               />

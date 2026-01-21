@@ -10,6 +10,8 @@ import undraw_clean_up_re_504g from '@assets/images/common/undraw_clean_up_re_50
 // Types
 import { UserLeaveInterface } from '@/_workspace/types/hr-user-leave/HrUserLeave'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 // Dialog Transition
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
@@ -27,6 +29,8 @@ interface UserLeaveDeleteModalProps {
 
 const UserLeaveDeleteModal = ({ open, onClose, selectedLeave, onConfirm }: UserLeaveDeleteModalProps) => {
   if (!selectedLeave) return null
+
+  const { t } = useTranslation()
 
   return (
     <Dialog
@@ -80,10 +84,10 @@ const UserLeaveDeleteModal = ({ open, onClose, selectedLeave, onConfirm }: UserL
               startIcon={<CircularProgress size={16} color='inherit' sx={{ display: 'none' }} />}
               sx={{ minWidth: 120 }}
             >
-              Yes, Delete !
+              {t('Yes, Delete !')}
             </Button>
             <Button variant='outlined' color='secondary' onClick={onClose} sx={{ minWidth: 120 }}>
-              No, Keep it
+              {t('No, Keep it')}
             </Button>
           </Box>
         </Box>

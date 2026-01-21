@@ -11,6 +11,9 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import AddIcon from '@mui/icons-material/Add'
 
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
+
 // Material React Table Imports
 import type {
   MRT_ColumnDef,
@@ -59,7 +62,8 @@ const TABLE_PROPS = { sx: { tableLayout: 'auto' } }
 
 const LeaveTypeSettingSearchResult = () => {
   const { settings } = useSettings()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
 
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
@@ -238,7 +242,8 @@ const LeaveTypeSettingSearchResult = () => {
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        header: t('Modified')
+        header: t('Modified'),
+        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
       }
     ],
     [t]

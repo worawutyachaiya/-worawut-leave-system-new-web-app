@@ -9,6 +9,8 @@ import dayjs from 'dayjs'
 import { useCheckPermission } from '@/_template/CheckPermission'
 import { ToastMessageError } from '@/components/ToastMessage'
 import { LeaveHistoryInterface } from '@/_workspace/types/leave-history/LeaveHistoryInterface'
+import { useTranslation } from '@/contexts/TranslationContext'
+
 const ITEM_HEIGHT = 48
 interface ActionsMenuProps<T extends MRT_RowData> {
   row: MRT_Row<T>
@@ -81,6 +83,7 @@ const ActionsMenu = <T extends MRT_RowData>({
     setAnchorEl(null)
   }
   const checkPermission = useCheckPermission()
+  const { t } = useTranslation()
   return (
     <>
       {row?.original?.inuseForSearch != 0 &&
@@ -138,7 +141,7 @@ const ActionsMenu = <T extends MRT_RowData>({
           <ListItemIcon>
             <i className='tabler-trash text-xl text-error' />
           </ListItemIcon>
-          <ListItemText primary='Cancel Request' />
+          <ListItemText primary={t('Cancel Request')} />
         </MenuItem>
       </Menu>
     </>

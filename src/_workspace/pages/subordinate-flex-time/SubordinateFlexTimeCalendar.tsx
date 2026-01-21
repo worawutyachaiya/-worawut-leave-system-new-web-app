@@ -9,6 +9,8 @@ import type { CalendarOptions, EventInput } from '@fullcalendar/core'
 import dayjs from 'dayjs'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import { useTranslation } from '@/contexts/TranslationContext'
+import thLocale from '@fullcalendar/core/locales/th'
+import enLocale from '@fullcalendar/core/locales/en-gb'
 import type { FlexTimeCalendarEvent } from '@/_workspace/types/subordinate-flex-time/SubordinateFlexTimeTypes'
 
 dayjs.extend(isSameOrBefore)
@@ -89,7 +91,7 @@ function SubordinateFlexTimeCalendar({
   setCalendarApi,
   handleLeftSidebarToggle
 }: Props) {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const calendarRef = useRef<any>(null)
   const theme = useTheme()
 
@@ -163,7 +165,15 @@ function SubordinateFlexTimeCalendar({
     direction: theme.direction
   }
 
-  return <FullCalendar ref={calendarRef} {...calendarOptions} height='auto' contentHeight='auto' />
+  return (
+    <FullCalendar
+      locale={locale === 'th' ? thLocale : enLocale}
+      ref={calendarRef}
+      {...calendarOptions}
+      height='auto'
+      contentHeight='auto'
+    />
+  )
 }
 
 export default SubordinateFlexTimeCalendar

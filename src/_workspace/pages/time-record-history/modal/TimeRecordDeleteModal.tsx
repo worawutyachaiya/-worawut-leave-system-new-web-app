@@ -12,6 +12,7 @@ import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessag
 import undraw_clean_up_re_504g from '@assets/images/common/undraw_clean_up_re_504g.svg'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { useDeleteTimeRecord } from '@/_workspace/react-query/hooks/useTimeRecordHistorySearch'
+import { useTranslation } from '@/contexts/TranslationContext'
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
   ref: Ref<unknown>
@@ -26,26 +27,27 @@ interface LeaveCancelModalProps {
 }
 const TimeRecordCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModalProps) => {
   const data = rowData?.original
+  const { t } = useTranslation()
   const { mutateAsync: deleteLeave, isPending: isLoading } = useDeleteTimeRecord(
     response => {
       if (response?.data?.Status === true) {
         ToastMessageSuccess({
           title: 'Cancel Leave Request',
-          message: response?.data?.Message || 'ยกเลิกการลาสำเร็จ'
+          message: t(response?.data?.Message) || 'ยกเลิกการลาสำเร็จ'
         })
         onSuccess?.()
         onClose()
       } else {
         ToastMessageError({
           title: 'Cancel Leave Request',
-          message: response?.data?.Message || 'เกิดข้อผิดพลาดในการยกเลิกการลา'
+          message: t(response?.data?.Message) || 'เกิดข้อผิดพลาดในการยกเลิกการลา'
         })
       }
     },
     error => {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: error?.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
+        message: t(error?.message) || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
       })
     }
   )
@@ -112,10 +114,10 @@ const TimeRecordCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCance
               startIcon={isLoading ? <CircularProgress size={16} color='inherit' /> : null}
               sx={{ minWidth: 120 }}
             >
-              {isLoading ? 'Cancelling...' : 'Yes, Cancel !'}
+              {isLoading ? t('Cancelling...') : t('Yes, Cancel !')}
             </Button>
             <Button variant='outlined' color='secondary' onClick={onClose} disabled={isLoading} sx={{ minWidth: 120 }}>
-              No, Keep it
+              {t('No, Keep it')}
             </Button>
           </Box>
         </Box>

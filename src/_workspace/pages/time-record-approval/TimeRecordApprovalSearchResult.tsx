@@ -22,6 +22,7 @@ import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useFormContext, useWatch } from 'react-hook-form'
 import {
   useTimeRecordSearchApproval,
@@ -34,7 +35,8 @@ import { TimeRecordResponseData } from '@/_workspace/types/time-record/TimeRecor
 import TableApprover from '../leave-history/components/TableApprover'
 import { ApproveConfirmDialog, RejectRemarkDialog } from './components/ApprovalDialogs'
 function TimeRecordApprovalSearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
   useWatch({ control, name: 'searchFilters' })
@@ -198,17 +200,26 @@ function TimeRecordApprovalSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
-        size: 200
+        size: 200,
+        Cell: ({ cell }) => {
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+        }
       },
       {
         accessorKey: 'IN_TIME',
         header: t('in time'),
-        size: 200
+        size: 200,
+        Cell: ({ cell }) => {
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+        }
       },
       {
         accessorKey: 'OUT_TIME',
         header: t('out time'),
-        size: 200
+        size: 200,
+        Cell: ({ cell }) => {
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+        }
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',

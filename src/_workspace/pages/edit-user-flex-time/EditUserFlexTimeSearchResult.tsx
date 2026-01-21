@@ -18,6 +18,7 @@ import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useFormContext, useWatch } from 'react-hook-form'
 import {
   useSearchUserFlexTime,
@@ -37,7 +38,8 @@ import DeleteConfirmDialog from './modal/DeleteConfirmDialog'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 
 function EditUserFlexTimeSearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
@@ -231,7 +233,7 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Flex Time Date'),
-        enableSorting: true
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
@@ -254,7 +256,10 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'LEAVE_DATE_RANGE',
         header: t('Leave Date'),
-        enableSorting: false
+        enableSorting: false,
+        Cell: ({ row }) =>
+          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')} ${t('to')} ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY')}` ||
+          '-'
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
@@ -272,6 +277,7 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Modified'),
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-',
         enableSorting: true
       },
       {

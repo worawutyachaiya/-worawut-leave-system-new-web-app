@@ -14,12 +14,15 @@ import type { MRT_Row } from 'material-react-table'
 // Types
 import type { DocumentData } from '../modal/validationSchema'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 interface ActionsMenuProps {
   row: MRT_Row<DocumentData>
   onDelete: (row: DocumentData) => void
 }
 
 const ActionsMenu = ({ row, onDelete }: ActionsMenuProps) => {
+  const { t } = useTranslation()
   // States
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
 
@@ -38,12 +41,7 @@ const ActionsMenu = ({ row, onDelete }: ActionsMenuProps) => {
 
   return (
     <>
-      <IconButton 
-        aria-label='more' 
-        aria-controls='actions-menu' 
-        aria-haspopup='true' 
-        onClick={handleClick}
-      >
+      <IconButton aria-label='more' aria-controls='actions-menu' aria-haspopup='true' onClick={handleClick}>
         <i className='tabler-dots-vertical' />
       </IconButton>
 
@@ -60,7 +58,7 @@ const ActionsMenu = ({ row, onDelete }: ActionsMenuProps) => {
           <ListItemIcon>
             <i className='tabler-trash text-xl text-error' />
           </ListItemIcon>
-          <ListItemText primary='Delete' />
+          <ListItemText primary={t('Delete')} />
         </MenuItem>
       </Menu>
     </>

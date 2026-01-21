@@ -7,6 +7,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import { useQueryClient } from '@tanstack/react-query'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import type {
   MRT_ColumnDef,
   MRT_ColumnFilterFnsState,
@@ -33,7 +34,8 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { FormDataPage } from './validationSchema'
 import type { FlexTimeRequestData } from '@/_workspace/types/flex-time/FlexTimeInterface'
 function FlexTimeApprovalSearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const theme = useTheme()
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
@@ -260,7 +262,7 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
-        Cell: ({ row }) => row.original.CREATE_DATE || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
       }
     ],
     [t, settings.mode]

@@ -4,6 +4,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useFormContext } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import type {
   MRT_ColumnDef,
   MRT_PaginationState,
@@ -26,7 +28,8 @@ import type { CheckSubordinateTimeRecord } from '@/_workspace/types/check-subord
 import TableApprover from './components/TableApprover'
 
 function SubordinateTimeRecordTableSearchResult() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'en' ? 'en' : 'th')
   const { settings } = useSettings()
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { getValues, setValue } = useFormContext<FormDataPage>()
@@ -154,21 +157,21 @@ function SubordinateTimeRecordTableSearchResult() {
         accessorKey: 'CREATE_DATE',
         header: t('Request Leave Date'),
         size: 230,
-        Cell: ({ row }) => row.original.CREATE_DATE || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'IN_TIME',
         header: t('in time'),
         size: 220,
         enableSorting: false,
-        Cell: ({ row }) => row.original.IN_TIME || '-'
+        Cell: ({ row }) => dayjs(row.original.IN_TIME).format('DD-MMM-YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'OUT_TIME',
         header: t('out time'),
         size: 220,
         enableSorting: false,
-        Cell: ({ row }) => row.original.OUT_TIME || '-'
+        Cell: ({ row }) => dayjs(row.original.OUT_TIME).format('DD-MMM-YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
@@ -186,7 +189,7 @@ function SubordinateTimeRecordTableSearchResult() {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
         size: 200,
-        Cell: ({ row }) => row.original.UPDATE_DATE || '-'
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'UPDATE_BY',

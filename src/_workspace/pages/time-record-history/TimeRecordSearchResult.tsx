@@ -19,6 +19,7 @@ import type {
 import { useFormContext } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { DxMRTTable } from '@/_template/DxMRTTable'
 import { useSettings } from '@/@core/hooks/useSettings'
@@ -60,7 +61,8 @@ function SearchResult() {
     setRowSelected(row)
     setOpenCancelModal(true)
   }
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const paramForSearch: TimeRecordSearchParams = {
     REQUEST_DATE: getValues('searchFilters.requestDate')
       ? dayjs(getValues('searchFilters.requestDate')).startOf('day').toDate().toString()
@@ -146,32 +148,35 @@ function SearchResult() {
         header: t('Request Date'),
         size: 205,
         Cell: ({ cell }) => {
-          const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD/MM/YYYY HH:mm') : '-'
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
         }
       },
       {
         accessorKey: 'IN_TIME',
         header: t('in time'),
         size: 180,
-        enableSorting: false
+        enableSorting: false,
+        Cell: ({ cell }) => {
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+        }
       },
       {
         accessorKey: 'OUT_TIME',
         header: t('out time'),
-        size: 150,
-        enableSorting: false
+        size: 200,
+        enableSorting: false,
+        Cell: ({ cell }) => {
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+        }
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
         header: t('Reason'),
-        size: 200,
         enableSorting: false
       },
       {
         accessorKey: 'REMARK',
         header: t('Remark'),
-        size: 200,
         enableSorting: false
       },
       {
@@ -179,8 +184,7 @@ function SearchResult() {
         header: t('Update Date'),
         size: 195,
         Cell: ({ cell }) => {
-          const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD/MM/YYYY HH:mm') : '-'
+          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
         }
       },
       {

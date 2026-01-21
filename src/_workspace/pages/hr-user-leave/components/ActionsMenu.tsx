@@ -11,6 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import type { MRT_Row } from 'material-react-table'
 import type { UserLeaveInterface } from '@/_workspace/types/hr-user-leave/HrUserLeave'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
 interface ActionsMenuProps {
   row: MRT_Row<UserLeaveInterface>
   onEdit: (row: UserLeaveInterface) => void
@@ -18,6 +20,7 @@ interface ActionsMenuProps {
 }
 
 const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
+  const { t } = useTranslation()
   // State
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const rowOpen = Boolean(anchorEl)
@@ -64,13 +67,13 @@ const ActionsMenu = ({ row, onEdit, onDelete }: ActionsMenuProps) => {
           <ListItemIcon>
             <EditIcon fontSize='small' />
           </ListItemIcon>
-          <ListItemText primary='Edit' />
+          <ListItemText primary={t('Edit')} />
         </MenuItem>
         <MenuItem onClick={handleDelete} sx={{ '& svg': { mr: 2 } }}>
           <ListItemIcon>
             <DeleteIcon fontSize='small' color='error' />
           </ListItemIcon>
-          <ListItemText primary='Delete' />
+          <ListItemText primary={t('Delete')} />
         </MenuItem>
       </Menu>
     </>

@@ -18,6 +18,7 @@ import type {
 import { useFormContext } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 import { useSettings } from '@/@core/hooks/useSettings'
 import { useCheckPermission } from '@/_template/CheckPermission'
 import { useDxContext } from '@/_template/DxContextProvider'
@@ -67,7 +68,8 @@ function SearchResult() {
     setRowSelected(row)
     setOpenCancelModal(true)
   }
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const paramForSearch: LeaveHistorySearchParams = {
     LEAVE_REQUEST_DATE: getValues('searchFilters.requestDate')
       ? dayjs(getValues('searchFilters.requestDate')).startOf('day').toDate().toString()
@@ -185,13 +187,21 @@ function SearchResult() {
         size: 205,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD-MMM-YYYY HH:mm') : '-'
+          return value ? dayjs(value).format(t('DD-MMM-YYYY HH:mm')) : '-'
         }
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
         header: t('Leave Date'),
-        enableSorting: false
+        Cell: ({ row }) => {
+          return (
+            dayjs(row.original.LEAVE_REQUEST_START_DATE).format(t('DD-MMM-YYYY')) +
+            ' ' +
+            t('to') +
+            ' ' +
+            dayjs(row.original.LEAVE_REQUEST_END_DATE).format(t('DD-MMM-YYYY'))
+          )
+        }
       },
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
