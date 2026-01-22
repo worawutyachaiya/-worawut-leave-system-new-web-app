@@ -12,7 +12,10 @@ import CustomTextField from '@/components/mui/TextField'
 import { useQueryClient } from '@tanstack/react-query'
 import { PREFIX_QUERY_KEY } from '@/_workspace/react-query/hooks/useHrChecker'
 import { FormDataPage } from './validationSchema'
-import { HR_CHECK_STATUS_OPTIONS, APPROVE_STATUS_OPTIONS } from '@/_workspace/types/hr-checker/HrCheckerInterface'
+import {
+  HR_CHECK_STATUS_OPTIONS_FOR_LEAVE,
+  APPROVE_STATUS_OPTIONS
+} from '@/_workspace/types/hr-checker/HrCheckerInterface'
 import { fetchLeaveType } from '@/_workspace/react-select/async-promise-load-options/fetchLeaveType'
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
 import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
@@ -211,7 +214,7 @@ function HrCheckerSearchFilter() {
                   <SelectCustom
                     {...field}
                     label={t('Status')}
-                    options={HR_CHECK_STATUS_OPTIONS}
+                    options={HR_CHECK_STATUS_OPTIONS_FOR_LEAVE}
                     getOptionLabel={option => option.label}
                     getOptionValue={option => option.value}
                     placeholder={t('Select status')}

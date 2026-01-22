@@ -39,7 +39,7 @@ import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessag
 
 interface TimeRecordData {
   TIME_RECORD_REQUEST_ID?: number
-  EMPLOYEE_ID?: string
+  EMPLOYEE_CODE?: string
   EMPLOYEE_NAME?: string
   EMPLOYEE_SECTION?: string
   CREATE_DATE?: string
@@ -254,7 +254,7 @@ function TimeRecordCheckerSearchResult() {
   const columns = useMemo<MRT_ColumnDef<TimeRecordData>[]>(
     () => [
       {
-        accessorKey: 'EMPLOYEE_ID',
+        accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
         size: 220
       },
