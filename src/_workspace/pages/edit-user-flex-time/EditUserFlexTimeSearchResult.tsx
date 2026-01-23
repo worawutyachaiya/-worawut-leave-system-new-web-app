@@ -233,13 +233,14 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Flex Time Date'),
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-',
+        size: 250
       },
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
         enableSorting: false,
-        size: 140
+        size: 200
       },
       {
         accessorKey: 'EMPLOYEE_FULL_NAME',
@@ -248,7 +249,6 @@ function EditUserFlexTimeSearchResult() {
         enableSorting: false
       },
       {
-        accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
         enableSorting: false,
         size: 150
@@ -278,13 +278,14 @@ function EditUserFlexTimeSearchResult() {
         accessorKey: 'UPDATE_DATE',
         header: t('Modified'),
         Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-',
-        enableSorting: true
+        enableSorting: true,
+        size: 180
       },
       {
         accessorKey: 'UPDATE_BY',
         header: t('Modified By'),
         enableSorting: true,
-        size: 140
+        size: 180
       }
     ],
     [t, settings.mode]

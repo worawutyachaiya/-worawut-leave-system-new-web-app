@@ -17,7 +17,7 @@ import type {
   MRT_SortingState,
   MRT_VisibilityState
 } from 'material-react-table'
-import { useFormContext, useWatch } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import { useUpdateEffect } from 'react-use'
 import dayjs from 'dayjs'
 import 'dayjs/locale/th'
@@ -41,7 +41,6 @@ function HrCheckerSearchResult() {
   dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
   const { control, getValues, setValue } = useFormContext<FormDataPage>()
-  useWatch({ control, name: 'searchFilters' })
   const [columnVisibility, setColumnVisibility] = useState<MRT_VisibilityState>(
     getValues('searchResults.columnVisibility') || {}
   )
@@ -73,7 +72,7 @@ function HrCheckerSearchResult() {
     if (Array.isArray(data?.data?.ResultOnDb) && data.data.ResultOnDb.length > 2) {
       const allData = data.data.ResultOnDb[2] as unknown as HrCheckerResponseData[]
       return allData
-        .filter(row => row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1 && row.CHECKED !== 1)
+        .filter(row => row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1)
         .map(row => ({
           LEAVE_REQUEST_ID: row.LEAVE_REQUEST_ID,
           TYPE: row.TYPE
@@ -126,7 +125,7 @@ function HrCheckerSearchResult() {
   const handleSelectPageData = () => {
     const tableData = getTableData()
     const newSelectedRows = tableData
-      .filter(row => row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1 && row.CHECKED !== 1)
+      .filter(row => row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1)
       .map(row => ({
         LEAVE_REQUEST_ID: row.LEAVE_REQUEST_ID,
         TYPE: row.TYPE
@@ -146,7 +145,7 @@ function HrCheckerSearchResult() {
     setIsSelectAllData(false)
     const newRowSelection: Record<string, boolean> = { ...rowSelection }
     tableData.forEach((row, index) => {
-      if (row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1 && row.CHECKED !== 1) {
+      if (row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1) {
         newRowSelection[String(index)] = true
       }
     })
@@ -177,12 +176,9 @@ function HrCheckerSearchResult() {
     setSelectedRows(allSelectableData)
     setIsSelectAllData(true)
     setIsPageSelected(false)
-    const tableData = getTableData()
     const newRowSelection: Record<string, boolean> = {}
-    tableData.forEach((row, index) => {
-      if (row.IS_APPROVER_APPROVED === 1 && row.IS_APPROVED !== 1 && row.CHECKED !== 1) {
-        newRowSelection[String(index)] = true
-      }
+    allSelectableData.forEach(row => {
+      newRowSelection[String(row.LEAVE_REQUEST_ID)] = true
     })
     setRowSelection(newRowSelection)
     ToastMessageSuccess({ message: `${t('Selected all')} ${allSelectableData.length} ${t('items')}` })
@@ -198,20 +194,25 @@ function HrCheckerSearchResult() {
     const tableData = getTableData()
     const newRowSelection = typeof updater === 'function' ? updater(rowSelection) : updater
     setRowSelection(newRowSelection)
+
     const newSelectedRows: { LEAVE_REQUEST_ID: number; TYPE: string }[] = []
-    Object.keys(newRowSelection).forEach(key => {
-      const index = parseInt(key, 10)
-      if (newRowSelection[key] && tableData[index]) {
-        newSelectedRows.push({
-          LEAVE_REQUEST_ID: tableData[index].LEAVE_REQUEST_ID,
-          TYPE: tableData[index].TYPE
+
+    const preservedRows = selectedRows.filter(row => newRowSelection[String(row.LEAVE_REQUEST_ID)])
+
+    const invalidSelectionIds: string[] = []
+    Object.keys(newRowSelection).forEach(id => {
+      if (preservedRows.some(r => String(r.LEAVE_REQUEST_ID) === id)) return
+
+      const foundInCurrentPage = tableData.find(row => String(row.LEAVE_REQUEST_ID) === id)
+      if (foundInCurrentPage) {
+        preservedRows.push({
+          LEAVE_REQUEST_ID: foundInCurrentPage.LEAVE_REQUEST_ID,
+          TYPE: foundInCurrentPage.TYPE
         })
       }
     })
-    const otherPagesSelections = selectedRows.filter(
-      row => !tableData.some(tableRow => tableRow.LEAVE_REQUEST_ID === row.LEAVE_REQUEST_ID)
-    )
-    setSelectedRows([...otherPagesSelections, ...newSelectedRows])
+
+    setSelectedRows(preservedRows)
     setIsPageSelected(false)
     setIsSelectAllData(false)
   }
@@ -471,11 +472,11 @@ function HrCheckerSearchResult() {
             <Button
               variant='tonal'
               color='warning'
-              onClick={handleSelectAllData}
-              disabled={isPageSelected || isSelectAllData}
-              startIcon={<i className='tabler-database' />}
+              onClick={isSelectAllData ? handleClearAllData : handleSelectAllData}
+              disabled={isPageSelected}
+              startIcon={<i className={isSelectAllData ? 'tabler-trash' : 'tabler-database'} />}
             >
-              {t('Select All Data')}
+              {isSelectAllData ? t('Clear All Data') : t('Select All Data')}
             </Button>
             <Button
               variant='tonal'
@@ -501,6 +502,11 @@ function HrCheckerSearchResult() {
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DxMRTTable
+          {...({
+            getRowId: (row: any) => String(row.LEAVE_REQUEST_ID),
+            autoResetRowSelection: false,
+            positionToolbarAlertBanner: 'none'
+          } as any)}
           enableRowActions={false}
           columns={columns}
           data={getTableData()}
@@ -514,9 +520,7 @@ function HrCheckerSearchResult() {
           onColumnPinningChange={setColumnPinning}
           onColumnOrderChange={setColumnOrder}
           onRowSelectionChange={handleMRTRowSelectionChange}
-          enableRowSelection={row =>
-            row.original.IS_APPROVER_APPROVED === 1 && row.original.IS_APPROVED !== 1 && row.original.CHECKED !== 1
-          }
+          enableRowSelection={row => row.original.IS_APPROVER_APPROVED === 1 && row.original.IS_APPROVED !== 1}
           state={{
             columnFilters,
             isLoading,

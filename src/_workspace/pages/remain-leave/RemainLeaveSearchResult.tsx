@@ -336,21 +336,25 @@ const RemainLeaveSearchResult = () => {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 180
+        size: 200,
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
-        accessorFn: row => `${row.EMPLOYEE_NAME || ''}${row.EMPLOYEE_SURNAME ? ' ' + row.EMPLOYEE_SURNAME : ''}`
+        accessorFn: row => `${row.EMPLOYEE_NAME || ''}${row.EMPLOYEE_SURNAME ? ' ' + row.EMPLOYEE_SURNAME : ''}`,
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
-        size: 140
+        size: 140,
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
         header: t('Start Work'),
+        size: 180,
         Cell: ({ cell }) => {
           const dateValue = cell.getValue() as string
           return dateValue ? dayjs(dateValue).format('DD-MMM-YYYY') : '-'
@@ -359,14 +363,16 @@ const RemainLeaveSearchResult = () => {
       {
         accessorKey: 'LEAVE_TYPE_CODE',
         header: t('Leave Type'),
-        size: 170
+        size: 170,
+        enableSorting: false
       },
       {
         accessorKey: 'LEAVE_REMAIN_DAY',
-        header: t('Leave Remaining')
+        header: t('Leave Remaining'),
+        enableSorting: false
       }
     ],
-    []
+    [settings.mode, t]
   )
 
   const renderEmptyRowsFallback = () => {

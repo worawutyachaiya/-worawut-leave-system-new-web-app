@@ -3,6 +3,7 @@ import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useSearchApprover } from '@/_workspace/react-query/hooks/useLeaveApprover'
+import { useSearchFlexTimeApprover } from '@/_workspace/react-query/hooks/useFlexTime'
 import { useSettings } from '@/@core/hooks/useSettings'
 import type { LeaveRecord } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
 
@@ -18,6 +19,9 @@ interface ApproverItem {
 const SubordinateTableApprover: React.FC<SubordinateTableApproverProps> = ({ row }) => {
   const { settings } = useSettings()
 
+  // Determine type from row (assuming row has TYPE field or defaults to LEAVE)
+  const rowType = (row as any)?.TYPE || 'LEAVE'
+  const isFlexTime = rowType === 'FLEX_TIME'
 
   const approverList = useMemo(() => {
     const list: string[] = []
@@ -29,20 +33,31 @@ const SubordinateTableApprover: React.FC<SubordinateTableApproverProps> = ({ row
     return list
   }, [row])
 
-  const params = useMemo(
+  const leaveParams = useMemo(
     () => ({
       LEAVE_REQUEST_ID: row?.LEAVE_REQUEST_ID || '',
-      TYPE: 'LEAVE'
+      TYPE: rowType
+    }),
+    [row?.LEAVE_REQUEST_ID, rowType]
+  )
+
+  const flexTimeParams = useMemo(
+    () => ({
+      FLEX_TIME_REQUEST_ID: row?.LEAVE_REQUEST_ID || ''
     }),
     [row?.LEAVE_REQUEST_ID]
   )
 
   const shouldFetch = !!row?.LEAVE_REQUEST_ID && approverList.length > 0
-  const { data, isLoading, isError } = useSearchApprover(params, shouldFetch)
+
+  const leaveApproverQuery = useSearchApprover(leaveParams, shouldFetch && !isFlexTime)
+  const flexTimeApproverQuery = useSearchFlexTimeApprover(flexTimeParams, shouldFetch && isFlexTime)
+
+  const { data, isLoading, isError } = isFlexTime ? flexTimeApproverQuery : leaveApproverQuery
 
   const result = useMemo<ApproverItem[]>(() => {
     const resultArray: ApproverItem[] = []
-    const apiData = data?.data?.ResultOnDb || []
+    const apiData = (data as any)?.data?.ResultOnDb || []
 
     approverList.forEach(approverId => {
       resultArray.push({
@@ -53,14 +68,21 @@ const SubordinateTableApprover: React.FC<SubordinateTableApproverProps> = ({ row
 
     resultArray.forEach(el => {
       apiData.forEach((apiItem: any) => {
-        if (el.APPROVER_ID.toString().toLowerCase() === apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE?.toLowerCase()) {
-          el.APPROVAL_STATUS_ID = apiItem.APPROVAL_STATUS_ID
+        const apiApproverId = isFlexTime
+          ? apiItem.FLEX_TIME_APPROVAL_BY || apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE
+          : apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE
+        const apiStatusId = isFlexTime
+          ? apiItem.FLEX_TIME_APPROVAL_STATUS || apiItem.APPROVAL_STATUS_ID
+          : apiItem.APPROVAL_STATUS_ID
+
+        if (el.APPROVER_ID.toString().toLowerCase() === apiApproverId?.toLowerCase()) {
+          el.APPROVAL_STATUS_ID = apiStatusId
         }
       })
     })
 
     return resultArray
-  }, [approverList, data?.data?.ResultOnDb])
+  }, [approverList, data, isFlexTime])
 
   if (isLoading) {
     return (

@@ -14,6 +14,7 @@ import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
 import { useGetCalendarEventsByDate } from '@/_workspace/react-query/hooks/useCheckSubordinateLeave'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import type { CalendarEvent } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 interface Props {
   open: boolean
@@ -24,6 +25,8 @@ interface Props {
 }
 
 function DateDetailModal({ open, onClose, date }: Props) {
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'en' ? 'en' : 'th')
   const userData = getUserData()
   const formattedDate = date ? dayjs(date).format('YYYY-MM-DD') : ''
 
@@ -51,7 +54,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
       }}
     >
       <DialogTitle>
-        Employee Leave On {displayDate}
+        {t('Employee Leave On')} {displayDate}
         <DialogCloseButton onClick={onClose} disableRipple>
           <i className='tabler-x' />
         </DialogCloseButton>
@@ -67,17 +70,17 @@ function DateDetailModal({ open, onClose, date }: Props) {
               <Typography component='li' key={`leave-${index}`} sx={{ mb: 1, lineHeight: 1.8 }}>
                 {leave.EMPLOYEE_CODE || '-'} {leave.EMPLOYEE_NAME || ''} {leave.EMPLOYEE_DEPT || ''}
                 {' - '}
-                {leave.LEAVE_TYPE_DESCRIPTION_TH || 'Leave'}
+                {locale === 'en' ? leave.LEAVE_TYPE_DESCRIPTION_EN : leave.LEAVE_TYPE_DESCRIPTION_TH}
               </Typography>
             ))}
           </Box>
         ) : (
-          <Typography>No Result Found.</Typography>
+          <Typography>{t('No Result Found')}</Typography>
         )}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color='secondary' variant='tonal'>
-          Close
+          {t('Close')}
         </Button>
       </DialogActions>
     </Dialog>

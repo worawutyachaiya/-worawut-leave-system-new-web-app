@@ -1,4 +1,8 @@
 {
+  "Cleared all selections": "ล้างข้อมูลที่เลือกทั้งหมดแล้ว",
+  "Selected all": "เลือกข้อมูลทั้งหมด",
+  "items": "รายการ",
+  "Employee Leave On": "พนักงานลาวันที่",
   "Close": "ปิด",
   "Selected": "เลือกแล้ว",
   "items on this page": "รายการในหน้านี้",
@@ -286,7 +290,7 @@
   "No results found": "ไม่พบข้อมูล",
   "Please adjust your filters or Try again.": "กรุณาปรับเงื่อนไขการค้นหา หรือลองใหม่อีกครั้ง",
   "Are you sure you want to delete this request?": "คุณต้องการลบคำขอนี้หรือไม่?",
-  "Flex Time Type": "ประเภทการเปลี่ยนเวลาทำงาน",
+  "Flex Time Type": "ประเภท",
   "Choose Request Date": "เลือกวันที่ยื่นแบบฟอร์ม",
   "Flex Time Request Date": "วันที่ยื่นแบบฟอร์ม Flex Time",
   "Select type": "เลือกประเภท",

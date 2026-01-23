@@ -62,6 +62,11 @@ export interface HrCheckStatusOption {
   label: string
 }
 export const HR_CHECK_STATUS_OPTIONS: HrCheckStatusOption[] = [
+  { value: '0', label: 'ยังไม่ตรวจสอบ / Not-check' },
+  { value: '1', label: 'ตรวจสอบแล้ว / Checked' },
+  { value: 'all', label: 'ทั้งหมด / All' }
+]
+export const HR_CHECK_STATUS_OPTIONS_FOR_LEAVE: HrCheckStatusOption[] = [
   { value: 'notCheck', label: 'ยังไม่ตรวจสอบ / Not-check' },
   { value: 'checked', label: 'ตรวจสอบแล้ว / Checked' },
   { value: 'all', label: 'ทั้งหมด / All' }

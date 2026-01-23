@@ -177,12 +177,14 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Flex Time Date'),
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-',
+        size: 250
       },
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-'
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-',
+        size: 180
       },
       {
         accessorKey: 'UPDATE_BY',

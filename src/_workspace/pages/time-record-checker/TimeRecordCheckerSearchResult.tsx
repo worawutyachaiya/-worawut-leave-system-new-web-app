@@ -39,7 +39,7 @@ import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessag
 
 interface TimeRecordData {
   TIME_RECORD_REQUEST_ID?: number
-  EMPLOYEE_ID?: string
+  EMPLOYEE_CODE?: string
   EMPLOYEE_NAME?: string
   EMPLOYEE_SECTION?: string
   CREATE_DATE?: string
@@ -254,16 +254,22 @@ function TimeRecordCheckerSearchResult() {
   const columns = useMemo<MRT_ColumnDef<TimeRecordData>[]>(
     () => [
       {
-        accessorKey: 'EMPLOYEE_ID',
-        header: t('Employee Code'),
-        size: 220
-      },
-
-      {
         accessorKey: 'LEAVE_REQUEST_STATUS',
         header: t('Status'),
         Cell: ({ row }) => getStatusChip(row.original.LEAVE_REQUEST_STATUS),
         size: 160
+      },
+      {
+        accessorKey: 'APPROVAL',
+        header: t('Approval'),
+        enableSorting: false,
+        Cell: ({ row }) => <TableApprover row={row.original} />,
+        size: 160
+      },
+      {
+        accessorKey: 'EMPLOYEE_CODE',
+        header: t('Employee Code'),
+        size: 220
       },
       {
         accessorKey: 'IN_TIME',
@@ -292,13 +298,7 @@ function TimeRecordCheckerSearchResult() {
         size: 220,
         Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
       },
-      {
-        accessorKey: 'APPROVAL',
-        header: t('Approval'),
-        enableSorting: false,
-        Cell: ({ row }) => <TableApprover row={row.original} />,
-        size: 160
-      },
+
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),

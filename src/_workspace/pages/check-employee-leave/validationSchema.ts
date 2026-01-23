@@ -32,7 +32,7 @@ const hrCheckerSearchSchema = z.object({
             required_error: requiredFieldMessage({ fieldName: 'Leave Type' }),
             invalid_type_error: requiredFieldMessage({ fieldName: 'Leave Type' })
           })
-          .int({ message: requiredFieldMessage({ fieldName: 'Leave Type' }) }) 
+          .int({ message: requiredFieldMessage({ fieldName: 'Leave Type' }) })
           .positive({ message: requiredFieldMessage({ fieldName: 'Leave Type' }) }),
         LEAVE_TYPE_DESCRIPTION_EN: z
           .string({

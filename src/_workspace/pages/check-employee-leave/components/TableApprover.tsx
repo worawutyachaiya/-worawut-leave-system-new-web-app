@@ -3,30 +3,51 @@ import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useSearchApprover } from '@/_workspace/react-query/hooks/useLeaveApprover'
+import { useSearchFlexTimeApprover } from '@/_workspace/react-query/hooks/useFlexTime'
 import { useSettings } from '@/@core/hooks/useSettings'
 import { HrCheckerResponseData } from '@/_workspace/types/hr-checker/HrCheckerInterface'
+
 interface TableApproverProps {
   row: HrCheckerResponseData
 }
+
 interface ApproverItem {
   APPROVER_ID: string
   APPROVAL_STATUS_ID: number | string
 }
+
 const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
   const { settings } = useSettings()
-  const params = useMemo(
+  const rowType = (row as any)?.TYPE || 'LEAVE'
+  const isFlexTime = rowType === 'FLEX_TIME'
+
+  const leaveParams = useMemo(
     () => ({
-      LEAVE_REQUEST_ID: row?.LEAVE_REQUEST_ID || '',
-      TYPE: (row as any)?.TYPE || ''
+      LEAVE_REQUEST_ID: row?.LEAVE_REQUEST_ID,
+      TYPE: rowType
     }),
-    [row?.LEAVE_REQUEST_ID, (row as any)?.TYPE]
+    [row?.LEAVE_REQUEST_ID, rowType]
   )
-  const approverList = row?.APPROVER || []
+
+  const flexTimeParams = useMemo(
+    () => ({
+      FLEX_TIME_REQUEST_ID: row?.LEAVE_REQUEST_ID
+    }),
+    [row?.LEAVE_REQUEST_ID]
+  )
+
+  const approverList = row?.APPROVER
   const shouldFetch = !!row?.LEAVE_REQUEST_ID && approverList.length >= 0
-  const { data, isLoading, isError } = useSearchApprover(params, shouldFetch)
+
+  const leaveApproverQuery = useSearchApprover(leaveParams, shouldFetch && !isFlexTime)
+  const flexTimeApproverQuery = useSearchFlexTimeApprover(flexTimeParams, shouldFetch && isFlexTime)
+
+  const { data, isLoading, isError } = isFlexTime ? flexTimeApproverQuery : leaveApproverQuery
+
   const result = useMemo<ApproverItem[]>(() => {
     const resultArray: ApproverItem[] = []
-    const apiData = data?.data?.ResultOnDb || []
+    const apiData = (data as any)?.data?.ResultOnDb || []
+
     if ((row as any)?.IS_APPROVED === 0 || (row as any)?.IS_APPROVED === '0') {
       if (Array.isArray(approverList)) {
         approverList.forEach((elem: any) => {
@@ -39,21 +60,38 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
       }
     } else {
       apiData.forEach((elem: any) => {
+        const approverId = isFlexTime
+          ? elem.FLEX_TIME_APPROVAL_BY || elem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE
+          : elem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE
+        const statusId = isFlexTime
+          ? elem.FLEX_TIME_APPROVAL_STATUS || elem.APPROVAL_STATUS_ID
+          : elem.APPROVAL_STATUS_ID
+
         resultArray.push({
-          APPROVER_ID: elem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE,
-          APPROVAL_STATUS_ID: elem.APPROVAL_STATUS_ID 
+          APPROVER_ID: approverId,
+          APPROVAL_STATUS_ID: statusId
         })
       })
     }
+
     resultArray.forEach(el => {
       apiData.forEach((apiItem: any) => {
-        if (el.APPROVER_ID.toString().toLowerCase() === apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE?.toLowerCase()) {
-          el.APPROVAL_STATUS_ID = apiItem.APPROVAL_STATUS_ID
+        const apiApproverId = isFlexTime
+          ? apiItem.FLEX_TIME_APPROVAL_BY || apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE
+          : apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE
+        const apiStatusId = isFlexTime
+          ? apiItem.FLEX_TIME_APPROVAL_STATUS || apiItem.APPROVAL_STATUS_ID
+          : apiItem.APPROVAL_STATUS_ID
+
+        if (el.APPROVER_ID.toString().toLowerCase() === apiApproverId?.toLowerCase()) {
+          el.APPROVAL_STATUS_ID = apiStatusId
         }
       })
     })
+
     return resultArray
-  }, [row, approverList, data?.data?.ResultOnDb])
+  }, [row, approverList, data, isFlexTime])
+
   if (isLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', py: 1 }}>
@@ -61,12 +99,15 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
       </Box>
     )
   }
+
   if (isError) {
     return <span className='text-error'>Error loading approvers</span>
   }
+
   if (result.length === 0) {
     return <span className='text-secondary'>-</span>
   }
+
   const getStatusChip = (statusId: number | string) => {
     const status = String(statusId)
     if (status === '1') {
@@ -101,6 +142,7 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
       />
     )
   }
+
   return (
     <Box component='ol' sx={{ m: 0, pl: 2 }}>
       {result.map(({ APPROVER_ID, APPROVAL_STATUS_ID }, index) => (
@@ -122,4 +164,5 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
     </Box>
   )
 }
+
 export default TableApprover

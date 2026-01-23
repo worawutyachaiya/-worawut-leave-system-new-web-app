@@ -21,6 +21,7 @@ import classNames from 'classnames'
 
 // Third-party Imports
 import dayjs from 'dayjs'
+import 'dayjs/locale/th'
 
 // Components Imports
 import SkeletonCustom from '@/components/SkeletonCustom'
@@ -33,17 +34,6 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 
 // Translation
 import { useTranslation } from '@/contexts/TranslationContext'
-
-// Utility Functions
-const formatDate = (dateString: string): string => {
-  const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-  const date = new Date(dateString)
-  const day = date.getDate()
-  const month = monthNames[date.getMonth()]
-  const year = date.getFullYear()
-
-  return `${day}-${month}-${year}`
-}
 
 const getExperienceDate = (dateString: string, t: (key: string) => string): string => {
   const startDate = dayjs(dateString)
@@ -58,7 +48,8 @@ const getExperienceDate = (dateString: string, t: (key: string) => string): stri
 
 function LeaveRequestEmployeeInfo() {
   const [collapse, setCollapse] = useState(true)
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale == 'th' ? 'th' : 'en')
 
   const paramForSearch = { EMPLOYEE_CODE: `${getUserData().EMPLOYEE_CODE}` }
   const { data, isError, isLoading, error } = useSearchEmployeeInformation(paramForSearch, true)
@@ -166,10 +157,10 @@ function LeaveRequestEmployeeInfo() {
                       {t('User Info')}
                     </Typography>
                     <Typography variant='body2' color='textSecondary' sx={{ mb: 0 }}>
-                      {t('Birthday')} : {formatDate(employeeInfo.EMPLOYEE_BIRTH_DAY)}
+                      {t('Birthday')} : {dayjs(employeeInfo.EMPLOYEE_BIRTH_DAY).format('D-MMM-YYYY')}
                     </Typography>
                     <Typography variant='body2' color='textSecondary' sx={{ mb: 0 }}>
-                      {t('Start Work')} : {formatDate(employeeInfo.EMPLOYEE_START_WORK)}
+                      {t('Start Work')} : {dayjs(employeeInfo.EMPLOYEE_START_WORK).format('D-MMM-YYYY')}
                     </Typography>
                   </Box>
                 </Box>

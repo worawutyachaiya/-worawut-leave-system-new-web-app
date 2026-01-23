@@ -1,4 +1,8 @@
 {
+  "Cleared all selections": "Cleared all selections",
+  "Selected all": "Selected all",
+  "items": "items",
+  "Employee Leave On": "Employee Leave On",
   "Close": "Close",
   "Selected": "Selected",
   "items on this page": "items on this page",
@@ -179,7 +183,7 @@
   "Validation failed": "Validation failed",
   "Validation Errors": "Validation Errors",
   "Data submitted successfully!": "Data submitted successfully!",
-  "No Result Found": "No Result Found",
+  "No Result Found": "No Result Found.",
   "Document Name": "Document Name",
   "Document File Name": "Document File Name",
   "Description": "Description",
