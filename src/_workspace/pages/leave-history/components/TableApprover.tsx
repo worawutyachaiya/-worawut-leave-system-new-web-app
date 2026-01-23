@@ -14,10 +14,13 @@ interface ApproverItem {
 }
 const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
   const { settings } = useSettings()
-  const params = useMemo(() => ({
-    LEAVE_REQUEST_ID: row?.LEAVE_REQUEST_ID || '',
-    TYPE: (row as any)?.TYPE || ''
-  }), [row?.LEAVE_REQUEST_ID, (row as any)?.TYPE])
+  const params = useMemo(
+    () => ({
+      LEAVE_REQUEST_ID: row?.LEAVE_REQUEST_ID || '',
+      TYPE: (row as any)?.TYPE || ''
+    }),
+    [row?.LEAVE_REQUEST_ID, (row as any)?.TYPE]
+  )
   const approverList = row?.APPROVER || []
   const shouldFetch = !!row?.LEAVE_REQUEST_ID && approverList.length >= 0
   const { data, isLoading, isError } = useSearchApprover(params, shouldFetch)
@@ -38,11 +41,11 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
       apiData.forEach((elem: any) => {
         resultArray.push({
           APPROVER_ID: elem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE,
-          APPROVAL_STATUS_ID: elem.APPROVAL_STATUS_ID  
+          APPROVAL_STATUS_ID: elem.APPROVAL_STATUS_ID
         })
       })
     }
-    resultArray.forEach((el) => {
+    resultArray.forEach(el => {
       apiData.forEach((apiItem: any) => {
         if (el.APPROVER_ID.toString().toLowerCase() === apiItem.APPROVAL_BY_APPROVER_EMPLOYEE_CODE?.toLowerCase()) {
           el.APPROVAL_STATUS_ID = apiItem.APPROVAL_STATUS_ID
