@@ -37,7 +37,7 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
       toggleFullScreen: t('Toggle Full Screen')
     },
     initialState: { showColumnFilters: false },
-    manualFiltering: true,
+    manualFiltering: false,
     manualPagination: true,
     manualSorting: true,
     isMultiSortEvent: () => true,
@@ -74,7 +74,7 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
 
     renderToolbarInternalActions: ({ table }) => (
       <>
-        <MRT_ToggleFiltersButton table={table} />
+        {/* <MRT_ToggleFiltersButton table={table} /> */}
         <MRT_ShowHideColumnsButton table={table} />
         <MRT_ToggleDensePaddingButton table={table} />
         <MRT_ToggleFullScreenButton table={table} />

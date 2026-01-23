@@ -208,7 +208,15 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
       {
         accessorKey: 'LEAVE_DATE_RANGE',
         header: t('Leave Date'),
-        size: 180,
+        Cell: ({ row }) => {
+          return (
+            dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY') +
+            ' ' +
+            t('to') +
+            ' ' +
+            dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD-MMM-YYYY')
+          )
+        },
         enableSorting: false
       },
       {

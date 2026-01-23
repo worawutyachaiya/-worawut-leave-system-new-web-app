@@ -317,7 +317,7 @@ const EmployeeLeaveSearchResultTable = () => {
         )
       }
     ],
-    [t]
+    [settings.mode, t]
   )
   const isFirstRender = useRef(true)
   useEffect(() => {

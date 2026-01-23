@@ -227,7 +227,8 @@ function FlexTimeApprovalSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: t('Employee Code')
+        header: t('Employee Code'),
+        size: 200
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
@@ -236,11 +237,13 @@ function FlexTimeApprovalSearchResult() {
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
-        header: t('Flex Time Type')
+        header: t('Flex Time Type'),
+        size: 200
       },
       {
         accessorKey: 'START_DATE',
         header: t('Start Date'),
+        size: 180,
         Cell: ({ row }) => {
           const date = row.original.START_DATE || row.original.FLEX_TIME_REQUEST_START_DATE
           return date ? dayjs(date).format('DD-MMM-YYYY') : '-'
@@ -249,6 +252,7 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'END_DATE',
         header: t('End Date'),
+        size: 180,
         Cell: ({ row }) => {
           const date = row.original.END_DATE || row.original.FLEX_TIME_REQUEST_END_DATE
           return date ? dayjs(date).format('DD-MMM-YYYY') : '-'
@@ -262,6 +266,7 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
+        size: 180,
         Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
       }
     ],

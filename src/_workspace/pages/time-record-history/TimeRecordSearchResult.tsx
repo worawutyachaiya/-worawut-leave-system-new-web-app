@@ -193,7 +193,7 @@ function SearchResult() {
         size: 180
       }
     ],
-    [settings.mode]
+    [settings.mode, t]
   )
   const isFirstRender = useRef(true)
   useEffect(() => {
