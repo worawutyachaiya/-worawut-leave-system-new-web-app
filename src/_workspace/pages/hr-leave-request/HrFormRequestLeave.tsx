@@ -413,7 +413,7 @@ function RequestLeaveFormHr() {
                     <AsyncSelectCustom
                       {...field}
                       label={t('Employee Code')}
-                      placeholder={t('Select employee code')}
+                      placeholder={t('Select Employee Code')}
                       defaultOptions
                       loadOptions={async (inputValue: string) => {
                         const response = await fetchAllEmployee({ EMPLOYEE_ID: inputValue })
@@ -458,7 +458,7 @@ function RequestLeaveFormHr() {
                     )}
                     classNamePrefix='select'
                     label={t('Leave Type')}
-                    placeholder='Select Leave Type'
+                    placeholder={t('Select Leave Type')}
                     error={!!error}
                     helperText={error?.message}
                   />

@@ -90,7 +90,7 @@ function DateDetailModal({ open, onClose, date }: Props) {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color='secondary' variant='tonal'>
-          Close
+          {t('Close')}
         </Button>
       </DialogActions>
     </Dialog>
