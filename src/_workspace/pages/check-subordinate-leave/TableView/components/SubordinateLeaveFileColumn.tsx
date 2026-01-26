@@ -15,18 +15,19 @@ interface SubordinateLeaveFileColumnProps {
 
 const SubordinateLeaveFileColumn = ({ fileName, filePath, size = 'medium' }: SubordinateLeaveFileColumnProps) => {
   const [isDownloading, setIsDownloading] = useState(false)
-  const { mutateAsync: downloadFile } = useDownloadLeaveFile(
-    response => {
-      if (response.data && fileName) {
-        downloadBlobAsFile(response.data, fileName)
-      }
-      setIsDownloading(false)
-    },
-    error => {
-      console.error('Download error:', error)
-      setIsDownloading(false)
+  const onDownloadSuccess = (response: { data: Blob }) => {
+    if (response.data && fileName) {
+      downloadBlobAsFile(response.data, fileName)
     }
-  )
+    setIsDownloading(false)
+  }
+
+  const onDownloadError = (error: Error) => {
+    console.error('Download error:', error)
+    setIsDownloading(false)
+  }
+
+  const { mutateAsync: downloadFile } = useDownloadLeaveFile(onDownloadSuccess, onDownloadError)
 
   const handleDownload = async () => {
     if (!fileName || !filePath) return

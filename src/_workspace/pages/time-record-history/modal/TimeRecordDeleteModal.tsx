@@ -28,29 +28,30 @@ interface LeaveCancelModalProps {
 const TimeRecordCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModalProps) => {
   const data = rowData?.original
   const { t } = useTranslation()
-  const { mutateAsync: deleteLeave, isPending: isLoading } = useDeleteTimeRecord(
-    response => {
-      if (response?.data?.Status === true) {
-        ToastMessageSuccess({
-          title: 'Cancel Leave Request',
-          message: t(response?.data?.Message) || 'ยกเลิกการลาสำเร็จ'
-        })
-        onSuccess?.()
-        onClose()
-      } else {
-        ToastMessageError({
-          title: 'Cancel Leave Request',
-          message: t(response?.data?.Message) || 'เกิดข้อผิดพลาดในการยกเลิกการลา'
-        })
-      }
-    },
-    error => {
+  const onDeleteSuccess = (response: any) => {
+    if (response?.data?.Status === true) {
+      ToastMessageSuccess({
+        title: 'Cancel Leave Request',
+        message: t(response?.data?.Message) || 'ยกเลิกการลาสำเร็จ'
+      })
+      onSuccess?.()
+      onClose()
+    } else {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: t(error?.message) || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
+        message: t(response?.data?.Message) || 'เกิดข้อผิดพลาดในการยกเลิกการลา'
       })
     }
-  )
+  }
+
+  const onDeleteError = (error: Error) => {
+    ToastMessageError({
+      title: 'Cancel Leave Request',
+      message: t(error?.message) || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
+    })
+  }
+
+  const { mutateAsync: deleteLeave, isPending: isLoading } = useDeleteTimeRecord(onDeleteSuccess, onDeleteError)
   const handleConfirmDelete = () => {
     if (!data) return
     const deleteParams = {

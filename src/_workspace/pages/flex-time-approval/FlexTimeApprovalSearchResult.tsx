@@ -78,33 +78,37 @@ function FlexTimeApprovalSearchResult() {
     paramForSearch,
     isEnableFetching
   )
-  const { mutate: createApproval, isPending: isApprovalLoading } = useCreateFlexTimeApproval(
-    (response: any) => {
-      if (response?.data?.Status === true) {
-        ToastMessageSuccess({
-          title: 'Flex Time Approval',
-          message: response?.data?.Message || 'ทำรายการสำเร็จแล้ว'
-        })
-        setRowSelection({})
-        setIsApproveDialogOpen(false)
-        setIsRejectDialogOpen(false)
-        queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
-        queryClient.invalidateQueries({ queryKey: [`${PREFIX_QUERY_KEY}_APPROVAL`] })
-        queryClient.invalidateQueries({ queryKey: ['NOTIFICATION'] })
-        setIsEnableFetching(true)
-      } else {
-        ToastMessageError({
-          title: 'Flex Time Approval',
-          message: response?.data?.Message || 'การอนุมัติมีปัญหา'
-        })
-      }
-    },
-    (error: any) => {
+  const onApprovalSuccess = (response: any) => {
+    if (response?.data?.Status === true) {
+      ToastMessageSuccess({
+        title: 'Flex Time Approval',
+        message: response?.data?.Message || 'ทำรายการสำเร็จแล้ว'
+      })
+      setRowSelection({})
+      setIsApproveDialogOpen(false)
+      setIsRejectDialogOpen(false)
+      queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
+      queryClient.invalidateQueries({ queryKey: [`${PREFIX_QUERY_KEY}_APPROVAL`] })
+      queryClient.invalidateQueries({ queryKey: ['NOTIFICATION'] })
+      setIsEnableFetching(true)
+    } else {
       ToastMessageError({
         title: 'Flex Time Approval',
-        message: error?.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
+        message: response?.data?.Message || 'การอนุมัติมีปัญหา'
       })
     }
+  }
+
+  const onApprovalError = (error: any) => {
+    ToastMessageError({
+      title: 'Flex Time Approval',
+      message: error?.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อ'
+    })
+  }
+
+  const { mutate: createApproval, isPending: isApprovalLoading } = useCreateFlexTimeApproval(
+    onApprovalSuccess,
+    onApprovalError
   )
   const tableData = useMemo(() => {
     const rawResult = data?.data?.ResultOnDb as any

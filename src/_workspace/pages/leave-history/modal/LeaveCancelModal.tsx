@@ -30,30 +30,31 @@ const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModa
   const { t } = useTranslation()
   const data = rowData?.original
   const queryClient = useQueryClient()
-  const { mutateAsync: deleteLeave, isPending: isLoading } = useDeleteLeave(
-    response => {
-      if (response?.data?.Status === true) {
-        ToastMessageSuccess({
-          title: 'Cancel Leave Request',
-          message: t('Cancel Leave Success')
-        })
-        queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
-        onSuccess?.()
-        onClose()
-      } else {
-        ToastMessageError({
-          title: 'Cancel Leave Request',
-          message: t('Cancel Leave Failed')
-        })
-      }
-    },
-    error => {
+  const onDeleteSuccess = (response: any) => {
+    if (response?.data?.Status === true) {
+      ToastMessageSuccess({
+        title: 'Cancel Leave Request',
+        message: t('Cancel Leave Success')
+      })
+      queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
+      onSuccess?.()
+      onClose()
+    } else {
       ToastMessageError({
         title: 'Cancel Leave Request',
-        message: t('Error connecting to the server')
+        message: t('Cancel Leave Failed')
       })
     }
-  )
+  }
+
+  const onDeleteError = () => {
+    ToastMessageError({
+      title: 'Cancel Leave Request',
+      message: t('Error connecting to the server')
+    })
+  }
+
+  const { mutateAsync: deleteLeave, isPending: isLoading } = useDeleteLeave(onDeleteSuccess, onDeleteError)
   const handleConfirmDelete = () => {
     if (!data) return
     const deleteParams = {

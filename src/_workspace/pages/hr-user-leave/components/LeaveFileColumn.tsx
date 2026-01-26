@@ -26,18 +26,19 @@ const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColum
   const [isDownloading, setIsDownloading] = useState(false)
 
   // Download file hook
-  const { mutateAsync: downloadFile } = useDownloadLeaveFile(
-    response => {
-      if (response.data && fileName) {
-        downloadBlobAsFile(response.data, fileName)
-      }
-      setIsDownloading(false)
-    },
-    error => {
-      console.error('Download error:', error)
-      setIsDownloading(false)
+  const onDownloadSuccess = (response: { data: Blob }) => {
+    if (response.data && fileName) {
+      downloadBlobAsFile(response.data, fileName)
     }
-  )
+    setIsDownloading(false)
+  }
+
+  const onDownloadError = (error: Error) => {
+    console.error('Download error:', error)
+    setIsDownloading(false)
+  }
+
+  const { mutateAsync: downloadFile } = useDownloadLeaveFile(onDownloadSuccess, onDownloadError)
 
   // Handle download
   const handleDownload = async () => {

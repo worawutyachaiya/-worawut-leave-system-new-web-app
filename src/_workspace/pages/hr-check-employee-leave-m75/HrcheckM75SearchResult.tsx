@@ -128,22 +128,26 @@ function HrcheckM75SearchResult() {
   }
 
   // M75 Check mutation
-  const { mutateAsync: createHrCheckerM75, isPending: isCreatingHrChecker } = useCreateHrCheckerM75(
-    data => {
-      if (data?.data?.Status) {
-        ToastMessageSuccess({ message: data.data.Message || t('M75 Check Success') })
-        queryClient.invalidateQueries({ queryKey: ['HR_CHECK_M75'] })
-        setSelectedRows([])
-        setRowSelection({})
-        setIsCheckConfirmModalOpen(false)
-        setIsEnableFetching(true)
-      } else {
-        ToastMessageError({ message: data?.data?.Message || t('M75 Check Failed') })
-      }
-    },
-    error => {
-      ToastMessageError({ message: error.message || t('An error occurred') })
+  const onHrCheckSuccess = (data: any) => {
+    if (data?.data?.Status) {
+      ToastMessageSuccess({ message: data.data.Message || t('M75 Check Success') })
+      queryClient.invalidateQueries({ queryKey: ['HR_CHECK_M75'] })
+      setSelectedRows([])
+      setRowSelection({})
+      setIsCheckConfirmModalOpen(false)
+      setIsEnableFetching(true)
+    } else {
+      ToastMessageError({ message: data?.data?.Message || t('M75 Check Failed') })
     }
+  }
+
+  const onHrCheckError = (error: Error) => {
+    ToastMessageError({ message: error.message || t('An error occurred') })
+  }
+
+  const { mutateAsync: createHrCheckerM75, isPending: isCreatingHrChecker } = useCreateHrCheckerM75(
+    onHrCheckSuccess,
+    onHrCheckError
   )
 
   const handleConfirmCheck = async () => {

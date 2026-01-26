@@ -45,15 +45,19 @@ const LeaveDocsPane = ({ document, tabIndex }: LeaveDocsPaneProps) => {
     undefined,
     !!document?.LEAVE_REGULARITY_FILE_NAME
   )
-  const { mutateAsync: downloadFile, isPending: isDownloading } = useDownloadLeaveDocument(
-    data => {
-      if (data && document) {
-        downloadBlobAsFile(data.data, `${document.LEAVE_REGULARITY_NAME}.pdf`)
-      }
-    },
-    error => {
-      ToastMessageError({ message: 'Download File: ' + error.message })
+  const onDownloadSuccess = (data: { data: Blob }) => {
+    if (data && document) {
+      downloadBlobAsFile(data.data, `${document.LEAVE_REGULARITY_NAME}.pdf`)
     }
+  }
+
+  const onDownloadError = (error: Error) => {
+    ToastMessageError({ message: 'Download File: ' + error.message })
+  }
+
+  const { mutateAsync: downloadFile, isPending: isDownloading } = useDownloadLeaveDocument(
+    onDownloadSuccess,
+    onDownloadError
   )
   useEffect(() => {
     if (pdfData?.data) {
