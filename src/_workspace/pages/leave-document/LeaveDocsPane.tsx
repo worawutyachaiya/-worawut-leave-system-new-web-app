@@ -84,7 +84,7 @@ const LeaveDocsPane = ({ document, tabIndex }: LeaveDocsPaneProps) => {
       >
         <CircularProgress />
         <Typography sx={{ mt: 2 }} color='text.secondary'>
-          {t('Loading Document...')}
+          {t('Loading Document')}
         </Typography>
       </Box>
     )

@@ -1,4 +1,10 @@
 {
+  "Loading Document": "กำลังโหลดเอกสาร...",
+  "Received Day": "วันที่ได้รับ",
+  "Experience (Years)": "ประสบการณ์ (ปี)",
+  "Annual Leave Received Table": "ตารางการลาพักร้อนที่ได้รับ",
+  "You need to cancel at least before 8:30 AM on the day you wish to use the service": "คุณจำเป็นต้องยกเลิกล่วงหน้าอย่างน้อยก่อนเวลา 08:30 น. ของวันที่ใช้สิทธิ",
+  "Clear All Data": "ล้างข้อมูลทั้งหมด",
   "Cleared all selections": "ล้างข้อมูลที่เลือกทั้งหมดแล้ว",
   "Selected all": "เลือกข้อมูลทั้งหมด",
   "items": "รายการ",
