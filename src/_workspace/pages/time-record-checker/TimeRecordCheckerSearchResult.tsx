@@ -105,34 +105,42 @@ function TimeRecordCheckerSearchResult() {
     setRowSelection({})
   }
 
-  const { mutateAsync: createHrChecker, isPending: isCreatingHrChecker } = useTimeRecordCreateHrChecker(
-    data => {
-      if (data?.data?.Status) {
-        ToastMessageSuccess({ message: data.data.Message || t('HR Check completed successfully') })
-        setIsCheckConfirmModalOpen(false)
-        refreshData()
-      } else {
-        ToastMessageError({ message: data?.data?.Message || t('HR Check failed') })
-      }
-    },
-    () => {
-      ToastMessageError({ message: t('Failed to check HR') })
+  const onCreateHrCheckerSuccess = (data: any) => {
+    if (data?.data?.Status) {
+      ToastMessageSuccess({ message: data.data.Message || t('HR Check completed successfully') })
+      setIsCheckConfirmModalOpen(false)
+      refreshData()
+    } else {
+      ToastMessageError({ message: data?.data?.Message || t('HR Check failed') })
     }
+  }
+
+  const onCreateHrCheckerError = () => {
+    ToastMessageError({ message: t('Failed to check HR') })
+  }
+
+  const { mutateAsync: createHrChecker, isPending: isCreatingHrChecker } = useTimeRecordCreateHrChecker(
+    onCreateHrCheckerSuccess,
+    onCreateHrCheckerError
   )
 
-  const { mutateAsync: deleteByHr, isPending: isDeletingByHr } = useTimeRecordDeleteByHr(
-    data => {
-      if (data?.data?.Status) {
-        ToastMessageSuccess({ message: data.data.Message || t('Reject completed successfully') })
-        setIsRejectConfirmModalOpen(false)
-        refreshData()
-      } else {
-        ToastMessageError({ message: data?.data?.Message || t('Reject failed') })
-      }
-    },
-    () => {
-      ToastMessageError({ message: t('Failed to reject') })
+  const onDeleteByHrSuccess = (data: any) => {
+    if (data?.data?.Status) {
+      ToastMessageSuccess({ message: data.data.Message || t('Reject completed successfully') })
+      setIsRejectConfirmModalOpen(false)
+      refreshData()
+    } else {
+      ToastMessageError({ message: data?.data?.Message || t('Reject failed') })
     }
+  }
+
+  const onDeleteByHrError = () => {
+    ToastMessageError({ message: t('Failed to reject') })
+  }
+
+  const { mutateAsync: deleteByHr, isPending: isDeletingByHr } = useTimeRecordDeleteByHr(
+    onDeleteByHrSuccess,
+    onDeleteByHrError
   )
 
   const { data, isLoading, isFetching, isRefetching, isError } = useTimeRecordSearchHrChecker(

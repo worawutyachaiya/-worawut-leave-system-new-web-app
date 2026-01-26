@@ -29,30 +29,31 @@ const FlexTimeCancelModal = ({ open, onClose, rowData, onSuccess }: FlexTimeCanc
   const { t } = useTranslation()
   const data = rowData?.original
   const queryClient = useQueryClient()
-  const { mutateAsync: deleteFlexTime, isPending: isLoading } = useDeleteFlexTime(
-    (response: any) => {
-      if (response?.data?.Status === true) {
-        ToastMessageSuccess({
-          title: 'Cancel FlexTime Request',
-          message: response?.data?.Message || 'ยกเลิก Flex Time สำเร็จ'
-        })
-        queryClient.invalidateQueries({ queryKey: [`${PREFIX_QUERY_KEY}_HISTORY`] })
-        onSuccess?.()
-        onClose()
-      } else {
-        ToastMessageError({
-          title: 'Cancel FlexTime Request',
-          message: response?.data?.Message || 'เกิดข้อผิดพลาดในการยกเลิก Flex Time'
-        })
-      }
-    },
-    (error: Error) => {
+  const onDeleteSuccess = (response: any) => {
+    if (response?.data?.Status === true) {
+      ToastMessageSuccess({
+        title: 'Cancel FlexTime Request',
+        message: response?.data?.Message || 'ยกเลิก Flex Time สำเร็จ'
+      })
+      queryClient.invalidateQueries({ queryKey: [`${PREFIX_QUERY_KEY}_HISTORY`] })
+      onSuccess?.()
+      onClose()
+    } else {
       ToastMessageError({
         title: 'Cancel FlexTime Request',
-        message: error?.message || 'เกิดข้อผิดพลาดในการยกเลิก Flex Time'
+        message: response?.data?.Message || 'เกิดข้อผิดพลาดในการยกเลิก Flex Time'
       })
     }
-  )
+  }
+
+  const onDeleteError = (error: Error) => {
+    ToastMessageError({
+      title: 'Cancel FlexTime Request',
+      message: error?.message || 'เกิดข้อผิดพลาดในการยกเลิก Flex Time'
+    })
+  }
+
+  const { mutateAsync: deleteFlexTime, isPending: isLoading } = useDeleteFlexTime(onDeleteSuccess, onDeleteError)
   const handleConfirmDelete = () => {
     if (!data) return
     const deleteParams = {

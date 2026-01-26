@@ -62,20 +62,21 @@ const LeaveFileUploadModal = ({
   const { errors } = useFormState({ control })
   const fileUpload = watch('fileUpload') as File | null
   const [errorMessage, setErrorMessage] = React.useState('')
-  const { mutateAsync: uploadFile, isPending: isUploading } = useUploadNewLeaveFile(
-    async response => {
-      if (response.data?.Status === true) {
-        handleReset()
-        onSuccess?.()
-        onClose()
-      } else {
-        setErrorMessage(response.data?.Message || 'เกิดข้อผิดพลาดในการอัพโหลด')
-      }
-    },
-    error => {
-      setErrorMessage(error.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อ')
+  const onUploadSuccess = async (response: any) => {
+    if (response.data?.Status === true) {
+      handleReset()
+      onSuccess?.()
+      onClose()
+    } else {
+      setErrorMessage(response.data?.Message || 'เกิดข้อผิดพลาดในการอัพโหลด')
     }
-  )
+  }
+
+  const onUploadError = (error: Error) => {
+    setErrorMessage(error.message || 'เกิดข้อผิดพลาดในการเชื่อมต่อ')
+  }
+
+  const { mutateAsync: uploadFile, isPending: isUploading } = useUploadNewLeaveFile(onUploadSuccess, onUploadError)
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
     onDrop: (acceptedFiles, rejectedFiles) => {

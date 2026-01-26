@@ -125,20 +125,24 @@ const LeaveTypeSettingSearchResult = () => {
   )
 
   // Delete Mutation
-  const { mutateAsync: deleteLeaveTypeRegulation, isPending: isDeleting } = useDeleteLeaveTypeRegulation(
-    response => {
-      if (response.data.Status) {
-        queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
-        setDeleteDialogOpen(false)
-        setDeleteTarget(null)
-        toast.success(response.data.Message || t('Deleted successfully'))
-      } else {
-        toast.error(response.data.Message || t('Failed to delete'))
-      }
-    },
-    error => {
-      toast.error(t('Failed to delete. Please try again.'))
+  const onDeleteSuccess = (response: any) => {
+    if (response.data.Status) {
+      queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
+      setDeleteDialogOpen(false)
+      setDeleteTarget(null)
+      toast.success(response.data.Message || t('Deleted successfully'))
+    } else {
+      toast.error(response.data.Message || t('Failed to delete'))
     }
+  }
+
+  const onDeleteError = () => {
+    toast.error(t('Failed to delete. Please try again.'))
+  }
+
+  const { mutateAsync: deleteLeaveTypeRegulation, isPending: isDeleting } = useDeleteLeaveTypeRegulation(
+    onDeleteSuccess,
+    onDeleteError
   )
 
   // Defensive Programming

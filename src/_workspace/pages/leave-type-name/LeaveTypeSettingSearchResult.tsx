@@ -79,20 +79,21 @@ function LeaveTypeSettingSearchResult() {
     Order: sorting
   }
   const { data, isLoading, isFetching, isRefetching, isError } = useSearchLeaveType(paramForSearch, isEnableFetching)
-  const { mutateAsync: deleteLeaveType } = useDeleteLeaveType(
-    response => {
-      if (response && response.data && response.data.Status === true) {
-        queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
-        toast.success(response.data.Message || 'Deleted successfully')
-      } else {
-        toast.error(response?.data?.Message || 'Failed to delete')
-      }
-    },
-    error => {
-      console.error('Delete error:', error)
-      toast.error('Failed to delete. Please try again.')
+  const onDeleteSuccess = (response: any) => {
+    if (response && response.data && response.data.Status === true) {
+      queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
+      toast.success(response.data.Message || 'Deleted successfully')
+    } else {
+      toast.error(response?.data?.Message || 'Failed to delete')
     }
-  )
+  }
+
+  const onDeleteError = (error: Error) => {
+    console.error('Delete error:', error)
+    toast.error('Failed to delete. Please try again.')
+  }
+
+  const { mutateAsync: deleteLeaveType } = useDeleteLeaveType(onDeleteSuccess, onDeleteError)
   const getTableData = (): LeaveTypeData[] => {
     if (Array.isArray(data?.data?.ResultOnDb)) {
       return data.data.ResultOnDb as unknown as LeaveTypeData[]
