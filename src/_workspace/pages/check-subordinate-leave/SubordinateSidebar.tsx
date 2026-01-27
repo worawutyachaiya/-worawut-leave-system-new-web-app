@@ -27,6 +27,8 @@ import type {
 } from '@/_workspace/types/check-sorbordinate-leave/CheckSubordinateLeaveTypes'
 import ExportEmployeeLeaveModal from './components/ExportEmployeeLeaveModal'
 import { useTranslation } from '@/contexts/TranslationContext'
+import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
+import { th, enGB } from 'date-fns/locale'
 
 interface Props {
   mdAbove: boolean
@@ -46,7 +48,7 @@ function SubordinateSidebar({
   onFilterAllChange,
   handleLeftSidebarToggle
 }: Props) {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const [isSearching, setIsSearching] = useState(false)
   const [exportModalOpen, setExportModalOpen] = useState(false)
   const { control, watch, setValue, getValues } = useFormContext<FormDataPage>()
@@ -207,6 +209,22 @@ function SubordinateSidebar({
           />
         </>
       )}
+      {/* Mini Calendar */}
+      <Divider sx={{ my: 2 }} />
+      <AppReactDatepicker
+        inline
+        locale={locale === 'th' ? th : enGB}
+        onChange={(date: Date | null) => date && calendarApi?.gotoDate(date)}
+        boxProps={{
+          className: 'flex justify-center is-full',
+          sx: {
+            '& .react-datepicker': {
+              boxShadow: 'none !important',
+              border: 'none !important'
+            }
+          }
+        }}
+      />
     </Box>
   )
   if (mdAbove) {

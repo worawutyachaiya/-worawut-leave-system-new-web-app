@@ -20,6 +20,8 @@ import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-o
 import { useTranslation } from '@/contexts/TranslationContext'
 import type { FormDataPage } from './validationSchema'
 import type { EmployeeOptionType } from '@/_workspace/types/subordinate-flex-time/SubordinateFlexTimeTypes'
+import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
+import { th, enGB } from 'date-fns/locale'
 
 interface Props {
   mdAbove: boolean
@@ -29,7 +31,7 @@ interface Props {
 }
 
 function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, handleLeftSidebarToggle }: Props) {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const [isSearching, setIsSearching] = useState(false)
   const { control, watch, setValue, getValues } = useFormContext<FormDataPage>()
   const employeeCode = watch('searchFilters.employeeCode')
@@ -150,6 +152,22 @@ function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, han
           </Card>
         </>
       )}
+      {/* Mini Calendar */}
+      <Divider sx={{ my: 2 }} />
+      <AppReactDatepicker
+        inline
+        locale={locale === 'th' ? th : enGB}
+        onChange={(date: Date | null) => date && calendarApi?.gotoDate(date)}
+        boxProps={{
+          className: 'flex justify-center is-full',
+          sx: {
+            '& .react-datepicker': {
+              boxShadow: 'none !important',
+              border: 'none !important'
+            }
+          }
+        }}
+      />
     </Box>
   )
 

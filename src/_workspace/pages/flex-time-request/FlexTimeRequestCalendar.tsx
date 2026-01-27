@@ -95,13 +95,14 @@ const FlexTimeRequestCalendar = () => {
   return (
     <Card className='overflow-visible'>
       <AppFullCalendar className='app-calendar'>
-        <Box sx={{ display: 'flex', minHeight: 650 }}>
+        <Box sx={{ display: 'flex', minHeight: 650, position: 'relative', overflow: 'clip' }}>
           {/* Sidebar */}
           <FlexTimeSidebarLeft
             mdAbove={mdAbove}
             leftSidebarOpen={leftSidebarOpen}
             handleLeftSidebarToggle={handleLeftSidebarToggle}
             handleAddEventClick={handleAddEventClick}
+            calendarApi={calendarRef.current?.getApi()}
           />
           {/* Calendar */}
           <Box
@@ -130,8 +131,14 @@ const FlexTimeRequestCalendar = () => {
               events={events}
               dateClick={handleDateClick}
               headerToolbar={{
-                start: 'prev,next title',
+                start: mdAbove ? 'prev,next title' : 'sidebarToggle,prev,next title',
                 end: 'today'
+              }}
+              customButtons={{
+                sidebarToggle: {
+                  icon: 'tabler tabler-menu-2',
+                  click: handleLeftSidebarToggle
+                }
               }}
               height='auto'
               contentHeight='auto'
