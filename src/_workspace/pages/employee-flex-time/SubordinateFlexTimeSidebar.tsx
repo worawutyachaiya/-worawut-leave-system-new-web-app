@@ -13,6 +13,7 @@ import {
   ListItemText,
   CircularProgress
 } from '@mui/material'
+import classnames from 'classnames'
 import { Controller, useFormContext } from 'react-hook-form'
 import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
 import LeaveEmployeeInformationService from '@/_workspace/services/leave-employee-information/LeaveEmployeeInformationService'
@@ -171,35 +172,35 @@ function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, han
     </Box>
   )
 
-  if (mdAbove) {
-    return (
-      <Box
-        sx={{
-          width: 300,
-          flexShrink: 0,
-          borderRight: '1px solid',
-          borderColor: 'divider',
-          bgcolor: 'background.paper',
-          boxShadow: 'none'
-        }}
-      >
-        {sidebarContent}
-      </Box>
-    )
-  }
-
   return (
     <Drawer
       open={leftSidebarOpen}
       onClose={handleLeftSidebarToggle}
-      anchor='left'
-      variant='temporary'
-      ModalProps={{ keepMounted: true }}
+      variant={mdAbove ? 'permanent' : 'temporary'}
+      ModalProps={{
+        disablePortal: true,
+        disableAutoFocus: true,
+        disableScrollLock: true,
+        keepMounted: true
+      }}
+      className={classnames('block', { static: mdAbove, absolute: !mdAbove })}
+      PaperProps={{
+        className: classnames('items-start is-[300px] shadow-none rounded rounded-se-none rounded-ee-none', {
+          static: mdAbove,
+          absolute: !mdAbove
+        })
+      }}
       sx={{
+        zIndex: 10,
         '& .MuiDrawer-paper': {
-          width: 280,
-          boxSizing: 'border-box',
-          boxShadow: 'none'
+          zIndex: mdAbove ? 2 : 'drawer',
+          borderRight: '1px solid',
+          borderColor: 'divider',
+          bgcolor: 'background.paper'
+        },
+        '& .MuiBackdrop-root': {
+          borderRadius: 1,
+          position: 'absolute'
         }
       }}
     >

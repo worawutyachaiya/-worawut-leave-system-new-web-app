@@ -164,7 +164,7 @@ const CalendarContent = () => {
     <>
       <Card className='overflow-visible'>
         <AppFullCalendar className='app-calendar'>
-          <Box sx={{ display: 'flex', minHeight: 600 }}>
+          <Box sx={{ display: 'flex', minHeight: 600, position: 'relative', overflow: 'clip' }}>
             <SubordinateFlexTimeSidebar
               mdAbove={mdAbove}
               leftSidebarOpen={leftSidebarOpen}
