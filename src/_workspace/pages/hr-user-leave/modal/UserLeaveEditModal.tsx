@@ -48,7 +48,7 @@ import {
 } from '@/_workspace/react-query/hooks/useLeaveEmployeeBalance'
 
 // Local Imports
-import { getImgLeaveType } from '@/_workspace/pages/leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../../assets/leave-type-function/ImgLeaveType'
 import {
   oneDayTimeLeaveArr,
   multipleDayTimeLeaveArr,

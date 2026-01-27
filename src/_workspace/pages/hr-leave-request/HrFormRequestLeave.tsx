@@ -66,7 +66,7 @@ import { FormDataPage } from './validationSchema'
 import { LEAVE_TYPE_IDS } from '@/_workspace/types/leave-employee-balance/LeaveEmployeeBalanceInterface'
 import { FileProp } from '@/_workspace/types/leave-file-prop/LeaveFilePropInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
-import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 
 // Time Leave Options
 import {

@@ -279,6 +279,7 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'INUSE',
         header: t('Status'),
+        muiTableBodyCellProps: { align: 'center' },
         size: 140,
         enableSorting: false,
         Cell: ({ row }) => {
@@ -301,6 +302,8 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'LEAVE_ATTACHMENT',
         header: t('Leave Attachment'),
+        muiTableBodyCellProps: { align: 'center' },
+        size: 260,
         enableSorting: false,
         Cell: ({ row }) => {
           return (
@@ -373,7 +376,7 @@ const UserLeaveSearchResult = () => {
           renderRowActions={({ row }) => <ActionsMenu row={row} onEdit={handleEdit} onDelete={handleDelete} />}
           displayColumnDefOptions={{
             'mrt-row-actions': {
-              muiTableHeadCellProps: { align: 'center' },
+              // muiTableHeadCellProps: { align: 'center' },
               muiTableBodyCellProps: { align: 'center' },
               header: t('ACTIONS'),
               size: 100

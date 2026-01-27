@@ -68,7 +68,7 @@ import LeaveRequestSuccessModal, { MessageType } from './modal/LeaveRequestSucce
 
 // Types, Utils & Options Imports
 import { FormDataPage } from './validationSchema'
-import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 import { fetchLeaveType } from '@/_workspace/react-select/async-promise-load-options/fetchLeaveType'
 import { LEAVE_TYPE_IDS } from '@/_workspace/types/leave-employee-balance/LeaveEmployeeBalanceInterface'
 import { FileProp } from '@/_workspace/types/leave-file-prop/LeaveFilePropInterface'

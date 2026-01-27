@@ -221,6 +221,7 @@ const UserProbationSearchResult = () => {
       {
         accessorKey: 'IS_PASS_PRO',
         header: t('Status'),
+        muiTableBodyCellProps: { align: 'center' },
         enableSorting: false,
         Cell: ({ row }) => {
           const passpro = row.original.IS_PASS_PRO
@@ -238,6 +239,7 @@ const UserProbationSearchResult = () => {
       {
         accessorKey: 'EMPLOYEE_START_WORK',
         header: t('Start Work'),
+        size: 200,
         Cell: ({ row }) => {
           return dayjs(row.original.EMPLOYEE_START_WORK).format('DD-MMM-YYYY')
         }
@@ -260,11 +262,13 @@ const UserProbationSearchResult = () => {
               {t('Enter Pass Probation Date')}
             </Button>
           )
-        }
+        },
+        muiTableBodyCellProps: { align: 'center' }
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: t('Employee Code')
+        header: t('Employee Code'),
+        size: 220
       },
       {
         accessorKey: 'EMPLOYEE_NAME',

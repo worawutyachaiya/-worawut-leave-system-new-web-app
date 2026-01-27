@@ -34,7 +34,7 @@ import LeaveRequestSuccessModal, { MessageType } from './modal/LeaveRequestSucce
 
 // Types & Utils Imports
 import { FormDataPage } from './validationSchema'
-import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 import {
   TimeLeaveOption,
   oneDayTimeLeaveArr,

@@ -20,7 +20,7 @@ import { useDxContext } from '@/_template/DxContextProvider'
 
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
 import fetchLeaveTypeHR from '@/_workspace/react-select/async-promise-load-options/fetchLeaveTypeHR'
-import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 import dayjs from 'dayjs'
 
 import { FormDataPage, StatusOption, statusOption } from './ValidationSchema'
