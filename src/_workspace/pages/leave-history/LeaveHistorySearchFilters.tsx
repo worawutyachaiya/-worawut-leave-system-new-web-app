@@ -22,7 +22,7 @@ import { useCreate } from '@/libs/react-query/hooks/common-system/useUserProfile
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { fetchLeaveType } from '@/_workspace/react-select/async-promise-load-options/fetchLeaveType'
-import { getImgLeaveType } from '@/_workspace/pages/leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 import { useTranslation } from '@/contexts/TranslationContext'
 import { MENU_ID } from './env'
 import type { FormDataPage } from './validationSchema'

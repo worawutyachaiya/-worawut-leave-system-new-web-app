@@ -18,7 +18,7 @@ import {
 } from '@/_workspace/types/hr-checker/HrCheckerInterface'
 import { fetchLeaveType } from '@/_workspace/react-select/async-promise-load-options/fetchLeaveType'
 import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
-import { getImgLeaveType } from '../leave-history/leave-history-function/ImgLeaveType'
+import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { useDxContext } from '@/_template/DxContextProvider'
 import { Box } from '@mui/material'

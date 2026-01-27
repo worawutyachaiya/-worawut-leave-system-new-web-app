@@ -1,6 +1,7 @@
 import { forwardRef, ReactElement, Ref } from 'react'
 import { Box, Button, CircularProgress, Dialog, DialogContent, Slide, SlideProps, Typography } from '@mui/material'
 import confirmImg from '@/assets/images/common/undraw_notify_re_65on.svg'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 const Transition = forwardRef(function Transition(
   props: SlideProps & { children?: ReactElement<any, any> },
@@ -17,6 +18,7 @@ interface ConfirmModalProps {
 }
 
 const ConfirmModal = ({ open, onClose, onConfirm, isLoading = false }: ConfirmModalProps) => {
+  const { t } = useTranslation()
   return (
     <Dialog
       maxWidth='xs'
@@ -54,7 +56,7 @@ const ConfirmModal = ({ open, onClose, onConfirm, isLoading = false }: ConfirmMo
             }}
           />
           <Typography variant='h4' fontWeight='bold' sx={{ mb: 4 }}>
-            Are you sure you want to proceed?
+            {t('Are you sure you want to proceed?')}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 3 }}>
             <Button
@@ -65,10 +67,10 @@ const ConfirmModal = ({ open, onClose, onConfirm, isLoading = false }: ConfirmMo
               startIcon={isLoading ? <CircularProgress size={16} color='inherit' /> : null}
               sx={{ minWidth: 120 }}
             >
-              {isLoading ? 'Saving...' : 'Yes, Confirm'}
+              {isLoading ? t('Saving...') : t('Yes, Confirm')}
             </Button>
             <Button variant='outlined' color='secondary' onClick={onClose} disabled={isLoading} sx={{ minWidth: 120 }}>
-              No, Cancel
+              {t('No, Cancel')}
             </Button>
           </Box>
         </Box>
