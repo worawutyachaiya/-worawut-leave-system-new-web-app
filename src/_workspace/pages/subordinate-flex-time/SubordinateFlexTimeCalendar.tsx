@@ -151,7 +151,7 @@ function SubordinateFlexTimeCalendar({
     },
     customButtons: {
       sidebarToggle: {
-        icon: 'bi bi-list',
+        icon: 'tabler tabler-menu-2',
         click() {
           handleLeftSidebarToggle()
         }
