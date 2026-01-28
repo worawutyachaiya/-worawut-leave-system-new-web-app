@@ -117,7 +117,15 @@ const HrCheckM75SearchFilter = () => {
                     isClearable
                     cacheOptions
                     defaultOptions
-                    loadOptions={() => fetchAllEmployee({}) as any}
+                    loadOptions={async inputValue => {
+                      const employees = await fetchAllEmployee({
+                        EMPLOYEE_CODE: inputValue || ''
+                      })
+                      return employees.map(option => ({
+                        ...option,
+                        EMPLOYEE_CODE: option.EMPLOYEE_CODE ?? ''
+                      }))
+                    }}
                     getOptionLabel={(data: any) => data.EMPLOYEE_CODE || ''}
                     getOptionValue={(data: any) => data.EMPLOYEE_CODE || ''}
                     placeholder={t('Enter employee code')}

@@ -201,7 +201,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
                     {...field}
                     selected={field.value ? (field.value as Dayjs).toDate() : null}
                     onChange={(date: Date | null) => field.onChange(date ? dayjs(date) : null)}
-                    placeholderText='Choose a date'
+                    placeholderText={t('Choose a date')}
                     customInput={
                       <CustomTextField
                         fullWidth

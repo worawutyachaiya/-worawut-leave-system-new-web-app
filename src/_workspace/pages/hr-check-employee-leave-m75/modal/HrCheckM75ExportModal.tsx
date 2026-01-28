@@ -12,14 +12,17 @@ import {
   Select,
   MenuItem,
   CircularProgress,
-  Box
+  Box,
+  Typography
 } from '@mui/material'
+import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import { utils, writeFile } from 'xlsx'
 import dayjs from 'dayjs'
 import { useFormContext } from 'react-hook-form'
 import type { FormDataPage } from '../ValidationSchema'
 import { useSearchHrCheckerExport } from '@/_workspace/react-query/hooks/useSearchHrChecker'
 import type { HrCheckerM75ResponseData } from '@/_workspace/types/hr-checker-m75/HrCheckerM75Interface'
+import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
 
 interface HrCheckM75ExportModalProps {
   open: boolean
@@ -145,10 +148,29 @@ const HrCheckM75ExportModal = ({ open, onClose }: HrCheckM75ExportModalProps) =>
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth>
-      <DialogTitle>{t('Export To File')}</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth='sm'
+      fullWidth
+      sx={{
+        '& .MuiDialog-paper': {
+          overflow: 'visible',
+          borderRadius: 2
+        }
+      }}
+    >
+      <DialogTitle>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <FileDownloadIcon color='primary' />
+          <Typography variant='h5'>{t('Export To File')}</Typography>
+        </Box>
+        <DialogCloseButton onClick={onClose} disableRipple disabled={isLoading || isError}>
+          <i className='tabler-x' />
+        </DialogCloseButton>
+      </DialogTitle>
       <DialogContent>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, mt: 2 }}>
           <TextField
             fullWidth
             label={t('Enter file name')}

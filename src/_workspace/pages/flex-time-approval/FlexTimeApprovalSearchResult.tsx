@@ -374,6 +374,10 @@ function FlexTimeApprovalSearchResult() {
             sx: { cursor: 'pointer' }
           })}
           muiTableProps={{ sx: { tableLayout: 'auto' } }}
+          localization={{
+            clearSelection: t('Clear selection'),
+            selectedCountOfRowCountRowsSelected: t('{selectedCount} of {rowCount} row(s) selected')
+          }}
         />
       </LocalizationProvider>
       <ApproveConfirmDialog

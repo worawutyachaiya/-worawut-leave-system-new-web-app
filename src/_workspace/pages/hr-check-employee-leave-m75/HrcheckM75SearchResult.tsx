@@ -170,33 +170,33 @@ function HrcheckM75SearchResult() {
     setIsCheckConfirmModalOpen(true)
   }
 
-  const handleSelectPageData = () => {
-    const newSelectedRows = finalData
-      .filter((row: HrCheckerM75ResponseData) => !row.CHECKED)
-      .map((row: HrCheckerM75ResponseData) => ({
-        LEAVE_REQUEST_ID: row.LEAVE_REQUEST_ID,
-        TYPE: row.TYPE
-      }))
-    if (newSelectedRows.length === 0) {
-      ToastMessageError({ message: t('No selectable items on this page') })
-      return
-    }
-    const mergedRows = [...selectedRows]
-    newSelectedRows.forEach((newRow: { LEAVE_REQUEST_ID: number; TYPE: string }) => {
-      if (!mergedRows.some(existing => existing.LEAVE_REQUEST_ID === newRow.LEAVE_REQUEST_ID)) {
-        mergedRows.push(newRow)
-      }
-    })
-    setSelectedRows(mergedRows)
-    const newRowSelection: Record<string, boolean> = { ...rowSelection }
-    finalData.forEach((row: HrCheckerM75ResponseData) => {
-      if (!row.CHECKED) {
-        newRowSelection[String(row.LEAVE_REQUEST_ID)] = true
-      }
-    })
-    setRowSelection(newRowSelection)
-    ToastMessageSuccess({ message: `${t('Selected')} ${newSelectedRows.length} ${t('items on this page')}` })
-  }
+  // const handleSelectPageData = () => {
+  //   const newSelectedRows = finalData
+  //     .filter((row: HrCheckerM75ResponseData) => !row.CHECKED)
+  //     .map((row: HrCheckerM75ResponseData) => ({
+  //       LEAVE_REQUEST_ID: row.LEAVE_REQUEST_ID,
+  //       TYPE: row.TYPE
+  //     }))
+  //   if (newSelectedRows.length === 0) {
+  //     ToastMessageError({ message: t('No selectable items on this page') })
+  //     return
+  //   }
+  //   const mergedRows = [...selectedRows]
+  //   newSelectedRows.forEach((newRow: { LEAVE_REQUEST_ID: number; TYPE: string }) => {
+  //     if (!mergedRows.some(existing => existing.LEAVE_REQUEST_ID === newRow.LEAVE_REQUEST_ID)) {
+  //       mergedRows.push(newRow)
+  //     }
+  //   })
+  //   setSelectedRows(mergedRows)
+  //   const newRowSelection: Record<string, boolean> = { ...rowSelection }
+  //   finalData.forEach((row: HrCheckerM75ResponseData) => {
+  //     if (!row.CHECKED) {
+  //       newRowSelection[String(row.LEAVE_REQUEST_ID)] = true
+  //     }
+  //   })
+  //   setRowSelection(newRowSelection)
+  //   ToastMessageSuccess({ message: `${t('Selected')} ${newSelectedRows.length} ${t('items on this page')}` })
+  // }
 
   const handleMRTRowSelectionChange = (updater: any) => {
     const newRowSelection = typeof updater === 'function' ? updater(rowSelection) : updater
@@ -492,6 +492,10 @@ function HrcheckM75SearchResult() {
           enableHiding={true}
           displayColumnDefOptions={DISPLAY_COLUMN_OPTIONS}
           muiTableProps={TABLE_PROPS}
+          localization={{
+            clearSelection: t('Clear selection'),
+            selectedCountOfRowCountRowsSelected: t('{selectedCount} of {rowCount} row(s) selected')
+          }}
         />
       </LocalizationProvider>
     </Card>

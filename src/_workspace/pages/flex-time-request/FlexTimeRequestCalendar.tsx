@@ -40,7 +40,7 @@ const FlexTimeRequestCalendar = () => {
     endDate: dates.endDate
   })
   const events = (calendarData?.data?.ResultOnDb || []).map((item: any) => {
-    const isHoliday = item.title?.toLowerCase().includes('holiday')
+    const isHoliday = item.title?.toLowerCase().includes('holiday', 'วันหยุดบริษัท', 'วันหยุดนักขัตฤกษ์')
     return {
       id: item.id?.toString() || `${item.title}-${item.start}`,
       title: t(item.title || 'Leave'),
@@ -51,6 +51,7 @@ const FlexTimeRequestCalendar = () => {
       classNames: isHoliday ? ['event-bg-error'] : ['event-bg-primary']
     }
   })
+  console.log(events)
   const handleLeftSidebarToggle = () => setLeftSidebarOpen(!leftSidebarOpen)
   const handleAddEventClick = () => {
     setSelectedDate(dayjs().format('YYYY-MM-DD'))
@@ -72,7 +73,9 @@ const FlexTimeRequestCalendar = () => {
         title.includes('leave') ||
         title.includes('07.30') ||
         title.includes('08.30') ||
-        title.includes('09.30')
+        title.includes('09.30') ||
+        title.includes('วันหยุดบริษัท') ||
+        title.includes('วันหยุดนักขัตฤกษ์')
       )
     })
     if (isRestricted) {

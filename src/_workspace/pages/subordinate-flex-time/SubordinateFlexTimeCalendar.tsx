@@ -25,6 +25,8 @@ const FLEX_TIME_COLORS: Record<string, string> = {
   'Company Holiday': 'error',
   'Traditional Holiday': 'error',
   'Substitution Holiday': 'error',
+  วันหยุดบริษัท: 'error',
+  วันหยุดนักขัตฤกษ์: 'error',
   default: 'primary'
 }
 

@@ -331,9 +331,14 @@ function M75Form() {
                       label={t('Employee Code')}
                       placeholder={t('Select employee codes (multiple)')}
                       defaultOptions
-                      loadOptions={async (inputValue: string) => {
-                        const response = await fetchAllEmployee({ EMPLOYEE_ID: inputValue })
-                        return response as any
+                      loadOptions={async inputValue => {
+                        const employees = await fetchAllEmployee({
+                          EMPLOYEE_CODE: inputValue || ''
+                        })
+                        return employees.map(option => ({
+                          ...option,
+                          EMPLOYEE_CODE: option.EMPLOYEE_CODE ?? ''
+                        }))
                       }}
                       getOptionLabel={(data: any) => data.EMPLOYEE_CODE}
                       getOptionValue={(data: any) => data.EMPLOYEE_CODE}

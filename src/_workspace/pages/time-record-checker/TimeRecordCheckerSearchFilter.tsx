@@ -102,9 +102,14 @@ function TimeRecordCheckerSearchFilter() {
                     isClearable
                     cacheOptions
                     defaultOptions
-                    loadOptions={async (inputValue: string) => {
-                      const result = await fetchAllEmployee({})
-                      return result as any
+                    loadOptions={async inputValue => {
+                      const employees = await fetchAllEmployee({
+                        EMPLOYEE_CODE: inputValue || ''
+                      })
+                      return employees.map(option => ({
+                        ...option,
+                        EMPLOYEE_CODE: option.EMPLOYEE_CODE ?? ''
+                      }))
                     }}
                     getOptionLabel={data => data.EMPLOYEE_CODE || ''}
                     getOptionValue={data => data.EMPLOYEE_CODE || ''}
@@ -132,8 +137,8 @@ function TimeRecordCheckerSearchFilter() {
                     getOptionValue={data => data?.SECTION?.toString() || ''}
                     getOptionLabel={data => `${data?.SECTION}` || ''}
                     classNamePrefix='select'
-                    label='Section'
-                    placeholder='Select Section'
+                    label={t('Section')}
+                    placeholder={t('Select Section')}
                     error={!!error}
                     helperText={error?.message}
                   />

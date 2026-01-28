@@ -9,7 +9,6 @@ export interface FilterOption {
 
 export interface EmployeeOptionType {
   EMPLOYEE_ID: string
-  EMPLOYEE_NAME: string
 }
 
 export interface EmployeeInfoType {

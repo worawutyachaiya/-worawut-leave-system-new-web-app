@@ -38,7 +38,7 @@ const getUsedDayByLeaveType = (
 ): number => {
   const found = data?.data?.ResultOnDb?.find(item => item.LEAVE_TYPE_ID === leaveTypeId)
   // USED_DAY = QTY_DAY - LEAVE_REMAIN_DAY (คำนวณจาก backend)
-  // console.log(found?.USED_DAY);
+  // console.log(found?.USED_DAY)
   return found?.USED_DAY ?? 0
 }
 
