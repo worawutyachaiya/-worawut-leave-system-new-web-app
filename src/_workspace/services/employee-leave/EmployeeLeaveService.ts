@@ -92,4 +92,11 @@ export default class EmployeeLeaveService {
       data: Property
     })
   }
+  static getByLikeEmployeeCodeAndInuse(Property: any) {
+    return axiosRequest_LeaveSystem({
+      url: `${EmployeeLeaveAPI.API_ROOT_URL}/getByLikeEmployeeCodeAndInuse`,
+      method: 'POST',
+      data: Property
+    })
+  }
 }

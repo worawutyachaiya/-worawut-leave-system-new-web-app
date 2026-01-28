@@ -419,6 +419,10 @@ const EmployeeLeaveSearchResultTable = () => {
             onClick: row.getToggleSelectedHandler(),
             sx: { cursor: 'pointer' }
           })}
+          localization={{
+            clearSelection: t('Clear selection'),
+            selectedCountOfRowCountRowsSelected: t('{selectedCount} of {rowCount} row(s) selected')
+          }}
         />
       </LocalizationProvider>
       {/* Approval Dialogs */}

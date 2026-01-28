@@ -493,8 +493,8 @@ function LeaveRequestForm() {
         setConfirmModal(false)
         setResultModal({
           open: true,
-          message: response.data?.Message || 'เกิดข้อผิดพลาดในการบันทึก',
-          title: 'เกิดข้อผิดพลาด',
+          message: t(response.data?.Message) || 'เกิดข้อผิดพลาดในการบันทึก',
+          title: t('เกิดข้อผิดพลาด'),
           type: 'error'
         })
       }
@@ -503,8 +503,8 @@ function LeaveRequestForm() {
       setConfirmModal(false)
       setResultModal({
         open: true,
-        message: 'เกิดข้อผิดพลาดในการบันทึก',
-        title: 'เกิดข้อผิดพลาด',
+        message: t('เกิดข้อผิดพลาดในการบันทึก'),
+        title: t('เกิดข้อผิดพลาด'),
         type: 'error'
       })
     }
@@ -806,7 +806,7 @@ function LeaveRequestForm() {
                       <Grid container spacing={5} alignItems='center'>
                         <Grid item xs={12}>
                           <Typography variant='h5' fontWeight='bold' sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
-                            {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) > 30 ? (
+                            {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) >= Number(sickLeaveMaxDay) ? (
                               <Typography
                                 component='span'
                                 color='error'
@@ -820,13 +820,13 @@ function LeaveRequestForm() {
                               getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE)
                             )}{' '}
                             / {sickLeaveMaxDay} {t(getLeaveTypeUnit(LEAVE_TYPE_IDS.SICK_LEAVE))}
-                            {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) > 30 && (
+                            {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) >= Number(sickLeaveMaxDay) && (
                               <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
                                 {t('Exceed 30 days')}
                               </Typography>
                             )}
                           </Typography>
-                          {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) < 30 && (
+                          {getUsedDay(LEAVE_TYPE_IDS.SICK_LEAVE) < Number(sickLeaveMaxDay) && (
                             <Typography variant='body2' color='textSecondary' display='block' sx={{ mt: 1 }}>
                               {t('Sick Leave Used')}
                             </Typography>

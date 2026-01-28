@@ -435,6 +435,10 @@ function TimeRecordCheckerSearchResult() {
             rowSelection
           }}
           muiTableProps={{ sx: { tableLayout: 'auto' } }}
+          localization={{
+            clearSelection: t('Clear selection'),
+            selectedCountOfRowCountRowsSelected: t('{selectedCount} of {rowCount} row(s) selected')
+          }}
         />
       </LocalizationProvider>
     </Card>

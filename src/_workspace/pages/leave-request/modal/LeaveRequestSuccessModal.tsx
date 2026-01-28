@@ -122,18 +122,16 @@ const LeaveRequestSuccessModal = ({
       <DialogContent sx={{ py: 8, px: 5 }}>
         <Box sx={{ textAlign: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
           {/* Icon */}
-          <Box sx={{ mb: 3 }}>
-            {icon}
-          </Box>
+          <Box sx={{ mb: 3 }}>{icon}</Box>
 
           {/* Title */}
-          <Typography variant="h4" fontWeight="bold" sx={{ mb: 2, color: color }}>
+          <Typography variant='h4' fontWeight='bold' sx={{ mb: 2, color: color }}>
             {title || defaultTitle}
           </Typography>
 
           {/* Message */}
           {message && (
-            <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
+            <Typography variant='body1' color='textSecondary' sx={{ mb: 3 }}>
               {message}
             </Typography>
           )}
@@ -141,11 +139,11 @@ const LeaveRequestSuccessModal = ({
           {/* Action Buttons */}
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
             <Button
-              variant="contained"
+              variant='contained'
               color={getButtonColor()}
               onClick={onClose}
               disabled={isLoading}
-              startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : null}
+              startIcon={isLoading ? <CircularProgress size={16} color='inherit' /> : null}
               sx={{ minWidth: 120 }}
             >
               {isLoading ? t('Processing...') : t('OK')}

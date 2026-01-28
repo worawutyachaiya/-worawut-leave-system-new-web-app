@@ -17,7 +17,7 @@ import classnames from 'classnames'
 import { Controller, useFormContext } from 'react-hook-form'
 import AsyncSelectCustom from '@/components/react-select/AsyncSelectCustom'
 import LeaveEmployeeInformationService from '@/_workspace/services/leave-employee-information/LeaveEmployeeInformationService'
-import { fetchAllEmployee } from '@/_workspace/react-select/async-promise-load-options/fetchAllEmployee'
+import { fetchEmployeeCodeByEmployeeCodeAndInuse } from '@/_workspace/react-select/async-promise-load-options/fetchEmployeeLeave'
 import { useTranslation } from '@/contexts/TranslationContext'
 import type { FormDataPage } from './validationSchema'
 import type { EmployeeOptionType } from '@/_workspace/types/subordinate-flex-time/SubordinateFlexTimeTypes'
@@ -41,10 +41,9 @@ function SubordinateFlexTimeSidebar({ mdAbove, leftSidebarOpen, calendarApi, han
   const loadEmployeeOptions = async (inputValue: string): Promise<EmployeeOptionType[]> => {
     try {
       // HR Check: ค้นหาพนักงานทั้งหมด (ไม่ใช่ in-flow)
-      const results = await fetchAllEmployee({ EMPLOYEE_ID: inputValue })
+      const results = await fetchEmployeeCodeByEmployeeCodeAndInuse(inputValue, '1')
       return (results || []).map((emp: any) => ({
-        EMPLOYEE_ID: emp.EMPLOYEE_CODE || emp.EMPLOYEE_ID,
-        EMPLOYEE_NAME: emp.FULL_NAME || emp.EMPLOYEE_NAME || ''
+        EMPLOYEE_ID: emp.EMPLOYEE_CODE
       }))
     } catch (error) {
       return []

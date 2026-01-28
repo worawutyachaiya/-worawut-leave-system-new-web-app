@@ -30,12 +30,7 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
   const table = useMaterialReactTable({
     columns,
     data,
-    localization: {
-      showHideFilters: t('Toggle Filters'),
-      showHideColumns: t('Show/Hide Columns'),
-      toggleDensity: t('Toggle Dense Padding'),
-      toggleFullScreen: t('Toggle Full Screen')
-    },
+
     initialState: { showColumnFilters: false },
     manualFiltering: false,
     manualPagination: true,
@@ -197,8 +192,14 @@ export const DxMRTTable = <TData extends MRT_RowData>({ columns, data, isError, 
       }
     }),
 
-    //your custom table options...
-    ...rest //accept props to override default table options
+    ...rest,
+    localization: {
+      showHideFilters: t('Toggle Filters'),
+      showHideColumns: t('Show/Hide Columns'),
+      toggleDensity: t('Toggle Dense Padding'),
+      toggleFullScreen: t('Toggle Full Screen'),
+      ...rest.localization
+    }
   })
 
   return <MaterialReactTable table={table} />

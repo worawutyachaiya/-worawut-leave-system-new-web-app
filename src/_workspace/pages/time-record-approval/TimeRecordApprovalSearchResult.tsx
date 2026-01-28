@@ -344,6 +344,10 @@ function TimeRecordApprovalSearchResult() {
               </Tooltip>
             </Box>
           )}
+          localization={{
+            clearSelection: t('Clear selection'),
+            selectedCountOfRowCountRowsSelected: t('{selectedCount} of {rowCount} row(s) selected')
+          }}
         />
       </LocalizationProvider>
       {/* Approval Dialogs */}
