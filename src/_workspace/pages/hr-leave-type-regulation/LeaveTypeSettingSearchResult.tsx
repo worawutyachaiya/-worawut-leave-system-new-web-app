@@ -227,26 +227,33 @@ const LeaveTypeSettingSearchResult = () => {
         size: 140
       },
       {
+        enableSorting: false,
         accessorFn: row => `${row.LEAVE_TYPE_DESCRIPTION_TH || ''} / ${row.LEAVE_TYPE_DESCRIPTION_EN || ''}`,
         id: 'LEAVE_TYPE',
         header: t('Leave Type')
       },
       {
         accessorKey: 'DEPARTMENT',
+        enableSorting: false,
         header: t('Department')
       },
       {
+        enableSorting: false,
         accessorKey: 'LEAVE_TYPE_REQUEST_DAY_BEFORE_USE',
         header: t('Request Leave Day Before Use'),
         size: 350
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Modified By')
+        enableSorting: false,
+        header: t('Modified By'),
+        size: 200
       },
       {
         accessorKey: 'MODIFIED_DATE',
+        enableSorting: false,
         header: t('Modified'),
+        size: 200,
         Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
       }
     ],

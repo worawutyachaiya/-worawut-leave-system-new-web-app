@@ -139,6 +139,7 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
         header: t('TIME TO WORK'),
+        enableSorting: false,
         size: 180
       },
       {
@@ -158,6 +159,7 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
+        size: 200,
         Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-'
       },
       {

@@ -297,6 +297,7 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
+        size: 220,
         Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
@@ -316,24 +317,33 @@ const UserLeaveSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        header: t('Employee Code')
+        header: t('Employee Code'),
+        size: 200,
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
+        enableSorting: false,
         header: t('Employee Name'),
         Cell: ({ row }) => `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
+        enableSorting: false,
+        size: 200,
         header: t('Section')
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
+        enableSorting: false,
+        size: 200,
         header: t('Leave Type')
       },
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
         header: t('Leave Date'),
+        enableSorting: false,
+        size: 220,
         Cell: ({ row }) => {
           return dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm')
         }
@@ -341,24 +351,29 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
         header: t('Time'),
+        enableSorting: false,
         size: 140
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        header: t('Total Day Leave')
+        header: t('Total Day Leave'),
+        size: 250
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
-        header: t('Reason')
+        header: t('Reason'),
+        enableSorting: false
       },
       {
         accessorKey: 'MODIFIED_DATE',
         header: t('Modified'),
+        size: 200,
         Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Modified By')
+        header: t('Modified By'),
+        size: 200
       }
     ],
     [t]

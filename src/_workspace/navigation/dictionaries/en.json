@@ -1,4 +1,6 @@
 {
+  "New": "New",
+  "Notification": "Notifications",
   "{selectedCount} of {rowCount} row(s) selected": "{selectedCount} of {rowCount} row(s) selected",
   "Clear selection": "Clear selection",
   "OK": "OK",

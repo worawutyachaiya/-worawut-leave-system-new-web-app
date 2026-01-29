@@ -34,7 +34,10 @@ import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { TimeRecordResponseData } from '@/_workspace/types/time-record/TimeRecordInterface'
 import TableApprover from '../leave-history/components/TableApprover'
 import { ApproveConfirmDialog, RejectRemarkDialog } from './components/ApprovalDialogs'
+import { useQueryClient } from '@tanstack/react-query'
+import { PREFIX_QUERY_KEY_EMPLOYEE_LEAVE } from '@/_workspace/react-query/hooks/useTimeRecordApproval'
 function TimeRecordApprovalSearchResult() {
+  const queryClient = useQueryClient()
   const { t, locale } = useTranslation()
   dayjs.locale(locale === 'th' ? 'th' : 'en')
   const { isEnableFetching, setIsEnableFetching } = useDxContext()
@@ -72,6 +75,8 @@ function TimeRecordApprovalSearchResult() {
       setIsApproveDialogOpen(false)
       setIsRejectDialogOpen(false)
       setIsEnableFetching(true)
+      queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY_EMPLOYEE_LEAVE] })
+      queryClient.invalidateQueries({ queryKey: ['NOTIFICATION'] })
     } else {
       ToastMessageError({
         title: 'Leave Approval',
@@ -184,11 +189,13 @@ function TimeRecordApprovalSearchResult() {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
+        enableSorting: false,
         size: 180
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
+        enableSorting: false,
         size: 280,
         Cell: ({ row }) => (
           <Box>
@@ -198,6 +205,7 @@ function TimeRecordApprovalSearchResult() {
       },
       {
         accessorKey: 'SECTION',
+        enableSorting: false,
         header: t('Section'),
         size: 150
       },
@@ -228,6 +236,7 @@ function TimeRecordApprovalSearchResult() {
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
         header: t('Reason'),
+        enableSorting: false,
         size: 300
       },
       {

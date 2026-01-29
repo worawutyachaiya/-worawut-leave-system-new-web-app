@@ -227,26 +227,31 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'SECT_NAME',
         header: t('Section'),
+        enableSorting: false,
         size: 140
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
+        enableSorting: false,
         header: t('Employee Code'),
         size: 200
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
+        enableSorting: false,
         header: t('Employee Name'),
         Cell: ({ row }) => row.original.EMPLOYEE_NAME + ' ' + row.original.EMPLOYEE_SURNAME
       },
       {
         accessorKey: 'FLEX_TIME_DESCRIPTION',
+        enableSorting: false,
         header: t('Flex Time Type'),
         size: 200
       },
       {
         accessorKey: 'START_DATE',
         header: t('Start Date'),
+        enableSorting: false,
         size: 180,
         Cell: ({ row }) => {
           const date = row.original.START_DATE || row.original.FLEX_TIME_REQUEST_START_DATE
@@ -256,6 +261,7 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'END_DATE',
         header: t('End Date'),
+        enableSorting: false,
         size: 180,
         Cell: ({ row }) => {
           const date = row.original.END_DATE || row.original.FLEX_TIME_REQUEST_END_DATE
@@ -264,11 +270,13 @@ function FlexTimeApprovalSearchResult() {
       },
       {
         accessorKey: 'REASON',
+        enableSorting: false,
         header: t('Reason'),
         Cell: ({ row }) => row.original.REASON || row.original.DESCRIPTION || '-'
       },
       {
         accessorKey: 'CREATE_DATE',
+        enableSorting: false,
         header: t('Request Date'),
         size: 180,
         Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'

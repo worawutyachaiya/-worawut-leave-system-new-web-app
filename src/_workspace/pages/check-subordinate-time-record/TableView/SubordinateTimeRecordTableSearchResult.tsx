@@ -133,6 +133,7 @@ function SubordinateTimeRecordTableSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
+        enableSorting: false,
         header: t('Employee Code'),
         size: 180
       },

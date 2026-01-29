@@ -47,7 +47,8 @@ function EmployeeLeaveSearchFilters() {
   const { setValue, getValues, control, handleSubmit, watch } = useFormContext<FormDataPage>()
   const { isLoading, isSubmitting } = useFormState({ control })
   const queryClient = useQueryClient()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
+  dayjs.locale(locale === 'th' ? 'th' : 'en')
   const handleClear = () => {
     setValue('searchFilters', {
       employeeCode: null,

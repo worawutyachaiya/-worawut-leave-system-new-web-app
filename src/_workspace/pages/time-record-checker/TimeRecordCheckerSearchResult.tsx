@@ -263,6 +263,7 @@ function TimeRecordCheckerSearchResult() {
     () => [
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
+        enableSorting: false,
         header: t('Status'),
         Cell: ({ row }) => getStatusChip(row.original.LEAVE_REQUEST_STATUS),
         size: 160
@@ -276,6 +277,7 @@ function TimeRecordCheckerSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
+        enableSorting: false,
         header: t('Employee Code'),
         size: 220
       },
@@ -293,11 +295,13 @@ function TimeRecordCheckerSearchResult() {
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
-        header: t('Reason')
+        header: t('Reason'),
+        enableSorting: false
       },
       {
         accessorKey: 'TIME_RECORD_REASON',
-        header: t('Remark')
+        header: t('Remark'),
+        enableSorting: false
       },
 
       {

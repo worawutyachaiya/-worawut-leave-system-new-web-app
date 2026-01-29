@@ -221,14 +221,14 @@ const LeaveTypeSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_TYPE_CODE',
-        header: t('Leave Type Code')
-      },
-      {
-        accessorKey: 'LEAVE_TYPE_CODE',
+        size: 200,
+        enableSorting: false,
+
         header: t('Leave Type Code')
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
+        enableSorting: false,
         header: t('Leave Type Name')
       },
       {
@@ -238,10 +238,12 @@ const LeaveTypeSearchResult = () => {
       {
         accessorKey: 'MODIFIED_DATE',
         header: t('Modified Date'),
+        size: 210,
         Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',
+        size: 190,
         header: t('Modified By')
       }
     ],

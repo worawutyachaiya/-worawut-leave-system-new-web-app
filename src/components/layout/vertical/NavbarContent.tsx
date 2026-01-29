@@ -1,10 +1,14 @@
 // Third-party Imports
 import classnames from 'classnames'
 
+import { useState, useEffect } from 'react'
+
 // Type Imports
+import type { NotificationsType } from '@components/layout/shared/NotificationsDropdown'
 
 // Component Imports
 import { Divider, IconButton, Tooltip, Typography } from '@mui/material'
+import NotificationsDropdown from '@components/layout/shared/NotificationsDropdown'
 
 import useMediaQuery from '@mui/material/useMediaQuery'
 
@@ -18,6 +22,8 @@ import NavToggle from './NavToggle'
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
 import ColorMode from '../shared/ColorMode'
 import ModeScreenFullWidth from '../shared/ScreenFullWidthContainerSwitch'
+import { getUserData } from '@/utils/user-profile/userLoginProfile'
+import { useNotification } from '@/_workspace/react-query/hooks/useNotification'
 
 import { CoolMode } from '@/components/magicui/cool-mode'
 import { ModeDropdownToggler } from '../shared/ModeDropdownSwitch'
@@ -26,6 +32,63 @@ import { useTranslation } from '@/contexts/TranslationContext'
 
 const NavbarContent = () => {
   const { t } = useTranslation()
+  // States
+  const [notifications, setNotifications] = useState<NotificationsType[]>([])
+
+  const userData = getUserData()
+  const { data: result } = useNotification(
+    {
+      EMPLOYEE_ID_REQUEST: userData?.EMPLOYEE_CODE
+    },
+    !!userData?.EMPLOYEE_CODE
+  )
+
+  useEffect(() => {
+    if (result?.data?.ResultOnDb && Array.isArray(result.data.ResultOnDb)) {
+      const rawResult = result.data.ResultOnDb
+      const mappedNotifications: NotificationsType[] = []
+
+      const leaveCount = rawResult[0]?.[0]?.TOTAL_COUNT_LEAVE || 0
+      const flexCount = rawResult[1]?.[0]?.TOTAL_COUNT_FLEX_TIME || 0
+      const timeRecordCount = rawResult[2]?.[0]?.TOTAL_COUNT_TIME_RECORD || 0
+
+      if (leaveCount > 0) {
+        mappedNotifications.push({
+          avatarIcon: 'tabler-calendar-time',
+          title: t('Leave Approval'),
+          badgeContent: leaveCount,
+          read: false,
+          avatarColor: 'primary',
+          path: '/leave-approval'
+        })
+      }
+
+      if (flexCount > 0) {
+        mappedNotifications.push({
+          avatarIcon: 'tabler-clock',
+          title: t('Flex Time Approval'),
+          badgeContent: flexCount,
+          read: false,
+          avatarColor: 'error',
+          path: '/flex-time-approval'
+        })
+      }
+
+      if (timeRecordCount > 0) {
+        mappedNotifications.push({
+          avatarIcon: 'tabler-clipboard-check',
+          title: t('Time Record Approval'),
+          badgeContent: timeRecordCount,
+          read: false,
+          avatarColor: 'warning',
+          path: '/time-record-approval'
+        })
+      }
+
+      setNotifications(mappedNotifications)
+    }
+  }, [result, t])
+
   // Hooks
   const theme = useTheme()
   const belowMdScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -62,6 +125,7 @@ const NavbarContent = () => {
           </>
         )}
         <ColorMode isShowPrimaryPalette={!belowSmScreen} />
+        <NotificationsDropdown notifications={notifications} />
         <UserDropdown />
       </div>
     </div>

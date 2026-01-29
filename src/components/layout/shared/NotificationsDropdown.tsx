@@ -38,11 +38,18 @@ import { useSettings } from '@core/hooks/useSettings'
 // Util Imports
 import { getInitials } from '@/utils/getInitials'
 
+import { useTranslation } from '@/contexts/TranslationContext'
+
+import { useNavigate } from 'react-router'
+
 export type NotificationsType = {
   title: string
-  subtitle: string
-  time: string
-  read: boolean
+  subtitle?: string
+  time?: string
+  read?: boolean
+  badgeContent?: number
+  badgeColor?: ThemeColor
+  path?: string
 } & (
   | {
       avatarImage?: string
@@ -69,10 +76,10 @@ export type NotificationsType = {
 
 const ScrollWrapper = ({ children, hidden }: { children: ReactNode; hidden: boolean }) => {
   if (hidden) {
-    return <div className='overflow-x-hidden bs-full'>{children}</div>
+    return <div className='overflow-x-hidden max-bs-[400px]'>{children}</div>
   } else {
     return (
-      <PerfectScrollbar className='bs-full' options={{ wheelPropagation: false, suppressScrollX: true }}>
+      <PerfectScrollbar className='max-bs-[400px]' options={{ wheelPropagation: false, suppressScrollX: true }}>
         {children}
       </PerfectScrollbar>
     )
@@ -102,13 +109,22 @@ const getAvatar = (
 }
 
 const NotificationDropdown = ({ notifications }: { notifications: NotificationsType[] }) => {
+  const navigate = useNavigate()
+  const { t, locale } = useTranslation()
   // States
   const [open, setOpen] = useState(false)
   const [notificationsState, setNotificationsState] = useState(notifications)
 
   // Vars
-  const notificationCount = notificationsState.filter(notification => !notification.read).length
-  const readAll = notificationsState.every(notification => notification.read)
+  // Calculate total count: if badgeContent exists (summary mode), sum it up. Otherwise count unread items.
+  const notificationCount = notificationsState.reduce((acc, curr) => {
+    if (curr.badgeContent) {
+      return acc + curr.badgeContent
+    }
+    return acc + (!curr.read ? 1 : 0)
+  }, 0)
+
+  // const readAll = notificationsState.every(notification => notification.read)
 
   // Refs
   const anchorRef = useRef<HTMLButtonElement>(null)
@@ -118,6 +134,10 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
   const hidden = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const { settings } = useSettings()
+
+  useEffect(() => {
+    setNotificationsState(notifications)
+  }, [notifications])
 
   const handleClose = () => {
     setOpen(false)
@@ -146,27 +166,14 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
   }
 
   // Read or unread all notifications when read all icon is clicked
-  const readAllNotifications = () => {
-    const newNotifications = [...notificationsState]
+  // const readAllNotifications = () => {
+  //   const newNotifications = [...notificationsState]
 
-    newNotifications.forEach(notification => {
-      notification.read = !readAll
-    })
-    setNotificationsState(newNotifications)
-  }
-
-  useEffect(() => {
-    const adjustPopoverHeight = () => {
-      if (ref.current) {
-        // Calculate available height, subtracting any fixed UI elements' height as necessary
-        const availableHeight = window.innerHeight - 100
-
-        ref.current.style.height = `${Math.min(availableHeight, 550)}px`
-      }
-    }
-
-    window.addEventListener('resize', adjustPopoverHeight)
-  }, [])
+  //   newNotifications.forEach(notification => {
+  //     notification.read = !readAll
+  //   })
+  //   setNotificationsState(newNotifications)
+  // }
 
   return (
     <>
@@ -174,11 +181,18 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
         <Badge
           color='error'
           className='cursor-pointer'
-          variant='dot'
-          overlap='circular'
           invisible={notificationCount === 0}
+          badgeContent={notificationCount}
           sx={{
-            '& .MuiBadge-dot': { top: 6, right: 5, boxShadow: 'var(--mui-palette-background-paper) 0px 0px 0px 2px' }
+            '& .MuiBadge-badge': {
+              // top: 0,
+              // right: 0,
+              boxShadow: '0 0 0 2px var(--mui-palette-background-paper)',
+              minWidth: '18px',
+              height: '18px',
+              fontSize: '0.75rem',
+              padding: '0 4px'
+            }
           }}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         >
@@ -194,7 +208,7 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
         anchorEl={anchorRef.current}
         {...(isSmallScreen
           ? {
-              className: 'is-full !mbs-3 z-[1] max-bs-[550px] bs-[550px]',
+              className: 'is-full !mbs-3 z-[1] max-bs-[550px]',
               modifiers: [
                 {
                   name: 'preventOverflow',
@@ -204,21 +218,21 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
                 }
               ]
             }
-          : { className: 'is-96 !mbs-3 z-[1] max-bs-[550px] bs-[550px]' })}
+          : { className: 'is-96 !mbs-3 z-[1] max-bs-[550px]' })}
       >
         {({ TransitionProps, placement }) => (
           <Fade {...TransitionProps} style={{ transformOrigin: placement === 'bottom-end' ? 'right top' : 'left top' }}>
-            <Paper className={classnames('bs-full', settings.skin === 'bordered' ? 'border shadow-none' : 'shadow-lg')}>
+            <Paper className={classnames(settings.skin === 'bordered' ? 'border shadow-none' : 'shadow-lg')}>
               <ClickAwayListener onClickAway={handleClose}>
-                <div className='bs-full flex flex-col'>
+                <div className='flex flex-col'>
                   <div className='flex items-center justify-between plb-3.5 pli-4 is-full gap-2'>
                     <Typography variant='h6' className='flex-auto'>
-                      Notifications
+                      {t('Notification')}
                     </Typography>
                     {notificationCount > 0 && (
-                      <Chip size='small' variant='tonal' color='primary' label={`${notificationCount} New`} />
+                      <Chip size='small' variant='tonal' color='primary' label={`${notificationCount} ${t('New')}`} />
                     )}
-                    <Tooltip
+                    {/* <Tooltip
                       title={readAll ? 'Mark all as unread' : 'Mark all as read'}
                       placement={placement === 'bottom-end' ? 'left' : 'right'}
                       slotProps={{
@@ -239,7 +253,7 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
                       ) : (
                         <></>
                       )}
-                    </Tooltip>
+                    </Tooltip> */}
                   </div>
                   <Divider />
                   <ScrollWrapper hidden={hidden}>
@@ -253,7 +267,9 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
                         avatarIcon,
                         avatarText,
                         avatarColor,
-                        avatarSkin
+                        avatarSkin,
+                        badgeContent,
+                        badgeColor
                       } = notification
 
                       return (
@@ -262,44 +278,67 @@ const NotificationDropdown = ({ notifications }: { notifications: NotificationsT
                           className={classnames('flex plb-3 pli-4 gap-3 cursor-pointer hover:bg-actionHover group', {
                             'border-be': index !== notificationsState.length - 1
                           })}
-                          onClick={e => handleReadNotification(e, true, index)}
+                          onClick={() => {
+                            navigate(`/${locale}/${notification?.path}`)
+                            setOpen(false)
+                          }}
                         >
                           {getAvatar({ avatarImage, avatarIcon, title, avatarText, avatarColor, avatarSkin })}
-                          <div className='flex flex-col flex-auto'>
+                          <div className='flex flex-col flex-auto justify-center'>
                             <Typography variant='body2' className='font-medium mbe-1' color='text.primary'>
                               {title}
                             </Typography>
-                            <Typography variant='caption' color='text.secondary' className='mbe-2'>
-                              {subtitle}
-                            </Typography>
-                            <Typography variant='caption' color='text.disabled'>
-                              {time}
-                            </Typography>
+                            {/* {subtitle && (
+                              <Typography variant='caption' color='text.secondary' className='mbe-2'>
+                                {subtitle}
+                              </Typography>
+                            )}
+                            {time && (
+                              <Typography variant='caption' color='text.disabled'>
+                                {time}
+                              </Typography>
+                            )} */}
                           </div>
-                          <div className='flex flex-col items-end gap-2'>
-                            <Badge
-                              variant='dot'
-                              color={read ? 'secondary' : 'primary'}
-                              onClick={e => handleReadNotification(e, !read, index)}
-                              className={classnames('mbs-1 mie-1', {
-                                'invisible group-hover:visible': read
-                              })}
-                            />
-                            <i
-                              className='tabler-x text-xl invisible group-hover:visible'
-                              onClick={e => handleRemoveNotification(e, index)}
-                            />
+                          <div className='flex flex-col items-end gap-2 justify-center'>
+                            {badgeContent ? (
+                              <Chip
+                                label={badgeContent}
+                                color={badgeColor || 'error'}
+                                size='small'
+                                sx={{
+                                  borderRadius: '45%',
+                                  height: 18,
+                                  fontSize: '0.75rem',
+                                  '& .MuiChip-label': { px: 1.5 }
+                                }}
+                              />
+                            ) : (
+                              <>
+                                <Badge
+                                  variant='dot'
+                                  color={read ? 'secondary' : 'primary'}
+                                  onClick={e => handleReadNotification(e, !read, index)}
+                                  className={classnames('mbs-1 mie-1', {
+                                    'invisible group-hover:visible': read
+                                  })}
+                                />
+                                <i
+                                  className='tabler-x text-xl invisible group-hover:visible'
+                                  onClick={e => handleRemoveNotification(e, index)}
+                                />
+                              </>
+                            )}
                           </div>
                         </div>
                       )
                     })}
                   </ScrollWrapper>
-                  <Divider />
+                  {/* <Divider />
                   <div className='p-4'>
                     <Button fullWidth variant='contained' size='small'>
                       View All Notifications
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
               </ClickAwayListener>
             </Paper>

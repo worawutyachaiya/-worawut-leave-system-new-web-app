@@ -224,24 +224,32 @@ const DocumentSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_REGULARITY_NAME',
-        header: t('Document Name')
+        enableSorting: false,
+        header: t('Document Name'),
+        size: 200
       },
       {
         accessorKey: 'LEAVE_REGULARITY_FILE_NAME',
+        enableSorting: false,
+
         header: t('Document File Name')
       },
       {
         accessorKey: 'DESCRIPTION',
+        enableSorting: false,
+
         header: t('Description')
       },
       {
         accessorKey: 'MODIFIED',
         header: t('Modified'),
+        size: 200,
         Cell: ({ row }) => dayjs(row.original.MODIFIED).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',
-        header: t('Modified By')
+        header: t('Modified By'),
+        size: 200
       }
     ],
     [t]
