@@ -135,8 +135,10 @@ const EmployeeLeaveSearchResultTable = () => {
   const columns = useMemo<MRT_ColumnDef<EmployeeLeaveInterface>[]>(
     () => [
       {
+        size: 280,
         accessorKey: 'LEAVE_REQUEST_START_DATE',
         header: t('Leave Request Start Date'),
+        enableSorting: false,
         Cell: ({ row }) => {
           const startDate = row.original?.LEAVE_REQUEST_START_DATE
           const endDate = row.original?.LEAVE_REQUEST_END_DATE
@@ -152,25 +154,30 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 180
+        size: 200,
+        enableSorting: false
       },
       {
         accessorKey: 'FULL_NAME',
-        header: t('Full Name')
+        header: t('Full Name'),
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
         header: t('Employee Section'),
-        size: 140
+        size: 140,
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_DEPT',
         header: t('Employee Dept'),
-        size: 170
+        size: 170,
+        enableSorting: false
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
         header: t('Leave Type'),
+        enableSorting: false,
         Cell: ({ row }) => {
           const desc =
             (row.original as any).LEAVE_TYPE_DESCRIPTION_EN || (row.original as any).LEAVE_TYPE_DESCRIPTION_TH || ''
@@ -181,6 +188,7 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
         header: t('Time'),
+        enableSorting: false,
         size: 150
       }
     ],

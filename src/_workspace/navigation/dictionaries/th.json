@@ -1,4 +1,6 @@
 {
+  "New": "ใหม่",
+  "Notification": "การแจ้งเตือน",
   "{selectedCount} of {rowCount} row(s) selected": "{selectedCount} ของ {rowCount} แถว ที่เลือกแล้ว",
   "Clear selection": "ล้างการเลือกทั้งหมด",
   "OK": "ตกลง",

@@ -144,12 +144,14 @@ function SubordinateSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
+        enableSorting: false,
         header: t('Employee Code'),
         size: 200
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
+        enableSorting: false,
         Cell: ({ row }) => {
           const name = `${row.original.EMPLOYEE_NAME || ''} ${row.original.EMPLOYEE_SURNAME || ''}`
           return name.trim() || '-'

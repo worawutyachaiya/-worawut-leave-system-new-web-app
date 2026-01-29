@@ -239,6 +239,7 @@ const UserProbationSearchResult = () => {
       {
         accessorKey: 'EMPLOYEE_START_WORK',
         header: t('Start Work'),
+        enableSorting: false,
         size: 200,
         Cell: ({ row }) => {
           return dayjs(row.original.EMPLOYEE_START_WORK).format('DD-MMM-YYYY')
@@ -247,6 +248,7 @@ const UserProbationSearchResult = () => {
       {
         accessorKey: 'PASS_PRD_DATE',
         header: t('Pass Pro Date'),
+        enableSorting: false,
         Cell: ({ row }) => {
           const date = row.original?.PASS_PRD_DATE
           return date ? (
@@ -267,23 +269,28 @@ const UserProbationSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
+        enableSorting: false,
         header: t('Employee Code'),
         size: 220
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
+        enableSorting: false,
         header: t('First Name')
       },
       {
         accessorKey: 'EMPLOYEE_SURNAME',
+        enableSorting: false,
         header: t('Surname')
       },
       {
         accessorKey: 'EMPLOYEE_DEPT',
+        enableSorting: false,
         header: t('Department')
       },
       {
         accessorKey: 'EMPLOYEE_SECTION',
+        enableSorting: false,
         header: t('Section')
       }
     ],

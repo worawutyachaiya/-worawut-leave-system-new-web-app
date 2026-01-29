@@ -105,6 +105,7 @@ function SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
         header: 'Status',
+        enableSorting: false,
         size: 155,
         Cell: ({ cell, row }) => {
           if (row.original.INUSE === 0 || row.original.INUSE === '0') {

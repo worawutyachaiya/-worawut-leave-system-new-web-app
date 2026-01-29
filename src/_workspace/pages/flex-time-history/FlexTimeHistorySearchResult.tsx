@@ -180,6 +180,7 @@ function FlexTimeHistorySearchResult() {
       {
         accessorKey: 'FLEX_TIME_DATE_RANGE',
         header: t('Flex Time Date'),
+        size: 200,
         enableSorting: false,
         Cell: ({ row }) => {
           const startDate = row.original.FLEX_TIME_REQUEST_START_DATE || row.original.START_DATE
@@ -192,16 +193,19 @@ function FlexTimeHistorySearchResult() {
       },
       {
         accessorKey: 'CREATE_DATE',
+        size: 280,
         header: t('Request Flex Time Date'),
         Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_DATE',
+        size: 200,
         header: t('Update Date'),
         Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',
+        size: 200,
         header: t('Update By')
       }
     ],

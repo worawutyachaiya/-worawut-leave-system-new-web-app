@@ -280,6 +280,7 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
+        enableSorting: false,
         size: 180
       },
 
@@ -304,6 +305,8 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
+        enableSorting: false,
+
         Cell: ({ row }) => {
           return row.original.EMPLOYEE_NAME + ' ' + row.original.EMPLOYEE_SURNAME
         }
@@ -311,11 +314,15 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'EMPLOYEE_SECTION', // Changed from SECTION_NAME to match SQL Alias
         header: t('Section'),
+        enableSorting: false,
+
         size: 150
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH', // Changed from _EN to _TH as per SQL/Interface or both if available
         header: t('Leave Type'),
+        enableSorting: false,
+
         size: 180
       },
       {
@@ -341,6 +348,8 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_TIME', // Changed from LEAVE_TIME
         header: t('Time'),
+        enableSorting: false,
+
         size: 150
       },
       {
@@ -355,6 +364,8 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_REASON', // Changed from REASON
         header: t('Reason'),
+        enableSorting: false,
+
         size: 200
       },
       {

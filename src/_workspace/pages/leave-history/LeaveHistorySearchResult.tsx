@@ -114,6 +114,7 @@ function SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_STATUS',
         header: t('Status'),
+        enableSorting: false,
         size: 155,
         Cell: ({ cell, row }) => {
           if (row.original.INUSE === 0 || row.original.INUSE === '0') {
@@ -174,12 +175,14 @@ function SearchResult() {
       {
         accessorKey: 'LEAVE_TYPE_CODE',
         header: t('Leave Code'),
-        size: 210
+        size: 200,
+        enableSorting: false
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_TH',
         header: t('Leave Type'),
-        size: 190
+        size: 190,
+        enableSorting: false
       },
       {
         accessorKey: 'CREATE_DATE',
@@ -192,6 +195,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
+        enableSorting: false,
         header: t('Leave Date'),
         Cell: ({ row }) => {
           return (

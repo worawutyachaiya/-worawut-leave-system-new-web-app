@@ -103,10 +103,12 @@ function SearchResult() {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 220
+        size: 220,
+        enableSorting: false
       },
       {
         id: 'EMPLOYEE_FULL_NAME',
+        enableSorting: false,
         header: t('Employee Name'),
         accessorFn: row => `${row.EMPLOYEE_NAME || ''}${row.EMPLOYEE_SURNAME ? ' ' + row.EMPLOYEE_SURNAME : ''}`,
         size: 350
@@ -114,12 +116,15 @@ function SearchResult() {
       {
         accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
-        size: 200
+        size: 160,
+        enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_START_WORK',
+        // enableSorting: false,
+
         header: t('Start Work'),
-        size: 250,
+        size: 200,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
           return value ? dayjs(value).format('DD-MMM-YYYY') : '-'
@@ -128,7 +133,8 @@ function SearchResult() {
       {
         accessorKey: 'REMAIN_AL',
         header: t('AL Available'),
-        size: 250,
+        enableSorting: false,
+
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ cell }) => {
           const v = cell.getValue<any>()
@@ -137,8 +143,9 @@ function SearchResult() {
       },
       {
         accessorKey: 'REMAIN_AL_EMERGENCY',
+        enableSorting: false,
+
         header: t('AL Emergency Remaining'),
-        size: 300,
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ cell }) => {
           const v = cell.getValue<any>()

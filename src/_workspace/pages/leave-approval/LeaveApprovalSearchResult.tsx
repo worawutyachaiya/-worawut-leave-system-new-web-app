@@ -190,12 +190,15 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
+        enableSorting: false,
+
         size: 200
       },
       {
-        enableColumnOrdering: true,
         accessorKey: 'EMPLOYEE_NAME',
         header: t('Employee Name'),
+        enableSorting: false,
+
         Cell: ({ row }) => {
           const name = (row.original as any).EMPLOYEE_NAME + ' ' + (row.original as any).EMPLOYEE_SURNAME || '-'
           return name
@@ -204,11 +207,15 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
+        enableSorting: false,
+
         size: 160
       },
       {
         accessorKey: 'LEAVE_TYPE_DESCRIPTION_EN',
         header: t('Leave Type'),
+        enableSorting: false,
+
         size: 180,
         Cell: ({ row }) => {
           const desc =
@@ -228,6 +235,8 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'LEAVE_REQUEST_START_DATE',
         header: t('Leave Date'),
+        enableSorting: false,
+
         size: 240,
         Cell: ({ row }) => {
           const startDate = row.original?.LEAVE_REQUEST_START_DATE
@@ -244,17 +253,23 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'LEAVE_REQUEST_TIME',
         header: t('Time'),
+        enableSorting: false,
+
         size: 140
       },
       {
         accessorKey: 'TOTAL_LEAVE_DAY',
         header: t('Total Day'),
+        enableSorting: false,
+
         size: 160,
         Cell: ({ row }) => (row.original as any).LEAVE_REQUEST_TOTAL_DAY || '-'
       },
       {
         accessorKey: 'ATTACHMENT',
         header: t('Attachment'),
+        enableSorting: false,
+
         size: 200,
         muiTableBodyCellProps: {
           align: 'center'
@@ -271,12 +286,15 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         accessorKey: 'LEAVE_REQUEST_REMARK',
         header: t('Remark'),
+        enableSorting: false,
+
         Cell: ({ row }) => (row.original as any).REMARK || '-'
       },
       {
         accessorKey: 'STATUS',
         header: t('Approval'),
         enableSorting: false,
+
         size: 130,
         muiTableBodyCellProps: {
           align: 'center'
@@ -303,6 +321,8 @@ const EmployeeLeaveSearchResultTable = () => {
       {
         id: 'actions',
         header: t('Employee Detail'),
+        enableSorting: false,
+
         size: 180,
         muiTableBodyCellProps: {
           align: 'center'
