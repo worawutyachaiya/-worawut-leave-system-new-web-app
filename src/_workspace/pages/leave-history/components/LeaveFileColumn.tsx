@@ -55,7 +55,7 @@ const LeaveFileColumn = ({
     return (
       <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
         {/* ปุ่มดาวน์โหลด */}
-        <Tooltip title={`Download: ${fileName}`}>
+        <Tooltip title={t(`Download:`) + fileName}>
           <Button
             variant='contained'
             color='success'
@@ -69,7 +69,7 @@ const LeaveFileColumn = ({
         </Tooltip>
         {/* ปุ่มอัพโหลดใหม่ */}
         {showUploadButton && onClickUpload && (
-          <Tooltip title='Upload new file'>
+          <Tooltip title={t('Upload new file')}>
             <Button variant='tonal' color='warning' size={size} onClick={onClickUpload} startIcon={<UploadIcon />}>
               {size === 'small' ? t('New') : t('Upload New')}
             </Button>
@@ -81,7 +81,7 @@ const LeaveFileColumn = ({
   return (
     <Box>
       {showUploadButton && onClickUpload ? (
-        <Tooltip title='Upload file'>
+        <Tooltip title={t('Upload file')}>
           <Button variant='tonal' color='warning' size={size} onClick={onClickUpload} startIcon={<UploadIcon />}>
             {t('Upload')}
           </Button>

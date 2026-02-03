@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { Card, Box, useMediaQuery } from '@mui/material'
 import type { Theme } from '@mui/material/styles'
 import FullCalendar from '@fullcalendar/react'
@@ -7,7 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import AppFullCalendar from '@/libs/styles/AppFullCalendar'
-import FlexTimeSidebarLeft from './FlexTimeSidebarLeft'
+import FlexTimeSidebarLeft, { type CalendarFilterType, calendarsColor } from './FlexTimeSidebarLeft'
 import FlexTimeRequestFormDialog from './modal/FlexTimeRequestFormDialog'
 import { useGetFlexTimeByEmployeeId } from '@/_workspace/react-query/hooks/useFlexTime'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
@@ -25,6 +25,12 @@ const FlexTimeRequestCalendar = () => {
   const [openForm, setOpenForm] = useState(false)
   const [selectedDate, setSelectedDate] = useState<string>('')
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false)
+
+  //set filter calendar default to all
+  const [selectedCalendars, setSelectedCalendars] = useState<CalendarFilterType[]>(
+    Object.keys(calendarsColor) as CalendarFilterType[]
+  )
+
   const [calendarApi, setCalendarApi] = useState<any>(null)
   const mdAbove = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
   const calendarRef = useRef<any>(null)
@@ -39,23 +45,60 @@ const FlexTimeRequestCalendar = () => {
     startDate: dates.startDate,
     endDate: dates.endDate
   })
-  const events = (calendarData?.data?.ResultOnDb || []).map((item: any) => {
-    const isHoliday = item.title?.toLowerCase().includes('holiday', 'วันหยุดบริษัท', 'วันหยุดนักขัตฤกษ์')
-    return {
-      id: item.id?.toString() || `${item.title}-${item.start}`,
-      title: t(item.title || 'Leave'),
-      start: item.start,
-      end: item.end,
-      allDay: true,
-      extendedProps: { ...item },
-      classNames: isHoliday ? ['event-bg-error'] : ['event-bg-primary']
+
+  const getCalendarType = (title: string): CalendarFilterType => {
+    const lowerTitle = title?.toLowerCase() || ''
+    if (
+      lowerTitle.includes('holiday') ||
+      lowerTitle.includes('วันหยุดบริษัท') ||
+      lowerTitle.includes('วันหยุดนักขัตฤกษ์')
+    ) {
+      return 'Holiday'
     }
-  })
+    return 'Flex Time'
+  }
+
+  // Map and filter events based on selectedCalendars
+  const events = useMemo(() => {
+    const allEvents = (calendarData?.data?.ResultOnDb || []).map((item: any) => {
+      const calendarType = getCalendarType(item.title)
+      return {
+        id: item.id?.toString() || `${item.title}-${item.start}`,
+        title: t(item.title || 'Leave'),
+        start: item.start,
+        end: item.end,
+        allDay: true,
+        extendedProps: { ...item, calendarType },
+        classNames: calendarType === 'Holiday' ? ['event-bg-error'] : ['event-bg-primary']
+      }
+    })
+
+    // Filter events based on selected calendars
+    return allEvents.filter((event: any) => selectedCalendars.includes(event.extendedProps.calendarType))
+  }, [calendarData, selectedCalendars, t])
+
   console.log(events)
   const handleLeftSidebarToggle = () => setLeftSidebarOpen(!leftSidebarOpen)
   const handleAddEventClick = () => {
     setSelectedDate(dayjs().format('YYYY-MM-DD'))
     setOpenForm(true)
+  }
+
+  // Filter handlers
+  const handleFilterChange = (filter: CalendarFilterType) => {
+    if (selectedCalendars.includes(filter)) {
+      setSelectedCalendars(selectedCalendars.filter(cal => cal !== filter))
+    } else {
+      setSelectedCalendars([...selectedCalendars, filter])
+    }
+  }
+
+  const handleFilterAllChange = (checked: boolean) => {
+    if (checked) {
+      setSelectedCalendars(Object.keys(calendarsColor) as CalendarFilterType[])
+    } else {
+      setSelectedCalendars([])
+    }
   }
   const handleDateClick = (arg: any) => {
     const clickedDate = dayjs(arg.dateStr)
@@ -106,6 +149,9 @@ const FlexTimeRequestCalendar = () => {
             handleLeftSidebarToggle={handleLeftSidebarToggle}
             handleAddEventClick={handleAddEventClick}
             calendarApi={calendarRef.current?.getApi()}
+            selectedCalendars={selectedCalendars}
+            onFilterChange={handleFilterChange}
+            onFilterAllChange={handleFilterAllChange}
           />
           {/* Calendar */}
           <Box

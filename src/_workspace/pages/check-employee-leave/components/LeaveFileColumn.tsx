@@ -44,7 +44,7 @@ const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColum
   if (filePath && fileName) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Tooltip title={`Download File: ${fileName}`}>
+        <Tooltip title={t('Download:') + fileName}>
           <Button
             variant='contained'
             color='success'
@@ -61,7 +61,7 @@ const LeaveFileColumn = ({ fileName, filePath, size = 'medium' }: LeaveFileColum
   }
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Tooltip title='No File Uploaded'>
+      <Tooltip title={t('No File Uploaded')}>
         <Box component='span'>
           <Button variant='tonal' color='warning' size={size} disabled startIcon={<InsertDriveFileIcon />}>
             {t('No File')}
