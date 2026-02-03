@@ -195,7 +195,6 @@ function LeaveRequestForm() {
   const queryClient = useQueryClient()
 
   // Hooks
-  // Hooks : react-hook-form
   const { setValue, getValues, control, handleSubmit, watch, reset } = useFormContext<FormDataPage>()
 
   // Watch values for time leave options
@@ -612,10 +611,10 @@ function LeaveRequestForm() {
                                         color: 'text.primary',
                                         boxShadow: 6,
                                         borderRadius: 2,
-                                        maxWidth: 450,
-                                        '& .MuiTooltip-arrow': {
-                                          color: 'background.paper'
-                                        }
+                                        maxWidth: 450
+                                        // '& .MuiTooltip-arrow': {
+                                        //   color: 'background.paper'
+                                        // }
                                       }
                                     }
                                   }}
@@ -714,10 +713,10 @@ function LeaveRequestForm() {
                                         color: 'text.primary',
                                         boxShadow: 6,
                                         borderRadius: 2,
-                                        maxWidth: 550,
-                                        '& .MuiTooltip-arrow': {
-                                          color: 'background.paper'
-                                        }
+                                        maxWidth: 550
+                                        // '& .MuiTooltip-arrow': {
+                                        //   color: 'background.paper'
+                                        // }
                                       }
                                     }
                                   }}

@@ -1,4 +1,11 @@
 {
+  "Event Filters": "ตัวกรองกิจกรรม",
+  "Flex Time": "หยืดหยุ่นเวลาทำงาน",
+  "Holiday": "วันหยุด",
+  "No File Uploaded": "ไม่พบไฟล์",
+  "Upload file": "อัพโหลดไฟล์",
+  "Upload new file": "อัพโหลดไฟล์ใหม่",
+  "Download:": "ดาวน์โหลด: ",
   "New": "ใหม่",
   "Notification": "การแจ้งเตือน",
   "{selectedCount} of {rowCount} row(s) selected": "{selectedCount} ของ {rowCount} แถว ที่เลือกแล้ว",
