@@ -156,7 +156,7 @@ function EditUserFlexTimeSearchResult() {
         item.EMPLOYEE_FULL_NAME || `${item.EMPLOYEE_NAME || ''} ${item.EMPLOYEE_SURNAME || ''}`.trim(),
       LEAVE_DATE_RANGE:
         item.LEAVE_DATE_RANGE ||
-        `${dayjs(item.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')} ถึง ${dayjs(item.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY')}`
+        `${dayjs(item.FLEX_TIME_REQUEST_START_DATE).format('DD MMM YYYY')} ถึง ${dayjs(item.FLEX_TIME_REQUEST_END_DATE).format('DD MMM YYYY')}`
     }))
   }, [data])
 
@@ -233,7 +233,7 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Flex Time Date'),
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-',
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY') || '-',
         size: 250
       },
       {
@@ -258,7 +258,7 @@ function EditUserFlexTimeSearchResult() {
         header: t('Leave Date'),
         enableSorting: false,
         Cell: ({ row }) =>
-          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')} ${t('to')} ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY')}` ||
+          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD MMM YYYY')} ${t('to')} ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD MMM YYYY')}` ||
           '-'
       },
       {
@@ -277,7 +277,7 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Modified'),
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-',
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY') || '-',
         enableSorting: true,
         size: 180
       },

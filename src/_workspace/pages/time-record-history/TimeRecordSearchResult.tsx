@@ -149,7 +149,7 @@ function SearchResult() {
         header: t('Request Date'),
         size: 205,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {
@@ -158,7 +158,7 @@ function SearchResult() {
         size: 180,
         enableSorting: false,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {
@@ -167,7 +167,7 @@ function SearchResult() {
         size: 200,
         enableSorting: false,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {
@@ -185,7 +185,7 @@ function SearchResult() {
         header: t('Update Date'),
         size: 195,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {

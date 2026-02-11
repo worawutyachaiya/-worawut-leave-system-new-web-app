@@ -186,8 +186,8 @@ function FlexTimeHistorySearchResult() {
           const startDate = row.original.FLEX_TIME_REQUEST_START_DATE || row.original.START_DATE
           const endDate = row.original.FLEX_TIME_REQUEST_END_DATE || row.original.END_DATE
           if (!startDate || !endDate) return '-'
-          const start = dayjs(startDate).format('DD-MMM-YYYY')
-          const end = dayjs(endDate).format('DD-MMM-YYYY')
+          const start = dayjs(startDate).format('DD MMM YYYY')
+          const end = dayjs(endDate).format('DD MMM YYYY')
           return start === end ? start : `${start} - ${end}`
         }
       },
@@ -195,13 +195,13 @@ function FlexTimeHistorySearchResult() {
         accessorKey: 'CREATE_DATE',
         size: 280,
         header: t('Request Flex Time Date'),
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_DATE',
         size: 200,
         header: t('Update Date'),
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

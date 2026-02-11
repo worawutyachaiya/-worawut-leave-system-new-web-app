@@ -184,7 +184,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
               <CustomTextField
                 fullWidth
                 label={t('Start Work')}
-                value={dayjs(selectedEmployee.EMPLOYEE_START_WORK).format('DD-MMM-YYYY')}
+                value={dayjs(selectedEmployee.EMPLOYEE_START_WORK).format('DD MMM YYYY')}
                 InputProps={{
                   readOnly: true
                 }}
@@ -210,7 +210,7 @@ const EditPassProModal = ({ open, onClose, selectedEmployee, onSave }: EditPassP
                         helperText={t((errors.passProDate?.message as string) || '')}
                       />
                     }
-                    dateFormat={dayjs().format('DD-MMM-YYYY')}
+                    dateFormat={dayjs().format('DD MMM YYYY')}
                   />
                 )}
               />

@@ -158,21 +158,21 @@ function SubordinateTimeRecordTableSearchResult() {
         accessorKey: 'CREATE_DATE',
         header: t('Request Leave Date'),
         size: 230,
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'IN_TIME',
         header: t('in time'),
         size: 220,
         enableSorting: false,
-        Cell: ({ row }) => dayjs(row.original.IN_TIME).format('DD-MMM-YYYY HH:mm') || '-'
+        Cell: ({ row }) => dayjs(row.original.IN_TIME).format('DD MMM YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'OUT_TIME',
         header: t('out time'),
         size: 220,
         enableSorting: false,
-        Cell: ({ row }) => dayjs(row.original.OUT_TIME).format('DD-MMM-YYYY HH:mm') || '-'
+        Cell: ({ row }) => dayjs(row.original.OUT_TIME).format('DD MMM YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'TIME_RECORD_TYPE_DESCRIPTION',
@@ -190,7 +190,7 @@ function SubordinateTimeRecordTableSearchResult() {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
         size: 200,
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'UPDATE_BY',

@@ -33,7 +33,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 // Third-party Imports
 import { useDropzone } from 'react-dropzone'
-import dayjs from 'dayjs'
+import dayjs, { locale } from 'dayjs'
 
 // Hooks Imports
 import { useLeaveTypeMaxDay } from '@/_workspace/react-query/hooks/useLeaveTypeMaxDay'
@@ -78,6 +78,8 @@ import {
   oneDayTimeLeaveArrWithFlexTimeTypeFaster,
   oneDayTimeLeaveArrWithFlexTimeTypeSlower
 } from '../leave-request/timeLeaveOptions'
+
+import {th, enGB} from 'date-fns/locale'
 
 function RequestLeaveFormHr() {
   // States
@@ -233,7 +235,7 @@ function RequestLeaveFormHr() {
   }
 
   // Translation helper
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
 
   // Dropzone configuration
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -473,6 +475,8 @@ function RequestLeaveFormHr() {
                 control={control}
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <AppReactDatepicker
+                    dateFormat={'dd MMM YYYY'}
+                    locale={locale === 'th' ? th : enGB}
                     selected={value ? new Date(value) : null}
                     onChange={(date: Date | null) => {
                       onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
@@ -486,7 +490,8 @@ function RequestLeaveFormHr() {
                     autoComplete='off'
                     customInput={
                       <CustomTextField
-                        label={`${t('Start Date')}${currentMaxDay > 0 ? ` (Available ${currentMaxDay} Days)` : ''}`}
+                        // label={`${t('Start Date')}${currentMaxDay > 0 ? ` (Available ${currentMaxDay} Days)` : ''}`}
+                        label={`${t('Start Date')}`}
                         fullWidth
                         error={!!error}
                         helperText={error?.message}
@@ -504,6 +509,8 @@ function RequestLeaveFormHr() {
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <AppReactDatepicker
                     autoComplete='off'
+                    dateFormat={'dd MMM YYYY'}
+                    locale={locale === 'th' ? th : enGB}
                     selected={value ? new Date(value) : null}
                     onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     placeholderText={t('Select Date')}

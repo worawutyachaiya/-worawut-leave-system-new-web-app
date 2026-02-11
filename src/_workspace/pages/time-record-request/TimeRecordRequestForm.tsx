@@ -16,9 +16,10 @@ import { FormDataPage } from './validationSchema'
 import type { TimeRecordTypeI } from '@/_workspace/types/time-record/TimeRecordInterface'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
 import { useTranslation } from '@/contexts/TranslationContext'
+import {th, enGB} from 'date-fns/locale'
 
 function TimeRecordRequestForm() {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
 
   const [resultModal, setResultModal] = useState({
     open: false,
@@ -177,11 +178,12 @@ function TimeRecordRequestForm() {
                     render={({ field: { value, onChange } }) => (
                       <AppReactDatepicker
                         autoComplete='off'
+                        locale={locale === 'th' ? th : enGB}
                         selected={value ? new Date(value) : null}
                         openToDate={value ? new Date(value) : dayjs().set('hour', 8).set('minute', 30).toDate()}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')}
                         placeholderText={t('Choose a date')}
-                        dateFormat='dd-MMM-yyyy'
+                        dateFormat='dd MMM yyyy'
                         customInput={
                           <CustomTextField
                             fullWidth
@@ -247,10 +249,11 @@ function TimeRecordRequestForm() {
                     render={({ field: { value, onChange } }) => (
                       <AppReactDatepicker
                         autoComplete='off'
+                        locale={locale === 'th' ? th : enGB}
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')}
                         placeholderText={t('Choose a date')}
-                        dateFormat='dd-MMM-yyyy'
+                        dateFormat='dd MMM yyyy'
                         customInput={
                           <CustomTextField
                             fullWidth

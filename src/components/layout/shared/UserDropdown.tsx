@@ -29,7 +29,7 @@ import { useSettings } from '@core/hooks/useSettings'
 import { getLocalizedUrl } from '@/utils/i18n'
 import { deleteUserDataInCookies, getUserData } from '@/utils/user-profile/userLoginProfile'
 import { UserProps } from '@/utils/types/UserType'
-import { ImageEmployeeFromURL } from '@/libs/react-query/hooks/common-system/useImageData'
+import LeaveEmployeeInformationService from '@/_workspace/services/leave-employee-information/LeaveEmployeeInformationService'
 import { useNavigate } from 'react-router'
 
 const UserDropdown = () => {
@@ -46,7 +46,24 @@ const UserDropdown = () => {
   useEffect(() => {
     const dataItem = getUserData()
     setUserData(dataItem)
-    ImageEmployeeFromURL(dataItem?.EMPLOYEE_CODE ?? '', setSmall, setLarge)
+    const employeeCode = dataItem?.EMPLOYEE_CODE ?? ''
+    if (employeeCode) {
+      LeaveEmployeeInformationService.getImageFromUrl({ URL_PATH: employeeCode })
+        .then(responseJson => {
+          if (responseJson?.data?.Status === false) {
+            setSmall('')
+            setLarge('')
+          } else {
+            const imageUrl = URL.createObjectURL(responseJson.data)
+            setSmall(imageUrl)
+            setLarge(imageUrl)
+          }
+        })
+        .catch(() => {
+          setSmall('')
+          setLarge('')
+        })
+    }
   }, [])
 
   // Refs

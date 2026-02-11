@@ -244,7 +244,7 @@ const DocumentSearchResult = () => {
         accessorKey: 'MODIFIED',
         header: t('Modified'),
         size: 200,
-        Cell: ({ row }) => dayjs(row.original.MODIFIED).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.MODIFIED).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

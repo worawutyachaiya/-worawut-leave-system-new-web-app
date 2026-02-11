@@ -32,11 +32,6 @@ import HrCheckM75ConfirmModal from './modal/HrCheckM75ConfirmModal'
 import HrCheckM75ExportModal from './modal/HrCheckM75ExportModal'
 import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessage'
 
-// Helper functions
-const formatDate = (date: string | null | undefined) => {
-  if (!date) return '-'
-  return dayjs(date).format('DD/MM/YYYY')
-}
 
 const statusApprove: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
   0: { label: 'Pending', color: 'warning' },
@@ -329,7 +324,7 @@ function HrcheckM75SearchResult() {
         accessorKey: 'LEAVE_REQUEST_START_DATE', // Changed from REQUEST_LEAVE_DATE
         header: t('Request Leave Date'),
         size: 230,
-        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format('DD-MMM-YYYY')
+        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format('DD MMM YYYY')
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
@@ -340,8 +335,8 @@ function HrcheckM75SearchResult() {
           const startDate = row.original.LEAVE_REQUEST_START_DATE
           const endDate = row.original.LEAVE_REQUEST_END_DATE
           if (!startDate) return '-'
-          const formattedStart = dayjs(startDate).format('DD-MMM-YYYY')
-          const formattedEnd = endDate ? dayjs(endDate).format('DD-MMM-YYYY') : formattedStart
+          const formattedStart = dayjs(startDate).format('DD MMM YYYY')
+          const formattedEnd = endDate ? dayjs(endDate).format('DD MMM YYYY') : formattedStart
           return `${formattedStart} ${t('to')} ${formattedEnd}`
         }
       },
@@ -372,7 +367,7 @@ function HrcheckM75SearchResult() {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
         size: 170,
-        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format('DD-MMM-YYYY')
+        Cell: ({ cell }) => dayjs(cell.getValue<string>()).format('DD MMM YYYY')
       },
       {
         accessorKey: 'UPDATE_BY',

@@ -26,6 +26,8 @@ import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveTyp
 import { useTranslation } from '@/contexts/TranslationContext'
 import { MENU_ID } from './env'
 import type { FormDataPage } from './validationSchema'
+import { th, enGB } from 'date-fns/locale'
+
 const LEAVE_HISTORY_QUERY_KEY = 'LEAVE_HISTORY'
 function LeaveHistorySearchFilters() {
   const { setIsEnableFetching } = useDxContext()
@@ -34,7 +36,7 @@ function LeaveHistorySearchFilters() {
   const { isLoading } = useFormState({ control })
   const watchRequestDate = watch('searchFilters.requestDate')
   const queryClient = useQueryClient()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const onHandleClearSearchFilters = () => {
     setValue('searchFilters', {
       requestDate: null
@@ -114,7 +116,8 @@ function LeaveHistorySearchFilters() {
                       autoComplete='off'
                       selected={value ? new Date(value) : null}
                       id='requestDate'
-                      dateFormat='dd-MMM-yyyy'
+                      locale={locale === 'th' ? th : enGB}
+                      dateFormat='dd MMM yyyy'
                       onChange={(date: Date | null) => {
                         onChange(date)
                       }}

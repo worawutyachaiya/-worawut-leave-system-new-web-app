@@ -242,7 +242,7 @@ const UserProbationSearchResult = () => {
         enableSorting: false,
         size: 200,
         Cell: ({ row }) => {
-          return dayjs(row.original.EMPLOYEE_START_WORK).format('DD-MMM-YYYY')
+          return dayjs(row.original.EMPLOYEE_START_WORK).format('DD MMM YYYY')
         }
       },
       {

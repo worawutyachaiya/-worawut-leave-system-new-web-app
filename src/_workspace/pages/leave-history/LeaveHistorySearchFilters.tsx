@@ -25,8 +25,10 @@ import { fetchLeaveType } from '@/_workspace/react-select/async-promise-load-opt
 import { getImgLeaveType } from '../../../assets/leave-type-function/ImgLeaveType'
 import { useTranslation } from '@/contexts/TranslationContext'
 import { MENU_ID } from './env'
+import { th, enGB } from 'date-fns/locale'
 import type { FormDataPage } from './validationSchema'
 const LEAVE_HISTORY_QUERY_KEY = 'LEAVE_HISTORY'
+
 function LeaveHistorySearchFilters() {
   const { setIsEnableFetching } = useDxContext()
   const [collapse, setCollapse] = useState(false)
@@ -34,7 +36,7 @@ function LeaveHistorySearchFilters() {
   const { isLoading } = useFormState({ control })
   const watchRequestDate = watch('searchFilters.requestDate')
   const queryClient = useQueryClient()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const onHandleClearSearchFilters = () => {
     setValue('searchFilters', {
       requestDate: null,
@@ -113,10 +115,11 @@ function LeaveHistorySearchFilters() {
                   defaultValue={null}
                   render={({ field: { value, onChange } }) => (
                     <AppReactDatepicker
+                      locale={locale === 'th' ? th : enGB}
                       autoComplete='off'
                       selected={value ? new Date(value) : null}
                       id='requestDate'
-                      dateFormat='dd-MMM-yyyy'
+                      dateFormat='dd MMM yyyy'
                       onChange={(date: Date | null) => {
                         onChange(date)
                       }}

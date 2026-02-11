@@ -83,6 +83,7 @@ import {
 import { oneDayTimeLeaveArrWithFlexTimeTypeFaster, oneDayTimeLeaveArrWithFlexTimeTypeSlower } from './timeLeaveOptions'
 import { useSearchFlexTimeBySpecificDate } from '@/_workspace/react-query/hooks/useFlexTime'
 import classNames from 'classnames'
+import { th, enGB } from 'date-fns/locale'
 
 const getDayFromTimeLeave = (timeLeaveValue: string | undefined): number => {
   if (!timeLeaveValue) return 0
@@ -535,7 +536,7 @@ function LeaveRequestForm() {
   }
 
   // Translation
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
 
   // States
   const [files, setFiles] = useState<File[]>([])
@@ -978,8 +979,9 @@ function LeaveRequestForm() {
                     control={control}
                     render={({ field: { value, onChange }, fieldState: { error } }) => (
                       <AppReactDatepicker
-                        dateFormat='dd-MMM-yyyy'
+                        dateFormat='dd MMM yyyy'
                         selected={value ? new Date(value) : null}
+                        locale={locale === 'th' ? th : enGB}
                         onChange={(date: Date | null) => {
                           onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
                           setValue('searchFilters.endDate', dayjs(date).format('YYYY-MM-DD'), {
@@ -1023,7 +1025,8 @@ function LeaveRequestForm() {
                     control={control}
                     render={({ field: { value, onChange }, fieldState: { error } }) => (
                       <AppReactDatepicker
-                        dateFormat='dd-MMM-yyyy'
+                        dateFormat='dd MMM yyyy'
+                        locale={locale === 'th' ? th : enGB}
                         autoComplete='off'
                         selected={value ? new Date(value) : null}
                         onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}

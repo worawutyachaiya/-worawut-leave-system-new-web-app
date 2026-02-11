@@ -1,5 +1,4 @@
 import { Button, Grid, Dialog, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material'
-import LoadingButton from '@mui/lab/LoadingButton'
 import { Controller, useForm, FormProvider } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
@@ -23,13 +22,36 @@ interface Props {
 }
 const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
   const { t } = useTranslation()
+
+  const getMinSelectableDate = () => {
+    const now = dayjs()
+    const cutoffTime = now.hour(8).minute(30).second(0).millisecond(0)
+    if (now.isAfter(cutoffTime)) {
+      return now.add(1, 'day').toDate()
+    }
+    return now.toDate()
+  }
+
+  const minSelectableDate = getMinSelectableDate()
+
+  const getValidDate = (date: string) => {
+    const selectedDay = dayjs(date)
+    const minDay = dayjs(minSelectableDate)
+    if (selectedDay.isBefore(minDay, 'day')) {
+      return minDay.format('YYYY-MM-DD')
+    }
+    return date
+  }
+
+  const validStartDate = getValidDate(selectedDate)
+
   const methods = useForm<FormDataPage>({
     resolver: zodResolver(validationSchemaPage),
     defaultValues: {
       formData: {
         flexTimeType: null as any,
-        startDate: selectedDate,
-        endDate: selectedDate,
+        startDate: validStartDate,
+        endDate: validStartDate,
         reason: ''
       }
     }
@@ -39,11 +61,12 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
   const watchStartDate = watch('formData.startDate')
   useEffect(() => {
     if (open && selectedDate) {
+      const validDate = getValidDate(selectedDate)
       reset({
         formData: {
           flexTimeType: null as any,
-          startDate: selectedDate,
-          endDate: selectedDate,
+          startDate: validDate,
+          endDate: validDate,
           reason: ''
         }
       })
@@ -147,7 +170,7 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                         setValue('formData.endDate', date ? dayjs(date).format('YYYY-MM-DD') : '')
                       }}
                       placeholderText={t('Select Date')}
-                      minDate={new Date()}
+                      minDate={minSelectableDate}
                       excludeDates={companyHolidays}
                       highlightDates={companyHolidays}
                       autoComplete='off'
@@ -175,7 +198,7 @@ const FlexTimeRequestFormDialog = ({ open, onClose, selectedDate }: Props) => {
                         onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
                       }}
                       placeholderText={t('Select Date')}
-                      minDate={watchStartDate ? new Date(watchStartDate) : new Date()}
+                      minDate={watchStartDate ? new Date(watchStartDate) : minSelectableDate}
                       excludeDates={companyHolidays}
                       highlightDates={companyHolidays}
                       autoComplete='off'

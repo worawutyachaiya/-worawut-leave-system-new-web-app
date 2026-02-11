@@ -75,9 +75,9 @@ const ExportModal = ({ open, onClose, searchParams }: ExportModalProps) => {
       EMPLOYEE_SECTION: elem.EMPLOYEE_SECTION || '',
       FLEX_TIME_DESCRIPTION: elem.FLEX_TIME_DESCRIPTION || '',
       START_DATE: elem.FLEX_TIME_REQUEST_START_DATE
-        ? dayjs(elem.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')
+        ? dayjs(elem.FLEX_TIME_REQUEST_START_DATE).format('DD MMM YYYY')
         : '',
-      END_DATE: elem.FLEX_TIME_REQUEST_END_DATE ? dayjs(elem.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY') : '',
+      END_DATE: elem.FLEX_TIME_REQUEST_END_DATE ? dayjs(elem.FLEX_TIME_REQUEST_END_DATE).format('DD MMM YYYY') : '',
       REQUEST_DATE: elem.CREATE_DATE || '',
       STATUS:
         elem.FLEX_TIME_REQUEST_STATUS === 1 ? 'Approved' : elem.FLEX_TIME_REQUEST_STATUS === 2 ? 'Rejected' : 'Pending',

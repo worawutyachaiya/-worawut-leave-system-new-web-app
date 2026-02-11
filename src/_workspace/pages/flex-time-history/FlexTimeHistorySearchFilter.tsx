@@ -26,13 +26,15 @@ import { useDxContext } from '@/_template/DxContextProvider'
 import { FormDataPage, StatusOption } from './validationSchema'
 import { FLEX_TIME_TYPE_OPTIONS } from '@/_workspace/types/flex-time/FlexTimeInterface'
 import { MENU_ID } from './env'
+import { th, enGB } from 'date-fns/locale'
+
 function FlexTimeHistorySearchFilter() {
   const { setIsEnableFetching } = useDxContext()
   const [collapse, setCollapse] = useState(false)
   const queryClient = useQueryClient()
   const { control, setValue, getValues, handleSubmit } = useFormContext<FormDataPage>()
   const { isLoading } = useFormState({ control })
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const { data: flexTimeTypesData, isLoading: isLoadingFlexTimeTypes } = useGetFlexTimeTypes(true)
   const flexTimeTypeOptions = useMemo(() => {
     const resultOnDb = flexTimeTypesData?.data?.ResultOnDb as any
@@ -149,7 +151,8 @@ function FlexTimeHistorySearchFilter() {
                       autoComplete='off'
                       selected={value ? new Date(value) : null}
                       id='requestDate'
-                      dateFormat='dd-MMM-yyyy'
+                      dateFormat='dd MMM yyyy'
+                      locale={locale === 'th' ? th : enGB}
                       onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                       placeholderText={t('Choose a date')}
                       isClearable
@@ -174,7 +177,8 @@ function FlexTimeHistorySearchFilter() {
                       autoComplete='off'
                       selected={value ? new Date(value) : null}
                       id='startDate'
-                      dateFormat='dd-MMM-yyyy'
+                      dateFormat='dd MMM yyyy'
+                      locale={locale === 'th' ? th : enGB}
                       onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                       placeholderText={t('Choose start date')}
                       isClearable
@@ -196,7 +200,8 @@ function FlexTimeHistorySearchFilter() {
                       autoComplete='off'
                       selected={value ? new Date(value) : null}
                       id='endDate'
-                      dateFormat='dd-MMM-yyyy'
+                      dateFormat='dd MMM yyyy'
+                      locale={locale === 'th' ? th : enGB}
                       onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                       placeholderText={t('Choose end date')}
                       isClearable

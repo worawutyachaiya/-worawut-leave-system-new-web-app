@@ -77,7 +77,7 @@ const FlexTimeRequestCalendar = () => {
     return allEvents.filter((event: any) => selectedCalendars.includes(event.extendedProps.calendarType))
   }, [calendarData, selectedCalendars, t])
 
-  console.log(events)
+  // console.log(events)
   const handleLeftSidebarToggle = () => setLeftSidebarOpen(!leftSidebarOpen)
   const handleAddEventClick = () => {
     setSelectedDate(dayjs().format('YYYY-MM-DD'))

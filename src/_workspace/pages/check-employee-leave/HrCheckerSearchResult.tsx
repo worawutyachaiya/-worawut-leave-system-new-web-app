@@ -326,13 +326,13 @@ function HrCheckerSearchResult() {
         accessorKey: 'REAL_CREATE_DATE',
         enableSorting: false,
         header: t('Leave request date'),
-        Cell: ({ row }) => dayjs(row.original.REAL_CREATE_DATE).format('DD-MMM-YYYY HH:mm:ss')
+        Cell: ({ row }) => dayjs(row.original.REAL_CREATE_DATE).format('DD MMM YYYY HH:mm:ss')
       },
       {
         accessorKey: 'UPDATE_DATE',
         enableSorting: false,
         header: t('Update Date'),
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm:ss')
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY HH:mm:ss')
       },
       {
         accessorKey: 'LEAVE_REQUEST_REASON',
@@ -368,9 +368,9 @@ function HrCheckerSearchResult() {
         enableSorting: false,
         header: t('Leave Date'),
         Cell: ({ row }) =>
-          dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm') +
+          dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD MMM YYYY HH:mm') +
           ' - ' +
-          dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD-MMM-YYYY HH:mm')
+          dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'CREATE_BY',

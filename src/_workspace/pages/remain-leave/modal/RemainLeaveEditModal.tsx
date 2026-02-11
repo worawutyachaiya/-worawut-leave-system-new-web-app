@@ -167,7 +167,7 @@ const RemainLeaveEditModal = ({
                 disabled
                 label={t('Start Work')}
                 value={
-                  selectedData.EMPLOYEE_START_WORK ? dayjs(selectedData.EMPLOYEE_START_WORK).format('DD-MMM-YYYY') : ''
+                  selectedData.EMPLOYEE_START_WORK ? dayjs(selectedData.EMPLOYEE_START_WORK).format('DD MMM YYYY') : ''
                 }
                 InputLabelProps={{ shrink: true }}
               />
