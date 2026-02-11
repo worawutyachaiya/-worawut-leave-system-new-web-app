@@ -357,7 +357,7 @@ const RemainLeaveSearchResult = () => {
         size: 180,
         Cell: ({ cell }) => {
           const dateValue = cell.getValue() as string
-          return dateValue ? dayjs(dateValue).format('DD-MMM-YYYY') : '-'
+          return dateValue ? dayjs(dateValue).format('DD MMM YYYY') : '-'
         }
       },
       {

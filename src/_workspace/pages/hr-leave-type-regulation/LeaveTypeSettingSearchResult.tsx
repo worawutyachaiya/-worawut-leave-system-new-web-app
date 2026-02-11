@@ -254,7 +254,7 @@ const LeaveTypeSettingSearchResult = () => {
         enableSorting: false,
         header: t('Modified'),
         size: 200,
-        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD MMM YYYY HH:mm')
       }
     ],
     [t]

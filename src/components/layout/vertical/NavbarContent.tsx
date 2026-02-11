@@ -108,14 +108,14 @@ const NavbarContent = () => {
         ) : null}
       </div>
       <div className='flex items-center'>
-        <CoolMode>
+        {/* <CoolMode>
           <Tooltip title={t('Cool Mode')}>
             <IconButton className='text-textPrimary'>
               <i className='tabler-pacman text-[22px]' />
             </IconButton>
           </Tooltip>
         </CoolMode>
-        <Divider className='mr-2' orientation='vertical' flexItem />
+        <Divider className='mr-2' orientation='vertical' flexItem /> */}
         <LanguageDropdown />
         <ModeDropdownToggler />
         {belowSmScreen ? null : (

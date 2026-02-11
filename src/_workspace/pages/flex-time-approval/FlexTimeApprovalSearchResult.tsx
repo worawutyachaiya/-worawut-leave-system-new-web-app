@@ -255,7 +255,7 @@ function FlexTimeApprovalSearchResult() {
         size: 180,
         Cell: ({ row }) => {
           const date = row.original.START_DATE || row.original.FLEX_TIME_REQUEST_START_DATE
-          return date ? dayjs(date).format('DD-MMM-YYYY') : '-'
+          return date ? dayjs(date).format('DD MMM YYYY') : '-'
         }
       },
       {
@@ -265,7 +265,7 @@ function FlexTimeApprovalSearchResult() {
         size: 180,
         Cell: ({ row }) => {
           const date = row.original.END_DATE || row.original.FLEX_TIME_REQUEST_END_DATE
-          return date ? dayjs(date).format('DD-MMM-YYYY') : '-'
+          return date ? dayjs(date).format('DD MMM YYYY') : '-'
         }
       },
       {
@@ -279,7 +279,7 @@ function FlexTimeApprovalSearchResult() {
         enableSorting: false,
         header: t('Request Date'),
         size: 180,
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY') || '-'
       }
     ],
     [t, settings.mode]

@@ -214,7 +214,7 @@ function TimeRecordApprovalSearchResult() {
         header: t('Request Date'),
         size: 200,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {
@@ -222,7 +222,7 @@ function TimeRecordApprovalSearchResult() {
         header: t('in time'),
         size: 200,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {
@@ -230,7 +230,7 @@ function TimeRecordApprovalSearchResult() {
         header: t('out time'),
         size: 200,
         Cell: ({ cell }) => {
-          return dayjs(cell.getValue<string>()).format('DD-MMM-YYYY HH:mm') || '-'
+          return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }
       },
       {

@@ -142,12 +142,12 @@ function LeaveTypeSettingSearchResult() {
       {
         accessorKey: 'START_DATE',
         header: t('Start Date'),
-        Cell: ({ row }) => dayjs(row.original.START_DATE).format('DD-MMM-YYYY')
+        Cell: ({ row }) => dayjs(row.original.START_DATE).format('DD MMM YYYY')
       },
       {
         accessorKey: 'END_DATE',
         header: t('End Date'),
-        Cell: ({ row }) => dayjs(row.original.END_DATE).format('DD-MMM-YYYY')
+        Cell: ({ row }) => dayjs(row.original.END_DATE).format('DD MMM YYYY')
       },
       {
         accessorKey: 'REASON',

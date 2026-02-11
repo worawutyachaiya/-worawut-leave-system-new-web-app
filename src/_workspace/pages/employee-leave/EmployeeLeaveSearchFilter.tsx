@@ -243,7 +243,7 @@ function EmployeeLeaveSearchFilters() {
                         disabled
                         readOnly
                         autoComplete='off'
-                        placeholderText={dayjs(new Date()).format('YYYY-MMM-DD')}
+                        placeholderText={dayjs(new Date()).format('DD MMM YYYY')}
                         customInput={<CustomTextField label={t('Leave Date')} fullWidth error={!!error} />}
                       />
                     </>

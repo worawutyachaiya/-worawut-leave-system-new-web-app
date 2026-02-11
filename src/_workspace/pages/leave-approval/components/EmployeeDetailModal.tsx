@@ -31,7 +31,7 @@ import { useSearchEmployeeInformation } from '@/_workspace/react-query/hooks/use
 import { useLeaveHistorySearch } from '@/_workspace/react-query/hooks/useLeaveHistorySearch'
 import { LeaveHistoryInterface } from '@/_workspace/types/leave-history/LeaveHistoryInterface'
 import { LeaveEmployeeInformationInterface } from '@/_workspace/types/leave-employee-information/LeaveEmployeeInformationInterface'
-import { ImageEmployeeFromURL } from '@/libs/react-query/hooks/common-system/useImageData'
+import LeaveEmployeeInformationService from '@/_workspace/services/leave-employee-information/LeaveEmployeeInformationService'
 import TableApprover from '../../leave-history/components/TableApprover'
 import DialogCloseButton from '@/components/dialogs/DialogCloseButton'
 import { useTranslation } from '@/contexts/TranslationContext'
@@ -132,7 +132,17 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
   useEffect(() => {
     if (open && employeeCode) {
       setEmployeeImage('')
-      ImageEmployeeFromURL(employeeCode, setEmployeeImage, setEmployeeImage)
+      LeaveEmployeeInformationService.getImageFromUrl({ URL_PATH: employeeCode })
+        .then(responseJson => {
+          if (responseJson?.data?.Status === false) {
+            setEmployeeImage('')
+          } else {
+            setEmployeeImage(URL.createObjectURL(responseJson.data))
+          }
+        })
+        .catch(() => {
+          setEmployeeImage('')
+        })
     }
   }, [open, employeeCode])
   useEffect(() => {
@@ -197,11 +207,11 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
         header: t('Request Date'),
         Cell: ({ row }) => {
           return (
-            dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm') +
+            dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD MMM YYYY HH:mm') +
             ' ' +
             t('to') +
             ' ' +
-            dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD-MMM-YYYY HH:mm')
+            dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD MMM YYYY HH:mm')
           )
         }
       },
@@ -210,11 +220,11 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
         header: t('Leave Date'),
         Cell: ({ row }) => {
           return (
-            dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY') +
+            dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD MMM YYYY') +
             ' ' +
             t('to') +
             ' ' +
-            dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD-MMM-YYYY')
+            dayjs(row.original.LEAVE_REQUEST_END_DATE).format('DD MMM YYYY')
           )
         },
         enableSorting: false
@@ -248,7 +258,7 @@ const EmployeeDetailModal = ({ open, onClose, employeeCode }: EmployeeDetailModa
         size: 180,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD-MMM-YYYY HH:mm') : '-'
+          return value ? dayjs(value).format('DD MMM YYYY HH:mm') : '-'
         }
       },
       {

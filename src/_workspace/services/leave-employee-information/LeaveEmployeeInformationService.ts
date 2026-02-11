@@ -15,4 +15,13 @@ export default class LeaveEmployeeInformationService {
       data: params
     })
   }
+
+  static getImageFromUrl(params: { URL_PATH: string }) {
+    return axiosRequest_LeaveSystem({
+      url: `${LeaveEmployeeInformationAPI.API_ROOT_URL}/getImageFromUrl`,
+      data: params,
+      method: 'POST',
+      responseType: 'blob'
+    })
+  }
 }

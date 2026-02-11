@@ -24,12 +24,13 @@ import { useDxContext } from '@/_template/DxContextProvider'
 import { Box } from '@mui/material'
 import { useCreate } from '@/libs/react-query/hooks/common-system/useUserProfileSettingProgram'
 import { MENU_ID } from './env'
+import { th, enGB } from 'date-fns/locale'
 function HrCheckerSearchFilter() {
   const { setIsEnableFetching } = useDxContext()
   const [isExpanded, setIsExpanded] = useState(true)
   const queryClient = useQueryClient()
   const { control, getValues, setValue, handleSubmit } = useFormContext<FormDataPage>()
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const onHandleClearSearchFilters = () => {
     setValue('searchFilters', {
       startDate: null,
@@ -177,7 +178,8 @@ function HrCheckerSearchFilter() {
                     selected={value ? new Date(value) : null}
                     onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     placeholderText={t('Choose start date')}
-                    dateFormat='YYYY-MM-DD'
+                    dateFormat='dd MMM YYYY'
+                    locale={locale === 'th' ? th : enGB}
                     customInput={
                       <CustomTextField fullWidth label={t('Start Date')} placeholder={t('Choose start date')} />
                     }
@@ -196,7 +198,8 @@ function HrCheckerSearchFilter() {
                     selected={value ? new Date(value) : null}
                     onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     placeholderText={t('Choose end date')}
-                    dateFormat='YYYY-MM-DD'
+                    dateFormat='dd MMM YYYY'
+                    locale={locale === 'th' ? th : enGB}
                     minDate={
                       getValues('searchFilters.startDate') ? new Date(getValues('searchFilters.startDate')!) : undefined
                     }

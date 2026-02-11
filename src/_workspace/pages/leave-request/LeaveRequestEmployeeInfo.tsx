@@ -157,10 +157,10 @@ function LeaveRequestEmployeeInfo() {
                       {t('User Info')}
                     </Typography>
                     <Typography variant='body2' color='textSecondary' sx={{ mb: 0 }}>
-                      {t('Birthday')} : {dayjs(employeeInfo.EMPLOYEE_BIRTH_DAY).format('D-MMM-YYYY')}
+                      {t('Birthday')} : {dayjs(employeeInfo.EMPLOYEE_BIRTH_DAY).format('D MMM YYYY')}
                     </Typography>
                     <Typography variant='body2' color='textSecondary' sx={{ mb: 0 }}>
-                      {t('Start Work')} : {dayjs(employeeInfo.EMPLOYEE_START_WORK).format('D-MMM-YYYY')}
+                      {t('Start Work')} : {dayjs(employeeInfo.EMPLOYEE_START_WORK).format('D MMM YYYY')}
                     </Typography>
                   </Box>
                 </Box>

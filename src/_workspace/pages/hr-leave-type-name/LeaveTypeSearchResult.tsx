@@ -239,7 +239,7 @@ const LeaveTypeSearchResult = () => {
         accessorKey: 'MODIFIED_DATE',
         header: t('Modified Date'),
         size: 210,
-        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

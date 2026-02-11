@@ -173,7 +173,7 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Leave Date'),
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',
@@ -182,8 +182,8 @@ function SubordinateSearchResult() {
         Cell: ({ row }) => {
           const startDate = row.original.LEAVE_REQUEST_START_DATE
           const endDate = row.original.LEAVE_REQUEST_END_DATE
-          const start = startDate ? dayjs(startDate).format('DD-MMM-YYYY') : '-'
-          const end = endDate ? dayjs(endDate).format('DD-MMM-YYYY') : '-'
+          const start = startDate ? dayjs(startDate).format('DD MMM YYYY') : '-'
+          const end = endDate ? dayjs(endDate).format('DD MMM YYYY') : '-'
           return `${start} ${t('to')} ${end}`
         }
       },
@@ -215,7 +215,7 @@ function SubordinateSearchResult() {
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY HH:mm') || '-'
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY HH:mm') || '-'
       },
       {
         accessorKey: 'UPDATE_BY',

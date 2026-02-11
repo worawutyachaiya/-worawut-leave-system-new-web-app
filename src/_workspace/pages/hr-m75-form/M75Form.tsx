@@ -43,10 +43,11 @@ import {
   timeLeaveArrWFH
 } from './timeLeaveOptions'
 import { getUserData } from '@/utils/user-profile/userLoginProfile'
+import {th, enGB} from 'date-fns/locale'
 
 function M75Form() {
   // Hooks
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const { control, handleSubmit, watch, setValue, reset, getValues } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
 
@@ -414,6 +415,8 @@ function M75Form() {
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <AppReactDatepicker
                     selected={value ? new Date(value) : null}
+                    dateFormat={'dd MMM YYYY'}
+                    locale={locale === 'th' ? th : enGB}
                     onChange={(date: Date | null) => {
                       onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)
                       // Auto-set end date when start date changes
@@ -453,6 +456,8 @@ function M75Form() {
                 control={control}
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <AppReactDatepicker
+                    dateFormat={'dd MMM YYYY'}
+                    locale={locale === 'th' ? th : enGB}
                     autoComplete='off'
                     selected={value ? new Date(value) : null}
                     onChange={(date: Date | null) => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}

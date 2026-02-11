@@ -298,7 +298,7 @@ const UserLeaveSearchResult = () => {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
         size: 220,
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'LEAVE_ATTACHMENT',
@@ -345,7 +345,7 @@ const UserLeaveSearchResult = () => {
         enableSorting: false,
         size: 220,
         Cell: ({ row }) => {
-          return dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD-MMM-YYYY HH:mm')
+          return dayjs(row.original.LEAVE_REQUEST_START_DATE).format('DD MMM YYYY HH:mm')
         }
       },
       {
@@ -368,7 +368,7 @@ const UserLeaveSearchResult = () => {
         accessorKey: 'MODIFIED_DATE',
         header: t('Modified'),
         size: 200,
-        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD-MMM-YYYY HH:mm')
+        Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD MMM YYYY HH:mm')
       },
       {
         accessorKey: 'UPDATE_BY',

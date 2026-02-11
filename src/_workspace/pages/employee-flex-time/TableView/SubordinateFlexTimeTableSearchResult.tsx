@@ -171,19 +171,19 @@ function SubordinateFlexTimeTableSearchResult() {
         header: t('Flex Time Date'),
         enableSorting: false,
         Cell: ({ row }) =>
-          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD-MMM-YYYY')}  ${t('to')}  ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD-MMM-YYYY')}` ||
+          `${dayjs(row.original.FLEX_TIME_REQUEST_START_DATE).format('DD MMM YYYY')}  ${t('to')}  ${dayjs(row.original.FLEX_TIME_REQUEST_END_DATE).format('DD MMM YYYY')}` ||
           '-'
       },
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Flex Time Date'),
-        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD-MMM-YYYY') || '-',
+        Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY') || '-',
         size: 250
       },
       {
         accessorKey: 'UPDATE_DATE',
         header: t('Update Date'),
-        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD-MMM-YYYY') || '-',
+        Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY') || '-',
         size: 180
       },
       {

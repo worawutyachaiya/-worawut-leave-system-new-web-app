@@ -26,11 +26,12 @@ import dayjs from 'dayjs'
 import { FormDataPage, StatusOption, statusOption } from './ValidationSchema'
 import { MENU_ID } from './env'
 import { useTranslation } from '@/contexts/TranslationContext'
+import { th, enGB } from 'date-fns/locale'
 
 const PREFIX_QUERY_KEY = 'HR_CHECK_M75'
 
 const HrCheckM75SearchFilter = () => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const [collapse, setCollapse] = useState(true)
   const { control, handleSubmit, setValue, getValues } = useFormContext<FormDataPage>()
   const queryClient = useQueryClient()
@@ -200,6 +201,8 @@ const HrCheckM75SearchFilter = () => {
                 control={control}
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <AppReactDatepicker
+                    locale= {locale === 'th' ? th : enGB  }
+                    dateFormat={'dd MMM YYYY'}
                     selected={value ? dayjs(value, 'YYYY-MM-DD').toDate() : null}
                     onChange={date => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     autoComplete='off'
@@ -217,6 +220,8 @@ const HrCheckM75SearchFilter = () => {
                 control={control}
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <AppReactDatepicker
+                    locale= {locale === 'th' ? th : enGB  }
+                    dateFormat={'dd MMM YYYY'}
                     selected={value ? dayjs(value, 'YYYY-MM-DD').toDate() : null}
                     onChange={date => onChange(date ? dayjs(date).format('YYYY-MM-DD') : null)}
                     autoComplete='off'

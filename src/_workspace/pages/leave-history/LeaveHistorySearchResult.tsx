@@ -190,7 +190,7 @@ function SearchResult() {
         size: 205,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
-          return value ? dayjs(value).format(t('DD-MMM-YYYY HH:mm')) : '-'
+          return value ? dayjs(value).format(t('DD MMM YYYY HH:mm')) : '-'
         }
       },
       {
@@ -199,11 +199,11 @@ function SearchResult() {
         header: t('Leave Date'),
         Cell: ({ row }) => {
           return (
-            dayjs(row.original.LEAVE_REQUEST_START_DATE).format(t('DD-MMM-YYYY')) +
+            dayjs(row.original.LEAVE_REQUEST_START_DATE).format(t('DD MMM YYYY')) +
             ' ' +
             t('to') +
             ' ' +
-            dayjs(row.original.LEAVE_REQUEST_END_DATE).format(t('DD-MMM-YYYY'))
+            dayjs(row.original.LEAVE_REQUEST_END_DATE).format(t('DD MMM YYYY'))
           )
         }
       },
@@ -236,7 +236,7 @@ function SearchResult() {
         size: 195,
         Cell: ({ cell }) => {
           const value = cell.getValue<string>()
-          return value ? dayjs(value).format('DD-MMM-YYYY HH:mm') : '-'
+          return value ? dayjs(value).format('DD MMM YYYY HH:mm') : '-'
         }
       },
       {

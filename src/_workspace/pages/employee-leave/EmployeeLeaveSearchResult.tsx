@@ -144,9 +144,9 @@ const EmployeeLeaveSearchResultTable = () => {
           const endDate = row.original?.LEAVE_REQUEST_END_DATE
           return (
             <>
-              {startDate ? dayjs(startDate).format('DD-MMM-YYYY') : '-'}
+              {startDate ? dayjs(startDate).format('DD MMM YYYY') : '-'}
               {' ' + t('to') + ' '}
-              {endDate ? dayjs(endDate).format('DD-MMM-YYYY') : '-'}
+              {endDate ? dayjs(endDate).format('DD MMM YYYY') : '-'}
             </>
           )
         }

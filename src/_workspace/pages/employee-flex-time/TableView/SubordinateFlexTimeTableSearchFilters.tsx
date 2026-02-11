@@ -124,7 +124,7 @@ function SubordinateFlexTimeTableSearchFilters() {
                     autoComplete='off'
                     selected={value ? new Date(value) : null}
                     id='tableStartDate'
-                    dateFormat='dd-MMM-yyyy'
+                    dateFormat='dd MMM yyyy'
                     onChange={(date: Date | null) => {
                       onChange(date)
                     }}
@@ -145,7 +145,7 @@ function SubordinateFlexTimeTableSearchFilters() {
                     autoComplete='off'
                     selected={value ? new Date(value) : null}
                     id='tableEndDate'
-                    dateFormat='dd-MMM-yyyy'
+                    dateFormat='dd MMM yyyy'
                     onChange={(date: Date | null) => {
                       onChange(date)
                     }}
