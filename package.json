@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun run --bun vite --mode development",
     "build:prod": "vite build --mode production",
-    "start:prod": "serve dist -s -l 8035",
+    "start:prod": "serve dist -s -l 8015",
     "lint": "eslint .",
     "preview": "vite preview",
     "lint:fix": "lint --fix",
