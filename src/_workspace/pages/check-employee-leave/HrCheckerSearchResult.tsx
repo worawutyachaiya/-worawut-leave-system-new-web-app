@@ -281,7 +281,7 @@ function HrCheckerSearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false,
+        // enableSorting: false,
         size: 220
       },
       {
@@ -324,13 +324,13 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'REAL_CREATE_DATE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Leave request date'),
         Cell: ({ row }) => dayjs(row.original.REAL_CREATE_DATE).format('DD MMM YYYY HH:mm:ss')
       },
       {
         accessorKey: 'UPDATE_DATE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Update Date'),
         Cell: ({ row }) => dayjs(row.original.UPDATE_DATE).format('DD MMM YYYY HH:mm:ss')
       },
@@ -359,7 +359,7 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'LEAVE_REQUEST_TOTAL_DAY',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Total Days'),
         size: 200
       },
@@ -374,13 +374,13 @@ function HrCheckerSearchResult() {
       },
       {
         accessorKey: 'CREATE_BY',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Created By'),
         size: 200
       },
       {
         accessorKey: 'UPDATE_BY',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Updated By'),
         size: 200
       },

@@ -239,7 +239,7 @@ function EditUserFlexTimeSearchResult() {
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false,
+        // enableSorting: false,
         size: 200
       },
       {
@@ -249,9 +249,10 @@ function EditUserFlexTimeSearchResult() {
         enableSorting: false
       },
       {
+        accessorKey: 'EMPLOYEE_SECTION',
         header: t('Section'),
         enableSorting: false,
-        size: 150
+        size: 200
       },
       {
         accessorKey: 'LEAVE_DATE_RANGE',

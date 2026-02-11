@@ -336,8 +336,8 @@ const RemainLeaveSearchResult = () => {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 200,
-        enableSorting: false
+        size: 200
+        // enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
@@ -368,8 +368,8 @@ const RemainLeaveSearchResult = () => {
       },
       {
         accessorKey: 'LEAVE_REMAIN_DAY',
-        header: t('Leave Remaining'),
-        enableSorting: false
+        header: t('Leave Remaining')
+        // enableSorting: false
       }
     ],
     [settings.mode, t]

@@ -189,8 +189,8 @@ function TimeRecordApprovalSearchResult() {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false,
-        size: 180
+        // enableSorting: false,
+        size: 220
       },
       {
         accessorKey: 'EMPLOYEE_NAME',
@@ -212,7 +212,7 @@ function TimeRecordApprovalSearchResult() {
       {
         accessorKey: 'CREATE_DATE',
         header: t('Request Date'),
-        size: 200,
+        size: 220,
         Cell: ({ cell }) => {
           return dayjs(cell.getValue<string>()).format('DD MMM YYYY HH:mm') || '-'
         }

@@ -238,20 +238,20 @@ const LeaveTypeSettingSearchResult = () => {
         header: t('Department')
       },
       {
-        enableSorting: false,
+        // enableSorting: false,
         accessorKey: 'LEAVE_TYPE_REQUEST_DAY_BEFORE_USE',
         header: t('Request Leave Day Before Use'),
         size: 350
       },
       {
         accessorKey: 'UPDATE_BY',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Modified By'),
         size: 200
       },
       {
         accessorKey: 'MODIFIED_DATE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Modified'),
         size: 200,
         Cell: ({ row }) => dayjs(row.original.MODIFIED_DATE).format('DD MMM YYYY HH:mm')

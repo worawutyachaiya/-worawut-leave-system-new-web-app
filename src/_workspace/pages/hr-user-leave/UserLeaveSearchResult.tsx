@@ -318,8 +318,8 @@ const UserLeaveSearchResult = () => {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 200,
-        enableSorting: false
+        size: 220
+        // enableSorting: false
       },
       {
         accessorKey: 'EMPLOYEE_NAME',

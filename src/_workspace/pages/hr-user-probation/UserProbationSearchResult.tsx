@@ -269,7 +269,7 @@ const UserProbationSearchResult = () => {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Employee Code'),
         size: 220
       },
