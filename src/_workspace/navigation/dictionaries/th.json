@@ -107,7 +107,7 @@
   "Cannot cancel because already cancelled !": "ไม่สามารถยกเลิกได้เนื่องจากถูกยกเลิกแล้ว !",
   "You cannot cancel because it has been approved !": "คุณไม่สามารถยกเลิกได้ เพราะได้รับการอนุมัติแล้ว !",
   "Cancel Request": "ยกเลิกคำขอ",
-  "You must cancel at least 1 day in advance": "คุณจำเป็นต้องลาล่วงหน้าอย่างน้อย 1 วัน",
+  "You must cancel at least 1 day in advance": "คุณจำเป็นต้องยกเลิกล่วงหน้าอย่างน้อย 1 วัน",
   "Toggle theme": "เปลี่ยนธีม",
   "Languages": "ภาษา",
   "Compact Mode": "โหมดกะทัด",

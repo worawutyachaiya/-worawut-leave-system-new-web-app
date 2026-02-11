@@ -117,7 +117,7 @@ const TableApprover: React.FC<TableApproverProps> = ({ row }) => {
           }}
         >
           {getStatusChip(APPROVAL_STATUS_ID)}
-          <span style={{ margin: '0 4px' }}>:</span>
+          <span style={{ margin: '0 4px' }}></span>
           <span>{APPROVAL_BY_APPROVER_EMPLOYEE_CODE}</span>
         </Box>
       ))}

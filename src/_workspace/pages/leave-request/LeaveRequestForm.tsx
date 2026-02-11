@@ -381,6 +381,7 @@ function LeaveRequestForm() {
 
   useEffect(() => {
     if (watchLeaveType) {
+      setValue('searchFilters.startDate', null as any)
       setValue('searchFilters.endDate', null as any)
       setValue('searchFilters.timeLeave', null as any)
     }

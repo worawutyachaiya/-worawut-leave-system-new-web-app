@@ -155,7 +155,7 @@ const EmployeeLeaveSearchResultTable = () => {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
         size: 200,
-        enableSorting: false
+        // enableSorting: false
       },
       {
         accessorKey: 'FULL_NAME',
