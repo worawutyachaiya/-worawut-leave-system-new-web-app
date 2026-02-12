@@ -1,4 +1,8 @@
 {
+  "Logout": "ออกจากระบบ",
+  "My Profile": "ข้อมูลส่วนตัว",
+  "Setting": "ตั้งค่า",
+  "Email": "อีเมล",
   "Event Filters": "ตัวกรองกิจกรรม",
   "Flex Time": "หยืดหยุ่นเวลาทำงาน",
   "Holiday": "วันหยุด",
@@ -553,9 +557,9 @@
     "employeeFlexTime": "Flex Time ของพนักงาน",
     "subordinateFlexTime": "Flex Time ผู้ใต้บังคับบัญชา",
     "editUserFlexTime": "แก้ไข Flex Time ของพนักงาน",
-    "emailSetting": "ตั้งค่าอีเมล"
+    "emailSetting": "อีเมล"
   },
-  "Email Notification Settings": "การตั้งค่าการแจ้งเตือนทางอีเมล",
+  "Email Notification": "การแจ้งเตือนทางอีเมล",
   "Select how you want to receive email notifications for requests": "เลือกวิธีการรับการแจ้งเตือนทางอีเมลสำหรับคำขอ",
   "Immediate (Receive email immediately when a request is made)": "ทันที (ได้รับอีเมลทันทีที่มีคำขอ)",
   "Batch (Receive a summary email at 8:00 and 17:00)": "รวบยอด (ได้รับอีเมลสรุปตอน 8:00 และ 17:00)",

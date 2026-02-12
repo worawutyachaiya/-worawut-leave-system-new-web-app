@@ -18,7 +18,7 @@ const OptionCard = ({ title, description, icon, isSelected, onClick }: OptionCar
       sx={{
         p: 2,
         cursor: 'pointer',
-        border: `2px solid ${isSelected ? theme.palette.primary.main : alpha(theme.palette.divider, 0.5)}`,
+        border: `2px solid ${isSelected ? theme.palette.primary.main : 'transparent'}`,
         borderRadius: 2,
         height: '100%',
         backgroundColor: isSelected ? alpha(theme.palette.primary.main, 0.1) : 'transparent',

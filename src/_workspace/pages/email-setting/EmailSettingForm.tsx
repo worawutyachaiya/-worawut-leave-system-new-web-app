@@ -131,7 +131,7 @@ const EmailSettingForm = () => {
 
   return (
     <Card>
-      <CardHeader title={t('Email Notification Settings')} />
+      <CardHeader title={t('Email Notification')} />
       <CardContent>
         {isLoading ? (
           <Grid container justifyContent='center'>

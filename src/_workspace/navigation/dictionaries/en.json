@@ -1,4 +1,8 @@
 {
+  "Logout": "Logout",
+  "My Profile": "My Profile",
+  "Setting": "Setting",
+  "Email": "Email",
   "Event Filters": "Event Filters",
   "Flex Time": "Flex Time",
   "Holiday": "Holiday",
@@ -545,9 +549,9 @@
     "employeeFlexTime": "Employee Flex Time",
     "subordinateFlexTime": "Subordinate Flex Time",
     "editUserFlexTime": "Edit User Flex Time",
-    "emailSetting": "Email Setting"
+    "emailSetting": "Email"
   },
-  "Email Notification Settings": "Email Notification Settings",
+  "Email Notification": "Email Notification",
   "Select how you want to receive email notifications for requests": "Select how you want to receive email notifications for requests",
   "Immediate (Receive email immediately when a request is made)": "Immediate (Receive email immediately when a request is made)",
   "Batch (Receive a summary email at 8:00 and 17:00)": "Batch (Receive a summary email at 8:00 and 17:00)",
