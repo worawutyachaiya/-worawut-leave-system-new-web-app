@@ -83,6 +83,9 @@ const SubordinateFlexTimePage = lazy(() => import('@/_workspace/pages/subordinat
 // New: Edit User Flex Time
 const EditUserFlexTimePage = lazy(() => import('@/_workspace/pages/edit-user-flex-time/page'))
 
+// New: Email Setting
+const EmailSettingPage = lazy(() => import('@/_workspace/pages/email-setting/page'))
+
 const Home = lazy(() => import('../../../src/pages/home/page'))
 
 import { Outlet, useParams, Navigate } from 'react-router'
@@ -195,6 +198,9 @@ export default (
 
       {/* edit-user-flex-time */}
       <Route path='flex-time-edit-user' element={<EditUserFlexTimePage />} />
+
+      {/* email-setting */}
+      <Route path='email-setting' element={<EmailSettingPage />} />
     </Route>
   </>
 )

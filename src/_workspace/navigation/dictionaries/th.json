@@ -516,6 +516,7 @@
     "billOfMaterial": "รายการวัสดุ",
     "referToCustomerInvoiceTo": "อ้างอิงไปยังใบแจ้งหนี้ลูกค้า",
     "menu": "เมนูระบบการลา",
+    "Setting": "การตั้งค่า",
     "approvalMenu": "เมนูการอนุมัติ",
     "humanresourcemenu": "เมนู HR",
     "timeRecordMenu": "เมนูบันทึกเวลา",
@@ -551,6 +552,23 @@
     "flexTimeApproval": "การอนุมัติ Flex Time",
     "employeeFlexTime": "Flex Time ของพนักงาน",
     "subordinateFlexTime": "Flex Time ผู้ใต้บังคับบัญชา",
-    "editUserFlexTime": "แก้ไข Flex Time ของพนักงาน"
-  }
+    "editUserFlexTime": "แก้ไข Flex Time ของพนักงาน",
+    "emailSetting": "ตั้งค่าอีเมล"
+  },
+  "Email Notification Settings": "การตั้งค่าการแจ้งเตือนทางอีเมล",
+  "Select how you want to receive email notifications for requests": "เลือกวิธีการรับการแจ้งเตือนทางอีเมลสำหรับคำขอ",
+  "Immediate (Receive email immediately when a request is made)": "ทันที (ได้รับอีเมลทันทีที่มีคำขอ)",
+  "Batch (Receive a summary email at 8:00 and 17:00)": "รวบยอด (ได้รับอีเมลสรุปตอน 8:00 และ 17:00)",
+  "Save Settings": "บันทึกการตั้งค่า",
+  "Immediately": "รับการเจ้งเตือนทันที",
+  "Batched": "รับการเจ้งเตือนเป็นรอบ",
+  "Morning (09:00)": "รอบเช้า (09:00)",
+  "Afternoon (16:00)": "รอบบ่าย (16:00)",
+  "Both": "รับการแจ้งเตือนสองรอบ",
+  "Send email once a day at morning": "ส่งอีเมลวันละครั้งตอนเช้า",
+  "Send email once a day at afternoon": "ส่งอีเมลวันละครั้งตอนเย็น",
+  "Send email twice a day (09:00 & 16:00)": "ส่งอีเมลวันละสองครั้ง (09:00 และ 16:00)",
+  "Receive email immediately": "รับการแจ้งเตือนทันทีที่มีคำขอเข้ามา",
+  "Collect and send at the specified time": "รวบรวมและส่งตามเวลาที่กำหนด",
+  "Select the time you want": "เลือกเวลาที่ต้องการ"
 }
