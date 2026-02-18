@@ -165,8 +165,8 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        enableSorting: false,
-        size: 140
+        // enableSorting: false,
+        size: 160
       }
     ],
     [settings.mode, t]

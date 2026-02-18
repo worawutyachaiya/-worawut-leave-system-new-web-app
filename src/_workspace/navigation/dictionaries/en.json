@@ -1,4 +1,8 @@
 {
+  "Logout": "Logout",
+  "My Profile": "My Profile",
+  "Setting": "Setting",
+  "Email": "Email",
   "Event Filters": "Event Filters",
   "Flex Time": "Flex Time",
   "Holiday": "Holiday",
@@ -508,6 +512,7 @@
     "billOfMaterial": "Bill of Material",
     "referToCustomerInvoiceTo": "Refer to Customer Invoice To",
     "menu": "LEAVE REQUEST MENU",
+    "Setting": "Setting",
     "approvalMenu": "APPROVAL MENU",
     "humanresourcemenu": "HUMAN RESOURCE MENU",
     "timeRecordMenu": "TIME RECORD MENU",
@@ -543,6 +548,23 @@
     "flexTimeApproval": "Flex Time Approval",
     "employeeFlexTime": "Employee Flex Time",
     "subordinateFlexTime": "Subordinate Flex Time",
-    "editUserFlexTime": "Edit User Flex Time"
-  }
+    "editUserFlexTime": "Edit User Flex Time",
+    "emailSetting": "Email"
+  },
+  "Email Notification": "Email Notification",
+  "Select how you want to receive email notifications for requests": "Select how you want to receive email notifications for requests",
+  "Immediate (Receive email immediately when a request is made)": "Immediate (Receive email immediately when a request is made)",
+  "Batch (Receive a summary email at 8:00 and 17:00)": "Batch (Receive a summary email at 8:00 and 17:00)",
+  "Save Settings": "Save Settings",
+  "Immediately": "Immediately",
+  "Batched": "Batched",
+  "Morning (09:00)": "Morning (09:00)",
+  "Afternoon (16:00)": "Afternoon (16:00)",
+  "Both": "Both",
+  "Send email once a day at morning": "Send email once a day at morning",
+  "Send email once a day at afternoon": "Send email once a day at afternoon",
+  "Send email twice a day (09:00 & 16:00)": "Send email twice a day (09:00 & 16:00)",
+  "Receive email immediately": "Receive email immediately",
+  "Collect and send at the specified time": "Collect and send at the specified time",
+  "Select the time you want": "Select the time you want"
 }

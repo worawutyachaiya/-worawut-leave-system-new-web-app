@@ -152,8 +152,8 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'FLEX_TIME_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false,
-        size: 140
+        // enableSorting: false,
+        size: 200
       },
       {
         accessorKey: 'EMPLOYEE_FULL_NAME',
@@ -189,8 +189,8 @@ function SubordinateFlexTimeTableSearchResult() {
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        enableSorting: false,
-        size: 140
+        // enableSorting: false,
+        size: 160
       }
     ],
     [settings.mode, t]

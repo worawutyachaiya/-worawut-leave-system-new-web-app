@@ -232,7 +232,7 @@ function FlexTimeApprovalSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Employee Code'),
         size: 200
       },
@@ -251,7 +251,7 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'START_DATE',
         header: t('Start Date'),
-        enableSorting: false,
+        // enableSorting: false,
         size: 180,
         Cell: ({ row }) => {
           const date = row.original.START_DATE || row.original.FLEX_TIME_REQUEST_START_DATE
@@ -261,7 +261,7 @@ function FlexTimeApprovalSearchResult() {
       {
         accessorKey: 'END_DATE',
         header: t('End Date'),
-        enableSorting: false,
+        // enableSorting: false,
         size: 180,
         Cell: ({ row }) => {
           const date = row.original.END_DATE || row.original.FLEX_TIME_REQUEST_END_DATE
@@ -276,7 +276,7 @@ function FlexTimeApprovalSearchResult() {
       },
       {
         accessorKey: 'CREATE_DATE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Request Date'),
         size: 180,
         Cell: ({ row }) => dayjs(row.original.CREATE_DATE).format('DD MMM YYYY') || '-'

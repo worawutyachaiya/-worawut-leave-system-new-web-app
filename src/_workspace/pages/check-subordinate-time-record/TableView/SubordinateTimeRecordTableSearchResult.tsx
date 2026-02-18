@@ -133,9 +133,9 @@ function SubordinateTimeRecordTableSearchResult() {
       },
       {
         accessorKey: 'EMPLOYEE_CODE',
-        enableSorting: false,
+        // enableSorting: false,
         header: t('Employee Code'),
-        size: 180
+        size: 220
       },
       {
         accessorKey: 'EMPLOYEE_FULL_NAME',
@@ -195,7 +195,7 @@ function SubordinateTimeRecordTableSearchResult() {
       {
         accessorKey: 'UPDATE_BY',
         header: t('Update By'),
-        size: 140,
+        size: 200,
         Cell: ({ row }) => row.original.UPDATE_BY || '-'
       }
     ],

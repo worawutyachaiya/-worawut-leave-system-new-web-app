@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
 
     server: {
-      port: 8035
+      port: 8015
     },
     resolve: {
       alias: {

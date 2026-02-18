@@ -9,6 +9,16 @@ const verticalMenuData = (dictionary: Awaited<ReturnType<typeof getDictionary>>)
     href: '/home'
   },
   {
+    label: dictionary['navigation'].Setting,
+    isSection: true
+  },
+  {
+    label: dictionary['navigation'].emailSetting,
+    id: 533,
+    icon: 'tabler-mail',
+    href: '/email-setting'
+  },
+  {
     label: dictionary['navigation'].menu,
     isSection: true
   },

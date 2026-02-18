@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
+import { useTranslation } from '@/contexts/TranslationContext'
 
 // Third-party Imports
 
@@ -33,6 +34,7 @@ import LeaveEmployeeInformationService from '@/_workspace/services/leave-employe
 import { useNavigate } from 'react-router'
 
 const UserDropdown = () => {
+  const { t } = useTranslation()
   // States
   const [open, setOpen] = useState(false)
   const [userData, setUserData] = useState<UserProps>()
@@ -106,7 +108,6 @@ const UserDropdown = () => {
       // toastService.error((err as Error).message)
     }
   }
-
   return (
     <>
       <div className='flex flex-col mr-2 ml-2' onClick={handleDropdownOpen} style={{ cursor: 'pointer' }}>
@@ -169,11 +170,11 @@ const UserDropdown = () => {
                   <Divider className='mlb-1' />
                   <MenuItem className='mli-2 gap-3'>
                     <i className='tabler-user' />
-                    <Typography color='text.primary'>My Profile</Typography>
+                    <Typography color='text.primary'>{t('My Profile')}</Typography>
                   </MenuItem>
-                  <MenuItem className='mli-2 gap-3'>
+                  <MenuItem onClick={() => navigate(`/${locale}/email-setting`)} className='mli-2 gap-3'>
                     <i className='tabler-settings' />
-                    <Typography color='text.primary'>Settings</Typography>
+                    <Typography color='text.primary'>{t('Setting')}</Typography>
                   </MenuItem>
                   <div className='flex items-center plb-2 pli-3'>
                     <Button
@@ -185,7 +186,7 @@ const UserDropdown = () => {
                       onClick={handleUserLogout}
                       sx={{ '& .MuiButton-endIcon': { marginInlineStart: 1.5 } }}
                     >
-                      Logout
+                      {t('Logout')}
                     </Button>
                   </div>
                 </MenuList>

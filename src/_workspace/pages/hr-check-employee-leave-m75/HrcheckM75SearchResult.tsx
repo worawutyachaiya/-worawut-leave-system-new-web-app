@@ -32,7 +32,6 @@ import HrCheckM75ConfirmModal from './modal/HrCheckM75ConfirmModal'
 import HrCheckM75ExportModal from './modal/HrCheckM75ExportModal'
 import { ToastMessageError, ToastMessageSuccess } from '@/components/ToastMessage'
 
-
 const statusApprove: Record<string, { label: string; color: 'success' | 'warning' | 'error' }> = {
   0: { label: 'Pending', color: 'warning' },
   1: { label: 'Approved', color: 'success' },
@@ -275,8 +274,8 @@ function HrcheckM75SearchResult() {
       {
         accessorKey: 'LEAVE_REQUEST_EMPLOYEE_CODE',
         header: t('Employee Code'),
-        enableSorting: false,
-        size: 180
+        // enableSorting: false,
+        size: 200
       },
 
       {

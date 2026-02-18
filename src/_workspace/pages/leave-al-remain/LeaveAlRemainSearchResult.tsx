@@ -103,8 +103,8 @@ function SearchResult() {
       {
         accessorKey: 'EMPLOYEE_CODE',
         header: t('Employee Code'),
-        size: 220,
-        enableSorting: false
+        size: 220
+        // enableSorting: false
       },
       {
         id: 'EMPLOYEE_FULL_NAME',
@@ -133,7 +133,7 @@ function SearchResult() {
       {
         accessorKey: 'REMAIN_AL',
         header: t('AL Available'),
-        enableSorting: false,
+        // enableSorting: false,
 
         muiTableBodyCellProps: { align: 'center' },
         Cell: ({ cell }) => {
@@ -143,7 +143,7 @@ function SearchResult() {
       },
       {
         accessorKey: 'REMAIN_AL_EMERGENCY',
-        enableSorting: false,
+        // enableSorting: false,
 
         header: t('AL Emergency Remaining'),
         muiTableBodyCellProps: { align: 'center' },

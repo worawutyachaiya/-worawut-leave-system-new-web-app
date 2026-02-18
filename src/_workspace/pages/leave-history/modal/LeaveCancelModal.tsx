@@ -38,7 +38,6 @@ const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModa
       })
       queryClient.invalidateQueries({ queryKey: [PREFIX_QUERY_KEY] })
       onSuccess?.()
-      onClose()
     } else {
       ToastMessageError({
         title: 'Cancel Leave Request',
@@ -67,6 +66,7 @@ const LeaveCancelModal = ({ open, onClose, rowData, onSuccess }: LeaveCancelModa
       LEAVE_TYPE_DESCRIPTION_TH: data.LEAVE_TYPE_DESCRIPTION_TH || ''
     }
     deleteLeave(deleteParams)
+    onClose()
   }
   return (
     <Dialog
